@@ -1,0 +1,15 @@
+@import './reset.scss';
+@import './fonts.scss';
+@import './colors.scss';
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 1px;
+}
+
+body {
+    font-size: 10rem;
+}
