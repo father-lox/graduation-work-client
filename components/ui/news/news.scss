@@ -1,0 +1,51 @@
+@import '../buttons/button.scss';
+@import '../news-statistics//news-statistics.scss';
+@import '../publisher-page-link/publisher-page-link.scss';
+
+.news {
+    position: relative;
+    padding: 0 45rem 0 0;
+    max-width: 600rem;
+
+    &__title {
+        @include setFontNewsTitle();
+    }
+
+    &__author-comment-section {
+        margin: 25rem 0 0;
+    }
+    
+    &__author-name {
+        color: $accent-color;
+        @include setFontDefaultMedium();
+    }
+
+    &__author-comment {
+        @include setFontDefault();
+        margin: 8rem 0 0;
+    }
+
+    &__controllers {
+        display: flex;
+        justify-content: space-between;
+        margin: 15rem 0 0;
+    }
+
+    &__publisher-page-links {
+        display: flex;
+        flex-direction: column;
+
+        position: absolute;
+        top: 5rem;
+        right: 0;
+
+        .publisher-page-link:not(:first-child) {
+            margin: 10rem 0 0;
+        }
+    }
+
+    .button {
+        width: 144rem;
+        height: 26rem;
+    }
+}

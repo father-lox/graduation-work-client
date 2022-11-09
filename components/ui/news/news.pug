@@ -1,0 +1,17 @@
+include ../news-statistics/news-statistics
+include ../publisher-page-link/publisher-page-link
+
+mixin news(title, authorNickname, authorComment)
+    .news
+        h1.news__title= title
+        .news__author-comment-section
+            .news__author-name Comment by #{authorNickname}
+            .news__author-comment= authorComment
+        .news__controllers
+            +newsStatistics()
+            button.button Комментировать
+        .news__publisher-page-links
+            +publisherPageLink()
+            +publisherPageLink()
+            +publisherPageLink()
+            +publisherPageLink()

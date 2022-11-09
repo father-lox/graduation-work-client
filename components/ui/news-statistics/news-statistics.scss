@@ -1,0 +1,20 @@
+.news-statistics {
+    @include setFontDefaultMedium();
+    display: flex;
+    color: $tamahagane-color;
+
+    &__item {
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child) {
+            margin: 0 17rem 0 0;
+        }
+    }
+
+    &__preview-icon {
+        width: 24px;
+        stroke: $tamahagane-color;
+        margin: 0 10rem 0 0;
+    }
+}

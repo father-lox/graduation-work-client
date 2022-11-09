@@ -1,0 +1,13 @@
+@import '../../styles/general.scss';
+@import '../../components/ui/news/news.scss';
+
+.index {
+    padding: 0 30rem;
+
+    .news-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

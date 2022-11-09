@@ -1,0 +1,32 @@
+.button {
+    @include setFontButton();
+    color: $accent-color;
+    background-color: transparent;
+    border: none;
+    padding: 4rem 10rem;
+    min-width: fit-content;
+    border-radius: 4rem;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    @media (min-width: 769px) {
+        &:hover {
+            color: $white-color;
+            background-color: $accent-color;    
+        }
+
+        &:active {
+            color: $white-color;
+            background-color: $black-color;    
+        }
+    }
+
+    @media (max-width: 768px) {
+        &:active {
+            color: $white-color;
+            background-color: $accent-color;    
+        }
+    }
+}

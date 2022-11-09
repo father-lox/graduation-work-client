@@ -1,0 +1,13 @@
+.publisher-page-link {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 50%;
+    background-color: $accent-color;
+    transition-property: width, height;
+    transition: .15s cubic-bezier(0.33, 1, 0.68, 1);
+
+    &:hover {
+        transform: scale(1.2);
+        // will-change: contents;
+    }
+}
