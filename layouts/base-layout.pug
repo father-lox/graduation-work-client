@@ -1,0 +1,9 @@
+mixin baseLayout(classOfMainSection = 'index')
+    doctype html
+    html
+        head 
+            title News 
+            link(rel="stylesheet", href="./style.css")
+        body 
+            main(class=classOfMainSection)
+                block
