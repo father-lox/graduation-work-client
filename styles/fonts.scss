@@ -1,0 +1,84 @@
+$base-path-to-font-folder: '../../fonts';
+
+@font-face{
+    font-family: "Noto-Sans";
+    src: url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Regular.ttf") format("opentype"),
+    url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Regular.woff") format("woff"),
+    url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Regular.woff2") format("woff2");
+    font-style: normal; 
+    font-weight: normal;
+}
+
+@mixin setFontDefault($fontSize: 16rem) {
+    font-family: 'Noto-Sans', sans-serif;
+    font-size: $fontSize;
+    line-height: 136%;
+}
+
+/* --------------------- */
+
+
+@font-face{
+    font-family: "Noto-Sans";
+    src: url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Medium.ttf") format("opentype"),
+    url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Medium.woff") format("woff"),
+    url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Medium.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 500;
+}
+
+@mixin setFontDefaultMedium($fontSize: 16rem) {
+    font-family: 'Noto-Sans', sans-serif;
+    font-size: $fontSize;
+    line-height: 136%;
+    font-weight: 500;
+}
+
+/* --------------------- */
+
+
+@font-face{
+    font-family: "Noto-Serif";
+    src: url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Regular.ttf") format("opentype"),
+    url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Regular.woff") format("woff"),
+    url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Regular.woff2") format("woff2");
+    font-style: normal; 
+    font-weight: normal;
+}
+
+@font-face{
+    font-family: "Noto-Serif";
+    src: url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Medium.ttf") format("opentype"),
+    url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Medium.woff") format("woff"),
+    url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Medium.woff2") format("woff2");
+    font-style: normal; 
+    font-weight: 500;
+}
+
+@mixin setFontNewsTitle($fontSize: 36rem, $fontWeight: 500) {
+    font-family: 'Noto-Serif', sans-serif;
+    font-size: $fontSize;
+    line-height: 136%;
+    font-weight: $fontWeight;
+}
+
+/* --------------------- */
+
+
+@font-face{
+    font-family: "Roboto-Slab";
+    src: url($base-path-to-font-folder + "/Roboto_Slab/RobotoSlab-Regular.ttf") format("opentype"),
+    url($base-path-to-font-folder + "/Roboto_Slab/RobotoSlab-Regular.woff") format("woff"),
+    url($base-path-to-font-folder + "/Roboto_Slab/RobotoSlab-Regular.woff2") format("woff2");
+    font-style: normal; 
+    font-weight: normal;
+}
+
+@mixin setFontButton($fontSize: 14rem) {
+    font-family: "Roboto-Slab", sans-serif;
+    font-size: $fontSize;
+    line-height: 132%;
+    text-transform: lowercase;
+}
+
+/* --------------------- */
