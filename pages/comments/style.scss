@@ -1,0 +1,67 @@
+@import '../../styles/general.scss';
+@import '../../components/ui/news/news.scss';
+@import '../../components/ui/comment/comment.scss';
+@import '../../components/ui/inputs/input-expressive/input-expressive.scss';
+@import './components/back-to-news.scss';
+
+.comment-section {
+    $commentSectionMaxWidth: 512rem;
+
+    max-width: $commentSectionMaxWidth;
+
+    @include media-from($desktopMaxWidth) {
+        max-width: convertValueToVW($commentSectionMaxWidth);
+        margin: 0 0 0 convertValueToVW(162rem);
+    }
+
+    @include media-from($width768) {
+        margin: 0 0 0 12.7%;
+    }
+
+    @include media-till($width768) {
+        margin: 0 auto;
+        padding: 0 25rem;
+    }
+
+    &__back {
+        $width: 134rem;
+
+        position: fixed;
+        right: 0;
+
+        @include media-till($width768) {
+            height: 40rem;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @include media-from($width768) {
+            height: 100vh;
+            width: $width;
+            top: 0;   
+        }
+
+        @include media-from($desktopMaxWidth) {
+            width: convertValueToVW($width);
+        }
+    }
+
+    &__typing {
+        $typingMarginBottomDesktop: 30rem;
+
+        height: 50vh;
+        display: flex;
+        align-items: flex-end;
+        margin: 0 0 $typingMarginBottomDesktop;
+
+        @include media-from($desktopMaxWidth) {
+            margin: 0 0 convertValueToVW($typingMarginBottomDesktop);
+        }
+    }
+
+    .input-expressive {
+        width: 100%;
+        max-height: 100%;
+        height: 49rem;
+    }
+}

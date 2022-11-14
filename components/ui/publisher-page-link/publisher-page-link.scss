@@ -6,8 +6,12 @@
     transition-property: width, height;
     transition: .15s cubic-bezier(0.33, 1, 0.68, 1);
 
+    @include media-from($desktopMaxWidth) {
+        width: convertValueToVW(25rem);
+        height: convertValueToVW(25rem);
+    }
+    
     &:hover {
         transform: scale(1.2);
-        // will-change: contents;
     }
 }

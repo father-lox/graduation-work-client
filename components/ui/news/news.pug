@@ -1,12 +1,14 @@
 include ../news-statistics/news-statistics
 include ../publisher-page-link/publisher-page-link
+include ../comment/comment
 
 mixin news(title, authorNickname, authorComment)
     .news
         h1.news__title= title
         .news__author-comment-section
-            .news__author-name Comment by #{authorNickname}
-            .news__author-comment= authorComment
+            +comment(authorNickname, authorComment, true)
+            //- .news__author-name Comment by #{}
+            //- .news__author-comment= 
         .news__controllers
             +newsStatistics()
             button.button Комментировать

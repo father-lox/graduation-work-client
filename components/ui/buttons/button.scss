@@ -7,6 +7,11 @@
     min-width: fit-content;
     border-radius: 4rem;
 
+    @include media-from($desktopMaxWidth) {
+        padding: convertValueToVW(4rem) convertValueToVW(10rem);
+        border-radius: convertValueToVW(4rem);
+    }
+
     &:hover {
         cursor: pointer;
     }

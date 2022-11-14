@@ -11,7 +11,7 @@ $base-path-to-font-folder: '../../fonts';
 
 @mixin setFontDefault($fontSize: 16rem) {
     font-family: 'Noto-Sans', sans-serif;
-    font-size: $fontSize;
+    @include setFontSize($fontSize);
     line-height: 136%;
 }
 
@@ -29,7 +29,7 @@ $base-path-to-font-folder: '../../fonts';
 
 @mixin setFontDefaultMedium($fontSize: 16rem) {
     font-family: 'Noto-Sans', sans-serif;
-    font-size: $fontSize;
+    @include setFontSize($fontSize);
     line-height: 136%;
     font-weight: 500;
 }
@@ -57,9 +57,13 @@ $base-path-to-font-folder: '../../fonts';
 
 @mixin setFontNewsTitle($fontSize: 36rem, $fontWeight: 500) {
     font-family: 'Noto-Serif', sans-serif;
-    font-size: $fontSize;
+    @include setFontSize($fontSize);
     line-height: 136%;
     font-weight: $fontWeight;
+
+    @include media-till($width576) {
+        font-size: $fontSize - 10rem;
+    }
 }
 
 /* --------------------- */
@@ -76,7 +80,7 @@ $base-path-to-font-folder: '../../fonts';
 
 @mixin setFontButton($fontSize: 14rem) {
     font-family: "Roboto-Slab", sans-serif;
-    font-size: $fontSize;
+    @include setFontSize($fontSize);
     line-height: 132%;
     text-transform: lowercase;
 }

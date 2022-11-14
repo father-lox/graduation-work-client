@@ -1,0 +1,4 @@
+mixin comment(nickName, comment, isWriterComment = false)
+    .comment
+        p.comment__nickname(class=isWriterComment ? 'comment__nickname_writer' : '') Comment by #{nickName}
+        p.comment__text(class=isWriterComment ? 'comment__text_writer' : '') #{comment}

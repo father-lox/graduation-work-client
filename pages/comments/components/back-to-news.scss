@@ -1,0 +1,112 @@
+$backToNewsBackgroundColor: #FBFBFB;
+
+.back-to-news {
+    background-color: $backToNewsBackgroundColor;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    outline-color: $accent-color;
+
+    @include media-from($width768) {
+        flex-direction: column;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:focus {
+        .back-to-news__lable {
+            color: $accent-color;
+        }
+    }
+
+    &:hover, &:focus {
+        cursor: pointer;
+
+        .back-to-news__arrow {   
+            $arrowOffsetHover: -30rem;
+            
+            @include media-till($width768) {
+                transform: translateY($arrowOffsetHover) scale(1.5);
+            }
+
+            @include media-from($width768) {
+                transform: translateY($arrowOffsetHover);
+            }
+
+            @include media-from($desktopMaxWidth) {
+                transform: translateY(convertValueToVW($arrowOffsetHover));
+            }
+        }
+    }
+
+    &:active {
+        background-color: $accent-color;
+
+        @include media-from($width768) {
+            .back-to-news__arrow {
+                fill: $white-color;
+            }
+            
+            .back-to-news__lable {
+                color: $white-color;
+            }
+        }
+
+        @include media-till($width768) {
+            .back-to-news__arrow {
+                fill: $black-color;
+            }
+            
+            .back-to-news__lable {
+                color: $black-color;
+            }
+        }
+    }
+
+    &__lable {
+        $lableMarginTopDesktop: 78rem;
+        $lableMaxWidthDesktop: 35rem;
+
+        @include setFontButton();
+        text-align: left;
+
+        @include media-till($width768) {
+            margin: 0 0 0 25rem;
+        }
+
+        @include media-from($width768) {
+            transform: rotate(90deg);
+            margin: $lableMarginTopDesktop 0 0;
+            max-width: $lableMaxWidthDesktop;
+        }
+
+        @include media-from($desktopMaxWidth) {
+            margin: convertValueToVW($lableMarginTopDesktop) 0 0;
+            max-width: convertValueToVW($lableMaxWidthDesktop);
+        }
+    }
+
+    &__arrow {
+        $arrowMarginBottomDesktop: 55rem;
+
+        transition: transform .5s cubic-bezier(.86,0,.07,1);
+        fill: $accent-color;
+
+        @include media-till($width768) {
+            margin: 0 25rem 0 0;
+        }
+
+        @include media-from($width768) {
+            margin: 0 0 $arrowMarginBottomDesktop;
+        }
+
+        @include media-from($desktopMaxWidth) {
+            margin: 0 0 convertValueToVW($arrowMarginBottomDesktop);
+            width: convertValueToVW(30rem);
+            height: convertValueToVW(184rem);
+        }
+    }
+}

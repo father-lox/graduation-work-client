@@ -1,11 +1,17 @@
 @import '../buttons/button.scss';
 @import '../news-statistics//news-statistics.scss';
 @import '../publisher-page-link/publisher-page-link.scss';
+@import '../comment/comment.scss';
 
 .news {
     position: relative;
     padding: 0 45rem 0 0;
     max-width: 600rem;
+
+    @include media-from($desktopMaxWidth) {
+        max-width: convertValueToVW(600rem);
+        padding: 0 convertValueToVW(45rem) 0 0;
+    }
 
     &__title {
         @include setFontNewsTitle();
@@ -13,6 +19,10 @@
 
     &__author-comment-section {
         margin: 25rem 0 0;
+
+        @include media-from($desktopMaxWidth) {
+            margin: convertValueToVW(25rem) 0 0;
+        }
     }
     
     &__author-name {
@@ -23,12 +33,20 @@
     &__author-comment {
         @include setFontDefault();
         margin: 8rem 0 0;
+
+        @include media-from($desktopMaxWidth) {
+            margin: convertValueToVW(8rem) 0 0;
+        }
     }
 
     &__controllers {
         display: flex;
         justify-content: space-between;
         margin: 15rem 0 0;
+
+        @include media-from($desktopMaxWidth) {
+            margin: convertValueToVW(15rem) 0 0;
+        }
     }
 
     &__publisher-page-links {
@@ -41,11 +59,20 @@
 
         .publisher-page-link:not(:first-child) {
             margin: 10rem 0 0;
+
+            @include media-from($desktopMaxWidth) {
+                margin: convertValueToVW(10rem) 0 0;
+            }
         }
     }
 
     .button {
         width: 144rem;
         height: 26rem;
+
+        @include media-from($desktopMaxWidth) {
+            width: convertValueToVW(144rem);
+            height: convertValueToVW(26rem);
+        }
     }
 }

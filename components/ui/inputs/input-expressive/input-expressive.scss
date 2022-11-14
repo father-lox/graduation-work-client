@@ -1,0 +1,20 @@
+.input-expressive {
+    @include setFontNewsTitle();
+
+    border: none;
+    resize: none;
+    padding: 0;
+
+    &:hover, &:focus {
+        color: $light-accent-color;
+        outline: none;
+    }
+
+    &:hover:not(:focus):not(:placeholder-shown) {
+        color: $accent-color;
+    }
+
+    &:not(:placeholder-shown) {
+        color: $black-color;
+    }
+}
