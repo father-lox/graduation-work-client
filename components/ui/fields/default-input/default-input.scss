@@ -1,4 +1,4 @@
-// @import '../errorNote/errorNote.scss';
+@import '../../note-error/note-error.scss';
 
 .default-input {
     $transition-duration: .5s;
@@ -14,7 +14,7 @@
     padding: $padding-top 0 $padding-bottom $padding-left;
 
     &.default-input_error {
-        .error-note {
+        .note-error {
             display: flex;
         }
 
@@ -88,7 +88,7 @@
         display: none;
     }
 
-    &__hint, .error-note {
+    &__hint, .note-error {
         margin: 10rem 0 0;
     }
 
@@ -99,7 +99,7 @@
         text-transform: lowercase;
     }
 
-    .error-note {
+    .note-error {
         display: none;
     }
 }
