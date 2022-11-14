@@ -3,8 +3,8 @@ const outputDirectory = './pub/';
 
 export const path = {
     source: {
-        styles: `${clientDirectory}pages/**/*.scss`,
-        templates: `${clientDirectory}pages/**/*.pug`
+        styles: `${clientDirectory}pages/*/*.scss`,
+        templates: `${clientDirectory}pages/*/*.pug`
     },
 
     build: {
@@ -16,7 +16,8 @@ export const path = {
         styles: [
             `${clientDirectory}pages/**/*.scss`,
             `${clientDirectory}components/**/*.scss`, 
-            `${clientDirectory}layouts/**/*.scss`
+            `${clientDirectory}layouts/**/*.scss`,
+            `${clientDirectory}styles/**/*.scss`,
         ],
         templates: [
             `${clientDirectory}pages/**/*.pug`,
