@@ -1,0 +1,105 @@
+// @import '../errorNote/errorNote.scss';
+
+.default-input {
+    $transition-duration: .5s;
+
+    $padding-top: 12rem;
+    $padding-bottom: $padding-top;
+    $padding-left: 15rem;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-left: 3rem solid $accent-color;
+    padding: $padding-top 0 $padding-bottom $padding-left;
+
+    &.default-input_error {
+        .error-note {
+            display: flex;
+        }
+
+        .default-input__hint {
+            display: none;
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 10rem;
+    }
+
+    &__icon-and-name {
+        $top-position: 50%;
+        $left-position: $padding-left;
+
+        position: absolute;
+        top: $top-position;
+        left: $left-position;
+        display: flex;
+        order: -1;
+        margin: 0 0 8rem;
+        pointer-events: none;
+        transform: translateY(-50%);
+    }
+
+    &__icon {
+        // TODO: Убрать масштабирование обводки иконки
+        width: 18rem;
+        margin: 0 8rem 0 0;
+    }
+
+    &__name {
+        display: block;
+        text-transform: lowercase;
+        color: $accent-color;
+        @include setFontDefault(14rem);
+    }
+
+    &__input {
+        border: none;
+        padding: 0;
+        height: 20rem;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:focus-visible, &__input:focus {
+            outline:none;
+        }
+
+        &:focus + .default-input__icon-and-name, 
+        &:focus-visible + .default-input__icon-and-name, 
+        &:not(:placeholder-shown) + .default-input__icon-and-name {
+            position: static;
+            pointer-events: none;
+            transform: none;
+        }
+    
+        &:focus ~ .default-input__hint-and-error, 
+        &:focus-visible ~ .default-input__hint-and-error,
+        &:not(:placeholder-shown) ~ .default-input__hint-and-error {
+            display: block;
+        }
+    }
+
+    &__hint-and-error {
+        display: none;
+    }
+
+    &__hint, .error-note {
+        margin: 10rem 0 0;
+    }
+
+    &__hint {
+        @include setFontDefault(12rem);
+        //TODO: Заменить цвет на серый
+        color: $accent-color;
+        text-transform: lowercase;
+    }
+
+    .error-note {
+        display: none;
+    }
+}

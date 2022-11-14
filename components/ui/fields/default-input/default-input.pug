@@ -1,0 +1,13 @@
+include ../../note-error/note-error
+
+mixin defaultInput(inputType, inputName, iconSrc, label, hintMessage = null, errorMessage = null)
+    .default-input 
+        input.default-input__input(type=inputType name=inputName placeholder="")
+        .default-input__icon-and-name
+            img.default-input__icon(src=iconSrc)
+            p.default-input__name= label
+        .default-input__hint-and-error
+            if (hintMessage)
+                p.default-input__hint= hintMessage
+            if (errorMessage)
+                +noteError(errorMessage)
