@@ -1,0 +1,9 @@
+@mixin setFontSize($size) {
+    $size: stripUnit($size);
+
+    font-size: $size + rem;
+
+    @include media-from($desktopMaxWidth) {
+        font-size: convertValueToVW($size, $desktopMaxWidth);
+    }
+}
