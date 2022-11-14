@@ -5,11 +5,19 @@
     &__image {
         max-width: 24rem;
         stroke: $accent-color;
+
+        @include media-from($desktopMaxWidth) {
+            max-width: convertValueToVW(24rem);
+        }
     }
 
     &__text {
         color: $accent-color;
         @include setFontDefault(12rem);
         margin: 0 0 0 6rem;
+
+        @include media-from($desktopMaxWidth) {
+            margin: 0 0 0 convertValueToVW(6rem);
+        }
     }
 }
