@@ -1,9 +1,22 @@
 @import './reset.scss';
-@import './fonts.scss';
+@import './normalize.css';
+
+@import './media-querie-variables.scss';
+@import './media-queries.scss';
+
+@import './functions/functions.scss';
+@import './mixins/mixins.scss';
+
 @import './colors.scss';
+@import './fonts.scss';
 
 * {
     box-sizing: border-box;
+}
+
+::selection {
+    color: $white-color;
+    background-color: $accent-color;
 }
 
 html {
@@ -12,4 +25,18 @@ html {
 
 body {
     font-size: 10rem;
+}
+
+// Display Classes
+
+.display-more-767 {
+    @include media-till($width768) {
+        display: none;
+    }
+}
+
+.display-less-768 {
+    @include media-from($width768) {
+        display: none;
+    }
 }
