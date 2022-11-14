@@ -1,0 +1,7 @@
+@use 'sass:math';
+
+@import './stripUnit.scss';
+
+@function convertValueToVW($size, $resolution: $desktopMaxWidth) {
+    @return math.div((stripUnit($size) * 100), stripUnit($resolution)) + vw;
+}
