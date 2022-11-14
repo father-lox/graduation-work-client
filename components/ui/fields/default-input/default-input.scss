@@ -3,15 +3,21 @@
 .default-input {
     $transition-duration: .5s;
 
-    $padding-top: 12rem;
-    $padding-bottom: $padding-top;
-    $padding-left: 15rem;
+    $input-padding-top: 12rem;
+    $input-padding-bottom: $input-padding-top;
+    $input-padding-left: 15rem;
+    $input-borderWidth: 3rem;
 
     display: flex;
     flex-direction: column;
     position: relative;
-    border-left: 3rem solid $accent-color;
-    padding: $padding-top 0 $padding-bottom $padding-left;
+    border-left: $input-borderWidth solid $accent-color;
+    padding: $input-padding-top 0 $input-padding-bottom $input-padding-left;
+
+    @include media-from($desktopMaxWidth) {
+        border-width: convertValueToVW($input-borderWidth);
+        padding: convertValueToVW($input-padding-top) 0 convertValueToVW($input-padding-bottom) convertValueToVW($input-padding-left);
+    }
 
     &.default-input_error {
         .note-error {
@@ -26,27 +32,50 @@
     &__info {
         display: flex;
         flex-direction: column;
-        margin: 0 0 10rem;
+
+        $info-margin-bottom: 10rem;
+
+        margin: 0 0 $info-margin-bottom;
+
+        @include media-from($desktopMaxWidth) {
+            margin: 0 0 convertValueToVW($info-margin-bottom);
+        }
     }
 
     &__icon-and-name {
         $top-position: 50%;
-        $left-position: $padding-left;
+        $left-position: $input-padding-left;
 
         position: absolute;
         top: $top-position;
         left: $left-position;
         display: flex;
         order: -1;
-        margin: 0 0 8rem;
         pointer-events: none;
         transform: translateY(-50%);
+        
+        $icon-and-name-margin-bottom: 8rem;
+
+        margin: 0 0 $icon-and-name-margin-bottom;
+
+
+        @include media-from($desktopMaxWidth) {
+            margin: 0 0 convertValueToVW($icon-and-name-margin-bottom);
+        }
     }
 
     &__icon {
         // TODO: Убрать масштабирование обводки иконки
+        $icon-width: 18rem;
+        $icon-margin-right: 8rem; 
+
         width: 18rem;
         margin: 0 8rem 0 0;
+
+        @include media-from($desktopMaxWidth) {
+            width: convertValueToVW($icon-width);
+            margin: 0 convertValueToVW($icon-margin-right) 0 0;
+        }
     }
 
     &__name {
@@ -57,9 +86,16 @@
     }
 
     &__input {
+        $input-height: 20rem;
+
         border: none;
         padding: 0;
-        height: 20rem;
+        height: $input-height;
+        @include setFontSize(13rem);
+
+        @include media-from($desktopMaxWidth) {
+            height: convertValueToVW($input-height);
+        }
 
         &:hover {
             cursor: pointer;
@@ -89,7 +125,14 @@
     }
 
     &__hint, .note-error {
-        margin: 10rem 0 0;
+        $hint-error-margin-top: 10rem;
+
+        margin: $hint-error-margin-top 0 0;
+
+
+        @include media-from($desktopMaxWidth) {
+            margin: convertValueToVW($hint-error-margin-top) 0 0;
+        }
     }
 
     &__hint {

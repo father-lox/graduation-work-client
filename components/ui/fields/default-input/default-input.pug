@@ -1,7 +1,7 @@
 include ../../note-error/note-error
 
 mixin defaultInput(inputType, inputName, iconSrc, label, hintMessage = null, errorMessage = null)
-    .default-input 
+    .default-input.default-input_error 
         input.default-input__input(type=inputType name=inputName placeholder="")
         .default-input__icon-and-name
             img.default-input__icon(src=iconSrc)
