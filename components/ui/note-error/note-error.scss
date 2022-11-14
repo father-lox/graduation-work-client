@@ -1,0 +1,15 @@
+.note-error {
+    display: flex;
+    align-items: center;
+
+    &__image {
+        max-width: 24rem;
+        stroke: $accent-color;
+    }
+
+    &__text {
+        color: $accent-color;
+        @include setFontDefault(12rem);
+        margin: 0 0 0 6rem;
+    }
+}
