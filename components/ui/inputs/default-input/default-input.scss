@@ -137,8 +137,7 @@
 
     &__hint {
         @include setFontDefault(12rem);
-        //TODO: Заменить цвет на серый
-        color: $accent-color;
+        color: $walrus-color;
         text-transform: lowercase;
     }
 

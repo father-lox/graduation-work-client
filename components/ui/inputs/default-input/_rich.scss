@@ -1,0 +1,45 @@
+@use 'sass:math';
+
+.default-input.default-input_rich {
+    $fieldBorderWidth: 5rem;
+    $fieldPaddingTop: 25rem;
+    $fieldPaddingBottom: $fieldPaddingTop;
+    $fieldPaddingLeft: 28rem - $fieldBorderWidth;
+    $fieldPaddingRight: 20rem;
+
+    padding: $fieldPaddingTop $fieldPaddingRight $fieldPaddingBottom $fieldPaddingLeft;
+    border-width: 5rem;
+
+    .default-input__input {
+        $inputHeight: 22rem;
+        
+        color: $tamahagane-color;
+        height: 22rem;
+
+        @include setFontDefaultBold();
+
+        &:focus ~ .default-input__hint-and-error, 
+        &:focus-visible ~ .default-input__hint-and-error,
+        &:not(:placeholder-shown) ~ .default-input__hint-and-error {
+            margin: 16rem 0 0;
+        }
+    }
+    
+    .default-input__hint-and-error {
+        display: block;
+        margin: 3rem 0 0;
+    }
+
+    .default-input__icon-and-name {
+        $lableMarginBottom: 3rem;
+
+        top: $fieldPaddingTop;
+        left: $fieldPaddingLeft;
+        transform: none;
+        margin: 0 0 $lableMarginBottom;
+    }
+
+    .default-input__hint, .note-error {
+        margin: 0;
+    }
+}
