@@ -39,6 +39,10 @@
         margin: 0 0 $lableMarginBottom;
     }
 
+    .default-input__icon {
+        display: none;
+    }
+
     .default-input__hint, .note-error {
         margin: 0;
     }
