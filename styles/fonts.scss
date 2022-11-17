@@ -38,6 +38,25 @@ $base-path-to-font-folder: '../../fonts';
 
 
 @font-face{
+    font-family: "Noto-Sans";
+    src: url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Bold.ttf") format("opentype"),
+    url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Bold.woff") format("woff"),
+    url($base-path-to-font-folder + "/Noto_Sans/NotoSans-Bold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 700;
+}
+
+@mixin setFontDefaultBold($fontSize: 16rem) {
+    font-family: 'Noto-Sans', sans-serif;
+    @include setFontSize($fontSize);
+    line-height: 100%;
+    font-weight: 700;
+}
+
+/* --------------------- */
+
+
+@font-face{
     font-family: "Noto-Serif";
     src: url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Regular.ttf") format("opentype"),
     url($base-path-to-font-folder + "/Noto_Serif/NotoSerif-Regular.woff") format("woff"),
