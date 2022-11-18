@@ -1,0 +1,7 @@
+.button.button_accent {
+    border: 1px solid $accent-color;
+
+    &:active {
+        border-color: $black-color;
+    }
+}

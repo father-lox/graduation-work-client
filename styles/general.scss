@@ -24,7 +24,7 @@ html {
 }
 
 body {
-    @include setFontSize(10rem);
+    @include setFontDefault(10rem);
     caret-color: $accent-color;
 }
 

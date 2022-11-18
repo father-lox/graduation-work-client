@@ -1,7 +1,91 @@
 @import '../../styles/general.scss';
 @import '../../components/ui/inputs/default-input/default-input.scss';
 @import '../../components//ui/inputs/default-input/_rich';
+@import '../../components//ui/buttons/button.scss';
+@import '../../components//ui/buttons/_accent.scss';
 
 .singup {
-    padding: 50rem;
+    height: 100vh;
+    padding: 0 0 0 72rem;
+    
+    @include media-till($width1024) {
+        padding: 0 0 0 35rem;
+    }
+
+    @include media-till($width768) {
+        padding: 0 35rem;
+        margin: 0 auto;
+        max-width: 540rem;
+    }
+
+    @include media-till($width576) {
+        padding: 0 15rem;
+    }
+
+    &__container {
+        height: 100%;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+
+        @include media-between($width768, $desktopMaxWidth) {
+            width: 40%;
+        }
+
+        @include media-from($width768) {
+            max-width: 512rem;
+        }
+        
+        .button {
+            max-width: min-content;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    
+        .button {
+            align-self: flex-end;
+            margin: 11rem 0 0;
+        }
+    }
+
+    .default-input:not(:first-child) {
+        margin: 10rem 0 0;
+
+        @include media-from($width768) {
+            display: none;
+        }
+    }
+
+    &__info {
+        @include setFontSize(14rem);
+        color: $walrus-color;
+        line-height: 136%;
+    }
+
+    &__info-highlight {
+        color: $accent-color;
+    }
+
+    &__illustration {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: -1;
+        right: 4%;
+
+        @include media-till($desktopMaxWidth) {
+            max-width: 56%;
+        }
+
+        @include media-till($width768) {
+            display: none;
+        }
+    }
 }

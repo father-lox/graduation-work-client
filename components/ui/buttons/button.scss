@@ -29,7 +29,7 @@
     }
 
     @media (max-width: 768px) {
-        &:active {
+        &:active, &:focus {
             color: $white-color;
             background-color: $accent-color;    
         }
