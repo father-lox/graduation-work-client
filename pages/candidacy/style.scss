@@ -6,7 +6,10 @@
 
 .singup {
     height: 100vh;
-    padding: 0 0 0 72rem;
+
+    @include media-from($width1024) {
+        padding: 0 0 0 convertValueToVW(72rem);
+    }
     
     @include media-till($width1024) {
         padding: 0 0 0 35rem;
@@ -36,8 +39,14 @@
             width: 40%;
         }
 
+        $signup-actions-max-width: 512rem;
+
         @include media-from($width768) {
-            max-width: 512rem;
+            max-width: $signup-actions-max-width;
+        }
+
+        @include media-from($desktopMaxWidth) {
+            max-width: convertValueToVW($signup-actions-max-width);
         }
         
         .button {
@@ -51,7 +60,16 @@
     
         .button {
             align-self: flex-end;
-            margin: 11rem 0 0;
+
+            $button-top-margin: 11rem;
+
+            @include media-from($width768) {
+                margin: $button-top-margin 0 0;
+            }
+    
+            @include media-from($desktopMaxWidth) {
+                margin: convertValueToVW($button-top-margin);
+            }
         }
     }
 
@@ -79,6 +97,10 @@
         transform: translateY(-50%);
         z-index: -1;
         right: 4%;
+
+        @include media-from($desktopMaxWidth) {
+            width: convertValueToVW(700rem);
+        }
 
         @include media-till($desktopMaxWidth) {
             max-width: 56%;
