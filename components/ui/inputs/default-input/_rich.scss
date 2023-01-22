@@ -7,36 +7,76 @@
     $fieldPaddingLeft: 28rem - $fieldBorderWidth;
     $fieldPaddingRight: 20rem;
 
-    padding: $fieldPaddingTop $fieldPaddingRight $fieldPaddingBottom $fieldPaddingLeft;
-    border-width: 5rem;
+    @include media-till($desktopMaxWidth) {
+        padding: $fieldPaddingTop $fieldPaddingRight $fieldPaddingBottom $fieldPaddingLeft;
+        border-width: 5rem;
+    }
+
+    @include media-from($desktopMaxWidth) {
+        padding: convertValueToVW($fieldPaddingTop) convertValueToVW($fieldPaddingRight) convertValueToVW($fieldPaddingBottom) convertValueToVW($fieldPaddingLeft);
+        border-width: convertValueToVW(5rem);
+    }
 
     .default-input__input {
-        $inputHeight: 22rem;
+        $input-height: 22rem;
         
         color: $tamahagane-color;
-        height: 22rem;
 
         @include setFontDefaultBold();
+
+        @include media-till($desktopMaxWidth) {
+            height: $input-height;
+        }
+    
+        @include media-from($desktopMaxWidth) {
+            height: convertValueToVW($input-height);
+        }
 
         &:focus ~ .default-input__hint-and-error, 
         &:focus-visible ~ .default-input__hint-and-error,
         &:not(:placeholder-shown) ~ .default-input__hint-and-error {
-            margin: 16rem 0 0;
+            $hint-and-error-margin-top: 16rem;
+
+            @include media-till($desktopMaxWidth) {
+                margin: $hint-and-error-margin-top 0 0;
+            }
+        
+            @include media-from($desktopMaxWidth) {
+                margin: convertValueToVW($hint-and-error-margin-top) 0 0;
+            }
         }
     }
     
     .default-input__hint-and-error {
         display: block;
-        margin: 3rem 0 0;
+
+        $hint-and-error-margin-top: 3rem;
+
+        @include media-till($desktopMaxWidth) {
+            margin: $hint-and-error-margin-top 0 0;
+        }
+    
+        @include media-from($desktopMaxWidth) {
+            margin: convertValueToVW($hint-and-error-margin-top) 0 0;
+        }
     }
 
     .default-input__icon-and-name {
+        transform: none;
+        
         $lableMarginBottom: 3rem;
 
-        top: $fieldPaddingTop;
-        left: $fieldPaddingLeft;
-        transform: none;
-        margin: 0 0 $lableMarginBottom;
+        @include media-till($desktopMaxWidth) {
+            top: $fieldPaddingTop;
+            left: $fieldPaddingLeft;
+            margin: 0 0 $lableMarginBottom;
+        }
+    
+        @include media-from($desktopMaxWidth) {
+            top: convertValueToVW($fieldPaddingTop);
+            left: convertValueToVW($fieldPaddingLeft);
+            margin: 0 0 convertValueToVW($lableMarginBottom);
+        }
     }
 
     .default-input__icon {
