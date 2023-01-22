@@ -1,0 +1,29 @@
+include ../../layouts/base-layout
+include ../../components/ui/inputs/default-input/default-input.pug
+include ../../components/ui/note-error/note-error.pug
+
++baseLayout('sign-up')
+	form.sing-up-form
+		//- TODO: реализовать автоматическую подстановку svg-картинок для input, вместо прямой пердачи кода
+		+defaultInput('text', 'login', '././', 'your login', 'использоваться при авторизации', 'This field is requered')
+			<svg class="default-input__icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M8.9887 11.5096C6.08798 11.5096 3.61084 11.9482 3.61084 13.7046C3.61084 15.4611 6.07227 15.9154 8.9887 15.9154C11.8894 15.9154 14.3658 15.4761 14.3658 13.7204C14.3658 11.9646 11.9051 11.5096 8.9887 11.5096Z" stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M8.98867 9.00443C10.8922 9.00443 12.4351 7.46086 12.4351 5.55728C12.4351 3.65371 10.8922 2.11086 8.98867 2.11086C7.0851 2.11086 5.54152 3.65371 5.54152 5.55728C5.5351 7.45443 7.06795 8.998 8.96438 9.00443H8.98867Z" stroke="#FFA2A2" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		//- TODO: реализовать автоматическую подстановку svg-картинок для input, вместо прямой пердачи кода
+		+defaultInput('password', 'pass', '././', 'your password', 'защитите ваш аккаунт паролем', 'This field is requered')
+			<svg class="default-input__icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12.3173 7.08585V5.4756C12.3173 3.59085 10.7888 2.06235 8.90406 2.06235C7.01931 2.0541 5.48481 3.5751 5.47656 5.4606V5.4756V7.08585" stroke="#FFA2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M11.7623 15.9372H6.0315C4.461 15.9372 3.1875 14.6644 3.1875 13.0932V9.87645C3.1875 8.3052 4.461 7.03245 6.0315 7.03245H11.7623C13.3328 7.03245 14.6063 8.3052 14.6063 9.87645V13.0932C14.6063 14.6644 13.3328 15.9372 11.7623 15.9372Z" stroke="#FFA2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<path d="M8.89697 10.652V12.3178" stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		//- TODO: реализовать автоматическую подстановку svg-картинок для input, вместо прямой пердачи кода
+		+defaultInput('text', 'nickname', '././', 'your nickname', 'под этим именем вы будете публиковаться', 'This field is requered')
+			<svg class="default-input__icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M10.3105 15.3322H15.75" stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.58501 2.84609C10.1667 2.15084 11.2125 2.04889 11.9222 2.6188C11.9614 2.64972 13.2221 3.62909 13.2221 3.62909C14.0017 4.10039 14.244 5.10233 13.762 5.86694C13.7365 5.90789 6.60896 14.8234 6.60896 14.8234C6.37183 15.1192 6.01187 15.2938 5.62718 15.298L2.89765 15.3323L2.28265 12.7292C2.1965 12.3632 2.28265 11.9788 2.51978 11.683L9.58501 2.84609Z" stroke="#FFA2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<path d="M8.26562 4.50067L12.3548 7.64101" stroke="#FFA2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+
+		+noteError('не верный логин или пароль')
+		button.button.button_accent(type="submit") send

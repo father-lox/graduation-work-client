@@ -4,7 +4,7 @@ mixin defaultInput(inputType, inputName, iconSrc, label, hintMessage = null, err
     .default-input.default-input_rich
         input.default-input__input(type=inputType name=inputName placeholder="")
         .default-input__icon-and-name
-            img.default-input__icon(src=iconSrc)
+            block
             p.default-input__name= label
         .default-input__hint-and-error
             if (hintMessage)
