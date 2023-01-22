@@ -48,7 +48,6 @@
 
         position: absolute;
         top: $top-position;
-        left: $left-position;
         display: flex;
         order: -1;
         pointer-events: none;
@@ -56,11 +55,14 @@
         
         $icon-and-name-margin-bottom: 8rem;
 
-        margin: 0 0 $icon-and-name-margin-bottom;
-
+        @include media-till($desktopMaxWidth) {
+            left: $left-position;
+            margin: 0 0 $icon-and-name-margin-bottom;
+        }    
 
         @include media-from($desktopMaxWidth) {
             margin: 0 0 convertValueToVW($icon-and-name-margin-bottom);
+            left: convertValueToVW($left-position);
         }
     }
 
