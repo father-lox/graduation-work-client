@@ -1,13 +1,24 @@
-@import '../../styles/general.scss';
-@import '../../components/ui/news/news.scss';
+@use '../../styles/general.scss';
+@use '../../components/ui/news/news.scss';
+@use './components/comments/comments.scss';
 
 .index {
     padding: 0 30rem;
+
+    .comments {
+        display: none;
+    }
 
     .news-section {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
+        gap: 40rem;
+    }
+
+    .comments {
+        z-index: 1;
     }
 }
