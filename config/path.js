@@ -8,8 +8,8 @@ export const path = {
     },
 
     build: {
-        styles: outputDirectory,
-        templates: `${clientDirectory}pub/`
+        styles: `${outputDirectory}pages`,
+        templates: `${outputDirectory}pages`
     },
 
     watch: {

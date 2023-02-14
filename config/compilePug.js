@@ -4,6 +4,6 @@ import { path } from './path.js';
 
 export default function compilePug() {
   return gulp.src(path.source.templates)
-    .pipe(pug({}))
+    .pipe(pug())
     .pipe(gulp.dest(path.build.templates));
 };
