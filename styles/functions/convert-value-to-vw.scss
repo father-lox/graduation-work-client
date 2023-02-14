@@ -1,7 +1,15 @@
 @use 'sass:math';
+@use '../media-querie-variables.scss' as media-vars;
 
-@import './stripUnit.scss';
+//TODO: Вынести stripUnit в отдельный файл 
+@function stripUnit($number) {
+    @if type-of($number) == "number" and not unitless($number) {
+      @return math.div($number, ($number * 0 + 1));
+    }
+  
+    @return $number;
+  }
 
-@function convertValueToVW($size, $resolution: $desktopMaxWidth) {
-    @return math.div((stripUnit($size) * 100), stripUnit($resolution)) + vw;
+@function convertValueToVW($size, $resolution: media-vars.$desktopMaxWidth) {
+    @return math.div(stripUnit($size) * 100, stripUnit($resolution)) + vw;
 }

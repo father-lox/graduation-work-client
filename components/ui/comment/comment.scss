@@ -1,3 +1,7 @@
+@use '../../../styles/fonts.scss' as *;
+@use '../../../styles/mixins/set-font-size.scss' as *;
+@use '../../../styles/colors.scss' as *;
+
 .comment {
     @include setFontDefault(14rem);
 

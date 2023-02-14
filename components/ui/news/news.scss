@@ -1,7 +1,8 @@
-@import '../buttons/button.scss';
-@import '../news-statistics//news-statistics.scss';
-@import '../publisher-page-link/publisher-page-link.scss';
-@import '../comment/comment.scss';
+@use '../../../styles/media-querie-variables.scss' as *;
+@use '../../../styles/media-queries.scss' as *;
+@use '../../../styles/fonts.scss' as *;
+@use '../../../styles/colors.scss' as *;
+@use '../../../styles/functions/convert-value-to-vw.scss' as *;
 
 .news {
     position: relative;

@@ -1,3 +1,8 @@
+@use '../../../styles/media-querie-variables.scss' as *;
+@use '../../../styles/media-queries.scss' as *;
+@use '../../../styles/fonts.scss' as *;
+@use '../../../styles/colors.scss' as *;
+
 .publisher-page-link {
     width: 25rem;
     height: 25rem;

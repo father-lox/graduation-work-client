@@ -1,4 +1,9 @@
-@import '../../note-error/note-error.scss';
+@use '../../note-error/note-error.scss' as *;
+@use '../../../../styles/colors.scss' as *;
+@use '../../../../styles/media-queries.scss' as *;
+@use '../../../../styles/media-querie-variables.scss' as *;
+@use '../../../../styles/fonts.scss' as *;
+@use '../../../../styles/mixins/set-font-size.scss' as *;
 
 .default-input {
     $transition-duration: .5s;

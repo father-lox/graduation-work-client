@@ -1,3 +1,7 @@
+@use '../functions/convert-value-to-vw.scss' as *;
+@use '../media-querie-variables.scss' as *;
+@use '../media-queries.scss' as *;
+
 @mixin setFontSize($size) {
     $size: stripUnit($size);
 

@@ -1,14 +1,10 @@
-@import './reset.scss';
-@import './normalize.css';
+@use './reset.scss' as *;
+@use './normalize.css' as *;
 
-@import './media-querie-variables.scss';
-@import './media-queries.scss';
-
-@import './functions/functions.scss';
-@import './mixins/mixins.scss';
-
-@import './colors.scss';
-@import './fonts.scss';
+@use './colors.scss' as *;
+@use './fonts.scss' as *;
+@use './media-queries.scss' as *;
+@use './media-querie-variables.scss' as *;
 
 * {
     box-sizing: border-box;

@@ -1,4 +1,6 @@
-@use 'sass:math';
+@use '../../../../styles/media-querie-variables.scss';
+@use '../../../../styles/colors.scss';
+@use '../../../../styles/media-queries.scss';
 
 .default-input.default-input_rich {
     $fieldBorderWidth: 5rem;

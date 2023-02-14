@@ -1,7 +1,9 @@
-@import '../../styles/general.scss';
-@import '../../components/ui/buttons/button.scss';
-@import '../../components/ui/note-error/note-error.scss';
-@import '../../components/ui/inputs/default-input/default-input.scss';
+@use '../../styles/general.scss';
+@use '../../components/ui/buttons/button.scss';
+@use '../../components/ui/note-error/note-error.scss';
+@use '../../components/ui/inputs/default-input/default-input.scss';
+@use '../../styles/media-queries.scss' as *;
+@use '../../styles/media-querie-variables.scss' as *;
 
 .sign-up {
     margin: 0 auto;
