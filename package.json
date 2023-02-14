@@ -13,6 +13,8 @@
     "gulp": "^4.0.2",
     "gulp-pug": "^5.0.0",
     "gulp-sass": "^5.1.0",
-    "sass": "^1.56.0"
+    "jstransformer-scss": "^2.0.0",
+    "sass": "^1.56.0",
+    "typescript": "^4.9.4"
   }
 }
