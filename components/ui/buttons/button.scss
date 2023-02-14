@@ -1,7 +1,4 @@
-@use '../../../styles/media-querie-variables.scss' as *;
-@use '../../../styles/media-queries.scss' as *;
-@use '../../../styles/fonts.scss' as *;
-@use '../../../styles/colors.scss' as *;
+@use '../../../styles/_base-includes.scss' as *;
 
 .button {
     @include setFontButton();

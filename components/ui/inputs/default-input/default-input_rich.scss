@@ -1,6 +1,4 @@
-@use '../../../../styles/media-querie-variables.scss';
-@use '../../../../styles/colors.scss';
-@use '../../../../styles/media-queries.scss';
+@use '../../../../styles/base-includes' as *;
 
 .default-input.default-input_rich {
     $fieldBorderWidth: 5rem;
