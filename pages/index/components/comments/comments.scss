@@ -1,8 +1,8 @@
-@import '../../styles/general.scss';
-@import '../../components/ui/news/news.scss';
-@import '../../components/ui/comment/comment.scss';
-@import '../../components/ui/inputs/expressive-input/expressive-input.scss';
-@import './components/back-to-news.scss';
+@use '../../../../styles/base-includes.scss' as *;
+@use '../../../../components/ui/news/news.scss';
+@use '../../../../components/ui/comment/comment.scss';
+@use '../../../../components/ui/inputs/expressive-input/expressive-input.scss';
+@use './back-to-news.scss';
 
 .comment-section {
     $commentSectionMaxWidth: 512rem;
