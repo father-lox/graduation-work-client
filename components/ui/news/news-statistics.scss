@@ -7,22 +7,23 @@
     @include setFontDefaultMedium();
     display: flex;
     color: $tamahagane-color;
+    margin: 0;
+    padding: 0;
+    $space-between-items: 17rem;
+    gap: $space-between-items;
+
+    @include media-from($desktopMaxWidth) {
+        gap: convertValueToVW($space-between-items);
+    }
 
     &__item {
         display: flex;
         align-items: center;
-
-        &:not(:last-child) {
-            margin: 0 17rem 0 0;
-
-            @include media-from($desktopMaxWidth) {
-                margin: 0 convertValueToVW(17rem) 0 0;
-            }            
-        }
     }
 
     &__preview-icon {
-        width: 24px;
+        width: 24rem;
+        height: 24rem;
         stroke: $tamahagane-color;
         margin: 0 10rem 0 0;
 

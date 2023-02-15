@@ -1,18 +1,18 @@
-include ../news-statistics/news-statistics
-include ../publisher-page-link/publisher-page-link
-//- include ../comment/comment
+include ./news-statistics.pug
 
 mixin news()
     template#news
         style 
             include:scss ./news.scss
+            include:scss ./news-statistics.scss
             include:scss ../buttons/button.scss
+            
         .news
             h2.news__title
             .news__author-comment-section
                 slot(name="author-comment")
             .news__controllers
-                //- +newsStatistics()
+                +newsStatistics()
                 button.button Комментировать
             //- .news__publisher-page-links
             //-     +publisherPageLink()

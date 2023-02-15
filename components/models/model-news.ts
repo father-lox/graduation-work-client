@@ -3,7 +3,10 @@ import ModelComment from './model-comment.js';
 export default class ModelNews {
     constructor(
         readonly title: string,
-        readonly authorComment: ModelComment
+        readonly authorComment: ModelComment,
+        //TODO: Заменить моковые данные на реальные
+        readonly countViews: number = 999,
+        readonly countComments: number = 666,
     ) {}
 
     static requestAddress: string = 'http://localhost/api/posts';

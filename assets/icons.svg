@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-    <symbol id="сhat" viewBox="0 0 24 24">
+    <symbol id="chat" viewBox="0 0 24 24" fill="none">
         <g>
-            <path id="cloud" fill-rule="evenodd" clip-rule="evenodd"
+            <path id="cloud"
                 d="M19.0714 19.0699C16.0152 22.1263 11.4898 22.7867 7.78642 21.074C7.23971 20.8539 6.79149 20.676 6.36537 20.676C5.17849 20.683 3.70117 21.8339 2.93336 21.067C2.16555 20.2991 3.31726 18.8206 3.31726 17.6266C3.31726 17.2004 3.14642 16.7602 2.92632 16.2124C1.21283 12.5096 1.87411 7.98269 4.93026 4.92721C8.8316 1.02443 15.17 1.02443 19.0714 4.9262C22.9797 8.83501 22.9727 15.1681 19.0714 19.0699Z"
                 stroke="#3D3D3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             <path id="dot-3" d="M15.9393 12.413H15.9483" stroke="#3D3D3D" stroke-width="2" stroke-linecap="round"
@@ -12,12 +12,12 @@
                 stroke-linejoin="round" />
         </g>
     </symbol>
-    <symbol id="eye" viewBox="0 0 24 24">
+    <symbol id="eye" viewBox="0 0 24 24" fill="none">
         <g>
-            <path id="pupil" fill-rule="evenodd" clip-rule="evenodd"
+            <path id="pupil"
                 d="M15.2566 12.3876C15.2566 14.3932 13.6301 16.0185 11.6245 16.0185C9.61899 16.0185 7.99365 14.3932 7.99365 12.3876C7.99365 10.381 9.61899 8.75562 11.6245 8.75562C13.6301 8.75562 15.2566 10.381 15.2566 12.3876Z"
                 stroke="#3D3D3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path id="eye-pit" fill-rule="evenodd" clip-rule="evenodd"
+            <path id="eye-pit"
                 d="M11.6227 20.7749C15.9968 20.7749 19.9975 17.6299 22.25 12.3874C19.9975 7.145 15.9968 4 11.6227 4H11.6273C7.25324 4 3.2525 7.145 1 12.3874C3.2525 17.6299 7.25324 20.7749 11.6273 20.7749H11.6227Z"
                 stroke="#3D3D3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </g>

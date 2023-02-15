@@ -38,6 +38,8 @@ export default class RenderNews implements IRender {
 
     private setAttributes(newsNode: HTMLNews, authorCommentNode: HTMLComment, model: ModelNews) {
         newsNode.setAttribute('title', model.title);
+        newsNode.setAttribute('views', model.countViews.toString());
+        newsNode.setAttribute('comments', model.countComments.toString());
         authorCommentNode.setAttribute('nickname', model.authorComment.nickname);
         authorCommentNode.setAttribute('comment', model.authorComment.comment);
         authorCommentNode.setAttribute('slot', 'author-comment');
