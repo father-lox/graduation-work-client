@@ -4,9 +4,13 @@ export default class HTMLNews extends HTMLElement {
 
         this.template = document.getElementById(templateId) as HTMLTemplateElement;
         this.newsNode = this.template.content.cloneNode(true) as HTMLDivElement;
-        this.titleElement = this.newsNode.querySelector('.news__title') as HTMLHeadingElement;
+        
+        this.titleElement = this.newsNode.querySelector('#title') as HTMLHeadingElement;
+        this.commentButtonElement = this.newsNode.querySelector('#comment-button') as HTMLButtonElement;
+
         this.viewsCountElement = this.newsNode.querySelector('#views') as HTMLLIElement;      
         this.viewsCountTextNode = document.createTextNode('');  
+        
         this.commentsCountElement = this.newsNode.querySelector('#comments') as HTMLLIElement;
         this.commentsCountTextNode = document.createTextNode('');  
 
@@ -14,7 +18,8 @@ export default class HTMLNews extends HTMLElement {
             this.newsNode || 
             this.titleElement ||
             this.viewsCountElement ||
-            this.commentsCountElement)) {
+            this.commentsCountElement ||
+            this.commentButtonElement)) {
             throw new Error("Template is incorrect");
         }
     }
@@ -22,7 +27,8 @@ export default class HTMLNews extends HTMLElement {
     connectedCallback() {
         const root: ShadowRoot = this.attachShadow(this.shadowDOMProperty);
         root.appendChild(this.newsNode);
-        this.setData();
+        this.initData();
+        this.initEvents();
     }
 
     static get observedAttributes() {
@@ -52,15 +58,40 @@ export default class HTMLNews extends HTMLElement {
     private viewsCountTextNode: Text;
     private commentsCountElement: HTMLLIElement;
     private commentsCountTextNode: Text;
+    private commentButtonElement: HTMLButtonElement;
 
     private shadowDOMProperty: ShadowRootInit = {
         mode: 'closed'
     }
 
-    private setData() {
+    private initData() {
         this.setTitle();
         this.setViewsCount();
         this.setCommentsCount();
+    }
+
+    private initEvents() {
+        const newsId = Number(this.getAttribute('id'));
+
+        if (!newsId) {
+            throw Error('Attribute id is not set');
+        }
+
+        const showCommentsEvent: CustomEvent = new CustomEvent('show-comments', {
+            composed: true,
+            bubbles: true,
+            detail: {
+                newsId: newsId,
+            }
+        });
+
+        this.onButtonCommentClick(showCommentsEvent);
+    }
+
+    private onButtonCommentClick(generatedEvent: CustomEvent) {
+        this.commentButtonElement.addEventListener('click', () => {
+            this.dispatchEvent(generatedEvent);
+        });
     }
 
     private setTitle() {

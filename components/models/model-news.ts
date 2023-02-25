@@ -2,6 +2,7 @@ import ModelComment from './model-comment.js';
 
 export default class ModelNews {
     constructor(
+        readonly id: number,
         readonly title: string,
         readonly authorComment: ModelComment,
         //TODO: Заменить моковые данные на реальные
@@ -31,17 +32,18 @@ export default class ModelNews {
     }
 
     static serializeOne(
+        id: number,
         title: string,
         nickname: string,
         comment: string,
     ): ModelNews {
         const commentByAuthor = new ModelComment(nickname, comment, true);
-        return new ModelNews(title, commentByAuthor);
+        return new ModelNews(id, title, commentByAuthor);
     }
 
     static serializeMany(unserializedNews: Array<any>): ModelNews[] {
         return unserializedNews.map(news => {
-            return this.serializeOne(news.title, news['author'], news['author_comment'])
+            return this.serializeOne(Number(news.id), news.title, news['author'], news['author_comment'])
         }) as ModelNews[];
     }
 }
