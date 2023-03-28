@@ -8,12 +8,12 @@ mixin news()
             include:scss ../buttons/button.scss
             
         .news
-            h2.news__title
+            h2#title.news__title
             .news__author-comment-section
                 slot(name="author-comment")
             .news__controllers
                 +newsStatistics()
-                button.button Комментировать
+                button#comment-button.button Комментировать
             //- .news__publisher-page-links
             //-     +publisherPageLink()
             //-     +publisherPageLink()
