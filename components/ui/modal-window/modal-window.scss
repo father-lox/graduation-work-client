@@ -1,0 +1,49 @@
+@use '../../../styles/_colors.scss' as colors;
+
+.modal-window {
+    $timeAppearance: .75s;
+    width: 100%;
+    border: none;
+    height: 100vh;
+    max-width: unset;
+    max-height: unset;
+    margin: 0;
+    transition-property: transform;
+    transition-duration: $timeAppearance;
+
+    &::backdrop {
+        background-color: colors.$white-color;
+        transition-property: opacity;
+        transition-duration: $timeAppearance;
+    }
+    
+    // ***
+
+
+    &:not(.modal-window_hide-below) {
+        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1);
+    }
+
+    &.modal-window_hide-below::backdrop {
+        opacity: 0;
+    }
+
+    &_hide-below {
+        transform: translateY(100%) scale(0);
+    }
+
+    // ***
+
+
+    &.modal-window_hide-above {
+        transition-timing-function: cubic-bezier(.59,0,1,.79);        
+    }
+
+    &.modal-window_hide-above::backdrop {
+        opacity: 0;
+    }
+
+    &_hide-above {
+        transform: translateY(-100%);
+    }
+}
