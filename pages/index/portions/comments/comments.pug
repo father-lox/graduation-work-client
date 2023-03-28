@@ -1,0 +1,10 @@
+include ./back-to-news
+
+mixin comments()
+  dialog.comment-section.modal-window.modal-window_hide-below#comment-section
+    .comment-section__container
+      .comment-section__typing 
+        textarea.input-expressive(type="text" name="comment" rows="1" placeholder="Enter your comment")
+      #comment-list.comment-section__list
+
+    +backToNews('comment-section__back')

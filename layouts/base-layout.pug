@@ -1,10 +1,10 @@
-mixin baseLayout(classOfMainSection = 'index')
+mixin baseLayout(classOfMainSection = 'index', nameJSBundle = 'index', nameCSSBundle = 'style')
     doctype html
     html
         head 
             title News 
-            link(rel="stylesheet", href="./style.css")
+            link(rel="stylesheet", href=`./${nameCSSBundle}.css`)
         body 
             main(class=classOfMainSection)
                 block
-            script(src="./index.js", type="module") 
+            script(src=`./${nameJSBundle}.js`, type="module") 

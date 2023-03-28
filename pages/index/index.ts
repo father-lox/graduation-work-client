@@ -1,7 +1,9 @@
 import ModelNews from "../../components/models/model-news.js";
 import HTMLNews from "../../components/ui/news/html-news.js";
 import RenderNews from '../../components/renders/render-news.js'
+import CommentsManger from './portions/comments/comments-manager.js';
 
+new CommentsManger().init();
 
 const rendererNews: RenderNews = new RenderNews();
 const newsContainer: HTMLDivElement = document.querySelector('.news-section') as HTMLDivElement;
@@ -24,7 +26,7 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
-window.addEventListener('wheel', event => {
+newsContainer.addEventListener('wheel', event => {
     if (event.deltaY > 0) {
         switchToNextNews();
     }
@@ -47,6 +49,10 @@ async function updateNewsFeed() {
 }
 
 function switchToNextNews() {
+    if (window.pageYOffset !== window.scrollY) {
+        return;
+    }
+
     if (currentNews + 1 < nodesNews.length) {
         nodesNews[currentNews].style.display = 'none';
         currentNews++;   
@@ -55,10 +61,12 @@ function switchToNextNews() {
     if (currentNews === nodesNews.length - 1) {
         updateNewsFeed();
     }
+
+    window.scroll(0, 0);
 }
 
 function switchToPreviousNews() {
-    if (currentNews > 0) {
+    if (currentNews > 0 && window.pageYOffset === 0) {
         nodesNews[currentNews].style.display = 'none';
         currentNews--;
         nodesNews[currentNews].style.display = 'block';
