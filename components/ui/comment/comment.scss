@@ -4,9 +4,21 @@
 
 .comment {
     @include setFontDefault(14rem);
+    transition: opacity .6s ease-in-out, transform .6s ease-in-out;
+
+    &_hidden {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    &_shown {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
     &__nickname {
         color: $accent-color;
+        margin: 0;
 
         &_writer {
             @include setFontDefaultMedium();

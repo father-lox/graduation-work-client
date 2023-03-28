@@ -1,4 +1,4 @@
-import ModelComment from "../models/model-comment.js";
+import UserComment from "../../types/user-comment.js";
 import HTMLComment from '../ui/comment/html-comment.js';
 
 export default class RenderComment {
@@ -8,7 +8,7 @@ export default class RenderComment {
         }
     }
 
-    renderMany(commentsModels: Array<ModelComment>, place?: HTMLElement): HTMLComment[] | void {
+    renderMany(commentsModels: Array<UserComment>, place?: HTMLElement): HTMLComment[] | void {
         const commentsNodes: HTMLComment[] = [];
 
         commentsModels.forEach(commentModel => {
@@ -20,7 +20,7 @@ export default class RenderComment {
         }
     }
 
-    renderOne(commentModel: ModelComment, place?: HTMLElement): HTMLComment | void {
+    renderOne(commentModel: UserComment, place?: HTMLElement): HTMLComment | void {
         const commentNode: HTMLComment = document.createElement('c-comment') as HTMLComment;
 
         this.setAttributes(commentNode, commentModel);
@@ -32,7 +32,7 @@ export default class RenderComment {
         }
     }
 
-    setAttributes(commentNode: HTMLComment, commentModel: ModelComment) {
+    setAttributes(commentNode: HTMLComment, commentModel: UserComment) {
         commentNode.setAttribute('nickname', commentModel.nickname);
         commentNode.setAttribute('comment', commentModel.comment);
         if (commentModel.isAuthor) {

@@ -2,14 +2,14 @@ export default class HTMLComment extends HTMLElement {
 
     constructor(templateId: string = 'comment') {
         super();
-        this.template = document.getElementById(templateId) as HTMLTemplateElement;
-        this.commentNode = this.template.content.cloneNode(true) as unknown as HTMLDivElement;
-        this.nicknameElement = this.commentNode.querySelector('.comment__nickname') as HTMLParagraphElement;
-        this.commentElement = this.commentNode.querySelector('.comment__text') as HTMLParagraphElement;
-    
-        if (!(this.template || this.commentNode || this.nicknameElement || this.commentElement)) {
+        this.commentFragment = (document.getElementById(templateId) as HTMLTemplateElement).content.cloneNode(true) as unknown as DocumentFragment;
+        this.commentContainer = this.commentFragment.querySelector('.comment') as HTMLDivElement;
+        this.nicknameElement = this.commentFragment.querySelector('.comment__nickname') as HTMLParagraphElement;
+        this.commentElement = this.commentFragment.querySelector('.comment__text') as HTMLParagraphElement;
+
+        if (!(this.commentFragment || this.nicknameElement || this.commentElement)) {
             throw new Error("Template is incorrect");
-               
+
         }
     }
 
@@ -17,11 +17,21 @@ export default class HTMLComment extends HTMLElement {
         return ['nickname', 'comment'];
     }
 
+    hide() {
+        this.commentContainer.classList.add('comment_hidden');
+        this.commentContainer.classList.remove('comment_shown');
+    }
+
+    show() {
+        this.commentContainer.classList.add('comment_shown');
+        this.commentContainer.classList.remove('comment_hidden');
+    }
+
     connectedCallback() {
         const root: ShadowRoot = this.attachShadow(this.shadowDOMProperty);
-        root.appendChild(this.commentNode);
+        root.appendChild(this.commentFragment);
         this.processAttributes();
-        
+
         if (this.hasAttribute('is-author')) {
             this.styleAsAuthorComment();
         }
@@ -40,8 +50,8 @@ export default class HTMLComment extends HTMLElement {
         }
     }
 
-    private template: HTMLTemplateElement;
-    private commentNode: HTMLDivElement;
+    private commentFragment: DocumentFragment;
+    private commentContainer: HTMLDivElement;
     private nicknameElement: HTMLParagraphElement;
     private commentElement: HTMLParagraphElement;
     private shadowDOMProperty: ShadowRootInit = {
@@ -52,13 +62,13 @@ export default class HTMLComment extends HTMLElement {
         this.setNickname();
         this.setComment();
     }
- 
+
     private setNickname() {
         const nickname: string = this.getAttribute('nickname') || '';
 
         if (nickname.length === 0) {
             throw new Error('"nickname" attribute is required');
-            
+
         }
 
         this.nicknameElement.innerText = 'Comment by @' + nickname;
@@ -73,7 +83,7 @@ export default class HTMLComment extends HTMLElement {
 
         if (comment.length === 0) {
             throw new Error('"comment" attribute is required');
-            
+
         }
 
         this.commentElement.innerText = comment;

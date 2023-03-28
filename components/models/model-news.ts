@@ -1,10 +1,10 @@
-import ModelComment from './model-comment.js';
+import UserComment from '../../types/user-comment.js';
 
 export default class ModelNews {
     constructor(
         readonly id: number,
         readonly title: string,
-        readonly authorComment: ModelComment,
+        readonly authorComment: UserComment,
         //TODO: Заменить моковые данные на реальные
         readonly countViews: number = 999,
         readonly countComments: number = 666,
@@ -37,7 +37,8 @@ export default class ModelNews {
         nickname: string,
         comment: string,
     ): ModelNews {
-        const commentByAuthor = new ModelComment(nickname, comment, true);
+        const commentByAuthor: UserComment = {nickname, comment, isAuthor: true};
+        console.log(commentByAuthor);
         return new ModelNews(id, title, commentByAuthor);
     }
 
