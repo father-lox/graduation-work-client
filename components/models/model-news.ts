@@ -38,7 +38,6 @@ export default class ModelNews {
         comment: string,
     ): ModelNews {
         const commentByAuthor: UserComment = {nickname, comment, isAuthor: true};
-        console.log(commentByAuthor);
         return new ModelNews(id, title, commentByAuthor);
     }
 
