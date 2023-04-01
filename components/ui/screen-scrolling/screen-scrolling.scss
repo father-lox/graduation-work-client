@@ -1,0 +1,20 @@
+.screen-scrolling {
+    overflow: hidden;
+    max-height: 100vh;
+
+    &__item {
+        transition: transform .5s cubic-bezier(.86,0,.07,1);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &_next {
+        transform: translate(-50%, calc(100vh - 50%));
+    }
+
+    &_previous {
+        transform: translate(-50%, calc(-100vh - 50%));
+    }
+}
