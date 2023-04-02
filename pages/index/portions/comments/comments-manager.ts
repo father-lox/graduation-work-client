@@ -6,36 +6,36 @@ import ModalWindow from "../../../../components/ui/modal-window/modal-window.js"
 
 export default class CommentsManager {
     constructor(
-        private commentModelWindow: ModalWindow = new ModalWindow('comment-section'),
         private commentsSectionElement: HTMLDivElement = document.getElementById('comment-section') as HTMLDivElement,
         private commentsListElement: HTMLDivElement = document.getElementById('comment-list') as HTMLDivElement,
         private backToNewsElement: HTMLButtonElement = document.getElementById('back-to-news') as HTMLButtonElement,
         private commentRenderer = new RenderComment()
-    ) { }
-
-    init() {
-        this.initEvents();
+    ) {
     }
 
     private currentNewsId: number = 0;
     private previousNewsId: number | undefined;
-    private lastCommentsCount: number = 0;
     private comments: UserComment[] = [];
     private commentsNodes: HTMLComment[] = [];
     private canUpdateComments: Boolean = true;
     private loadTrigger: number = 100;
 
+    init() {
+        this.initEvents();
+    }
+
+    private hideComments = () => {
+        for (let index = this.commentsNodes.length - 1; index >= 0; index--) {
+            this.setAnimationRules(this.commentsNodes[index]);
+        }
+    }
+
+    private commentModelWindow: ModalWindow = new ModalWindow('comment-section', this.hideComments);
 
     private initEvents() {
         document.querySelector('.news-section')?.addEventListener('show-comments', (this.onNewsSectionShowComments as EventListener));
-        this.backToNewsElement.addEventListener('click', this.onClickBackToNews);
+        this.commentModelWindow.initHideElement(this.backToNewsElement);
         this.commentsSectionElement.addEventListener('scroll', this.onScrollToBottom);
-    }
-
-    private onClickBackToNews = () => {
-        this.commentModelWindow.hide();
-        //Удалять если nodes больше 30
-        // this.removeCommentsNodes()
     }
 
     private onScrollToBottom: EventListener = () => {
@@ -51,7 +51,7 @@ export default class CommentsManager {
         }
     }
 
-    private onNewsSectionShowComments: Function = (event: CustomEvent) => {
+    private onNewsSectionShowComments = (event: CustomEvent) => {
         this.canUpdateComments = true;
         this.currentNewsId = event.detail.newsId;
         this.loadAndRenderInitialComments(this.currentNewsId);
@@ -85,19 +85,19 @@ export default class CommentsManager {
 
     //TODO: Протестировать все случаи
     private renderComments(newsId: number) {
-        const isNewsNews = this.previousNewsId != newsId;
+        const isNewNews = this.previousNewsId != newsId;
 
         if (this.previousNewsId === undefined) {
             this.attachCommentsNodes(this.comments);
         }
-        else if (isNewsNews && this.commentsNodes.length === this.comments.length) {
+        else if (isNewNews && this.commentsNodes.length === this.comments.length) {
             this.updateCommentsAttribute(this.comments, this.commentsNodes);
         }
-        else if (isNewsNews && this.comments.length > this.commentsNodes.length) {
+        else if (isNewNews && this.comments.length > this.commentsNodes.length) {
             this.updateCommentsAttribute(this.comments.slice(0, this.commentsNodes.length), this.commentsNodes);
             this.attachCommentsNodes(this.comments.slice(this.commentsNodes.length, this.comments.length), true);
         }
-        else if (isNewsNews && this.comments.length < this.commentsNodes.length) {
+        else if (isNewNews && this.comments.length < this.commentsNodes.length) {
             this.updateCommentsAttribute(this.comments, this.commentsNodes.slice(0, this.comments.length));
             this.removeCommentsNodes(this.comments.length, this.commentsNodes.length);
         }
