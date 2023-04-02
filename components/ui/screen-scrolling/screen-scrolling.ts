@@ -22,8 +22,8 @@ export default class ScreenScrolling {
     //TODO: Если скрол был не достаточно сильный, обнулять switchAccumulator
     //TODO: Реализовать поддержку touchscreens
 
-    private readonly nextSwitchThreshold: number = 250;
-    private readonly previousSwitchThreshold: number = -250;
+    private readonly nextSwitchThreshold: number = 64;
+    private readonly previousSwitchThreshold: number = -this.nextSwitchThreshold;
     private switchAccumulator: number = 0;
     private isSwitchable: boolean = true;
 
