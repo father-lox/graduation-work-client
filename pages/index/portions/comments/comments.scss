@@ -55,14 +55,27 @@
 
     &__typing {
         $typingMarginBottomDesktop: 30rem;
+        $typingPaddingTopDesktop: $typingMarginBottomDesktop;
 
         height: 50vh;
         display: flex;
         align-items: flex-end;
         margin: 0 0 $typingMarginBottomDesktop;
+        padding: $typingPaddingTopDesktop 0 0;
 
         @include media-from($desktopMaxWidth) {
             margin: 0 0 convertValueToVW($typingMarginBottomDesktop);
+            padding: convertValueToVW($typingPaddingTopDesktop) 0 0;
+        }
+    }
+
+    &__field {
+        $fieldMinHeight: 55rem;
+    
+        min-height: $fieldMinHeight;
+        
+        @include media-from($desktopMaxWidth) {
+            margin: 0 0 convertValueToVW($fieldMinHeight);
         }
     }
 

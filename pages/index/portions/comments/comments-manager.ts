@@ -3,14 +3,17 @@ import RenderComment from '../../../../components/renders/render-comment.js';
 import HTMLComment from '../../../../components/ui/comment/html-comment.js';
 import UserComment from '../../../../types/user-comment.js';
 import ModalWindow from "../../../../components/ui/modal-window/modal-window.js";
+import autoResizeHeightTextarea from '../../../../components/ui/inputs/expressive-input/auto-resize-height-textarea.js'
 
 export default class CommentsManager {
     constructor(
         private commentsSectionElement: HTMLDivElement = document.getElementById('comment-section') as HTMLDivElement,
         private commentsListElement: HTMLDivElement = document.getElementById('comment-list') as HTMLDivElement,
         private backToNewsElement: HTMLButtonElement = document.getElementById('back-to-news') as HTMLButtonElement,
+        private commentField: HTMLTextAreaElement = document.getElementById('comment-field') as HTMLTextAreaElement,
         private commentRenderer = new RenderComment()
     ) {
+        autoResizeHeightTextarea(this.commentField);
     }
 
     private currentNewsId: number = 0;
