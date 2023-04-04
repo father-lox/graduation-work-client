@@ -1,5 +1,5 @@
-import UserComment from "../../types/user-comment.js";
-import HTMLComment from '../ui/comment/html-comment.js';
+import UserComment from 'types/user-comment.js';
+import HTMLComment from 'components/ui/comment/html-comment.js';
 
 export default class RenderComment {
     constructor() {

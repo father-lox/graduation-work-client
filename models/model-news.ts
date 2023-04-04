@@ -1,4 +1,4 @@
-import UserComment from '../../types/user-comment.js';
+import UserComment from 'types/user-comment.js';
 
 export default class ModelNews {
     constructor(

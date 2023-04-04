@@ -1,8 +1,8 @@
-import IRender from "./render.js";
-import HTMLNews from '../ui/news/html-news.js';
-import ModelNews from "../models/model-news.js";
-import HTMLComment from "../ui/comment/html-comment.js";
+import IRender from './render.js';
 import RenderComment from './render-comment.js';
+import HTMLNews from 'components/ui/news/html-news.js';
+import HTMLComment from 'components/ui/comment/html-comment.js';
+import ModelNews from 'models/model-news.js';
 
 export default class RenderNews implements IRender {
     constructor(private commentRenderer = new RenderComment()) {

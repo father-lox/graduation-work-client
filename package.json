@@ -5,16 +5,21 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "tsc -p ./ && (concurrently \"npm:watch-static\" \"tsc -w\" \"tsc-alias -w\")",
+    "watch-static": "npx gulp",
+    "build-ts": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^8.0.1",
     "gulp": "^4.0.2",
     "gulp-pug": "^5.0.0",
     "gulp-sass": "^5.1.0",
     "jstransformer-scss": "^2.0.0",
     "sass": "^1.56.0",
-    "typescript": "^4.9.4"
+    "tsc-alias": "^1.8.5",
+    "typescript": "^4.9.5"
   }
 }

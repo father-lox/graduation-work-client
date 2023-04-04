@@ -1,7 +1,7 @@
-import ModelNews from "../../components/models/model-news.js";
-import HTMLNews from "../../components/ui/news/html-news.js";
-import ScreenScrolling from "../../components/ui/screen-scrolling/screen-scrolling.js";
-import RenderNews from '../../components/renders/render-news.js'
+import ModelNews from 'models/model-news.js';
+import HTMLNews from 'components/ui/news/html-news.js';
+import ScreenScrolling from 'components/ui/screen-scrolling/screen-scrolling.js';
+import RenderNews from 'renders/render-news.js'
 import CommentsManger from './portions/comments/comments-manager.js';
 
 new CommentsManger().init();
