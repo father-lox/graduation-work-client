@@ -27,6 +27,9 @@ export default class CommentsManager {
         this.initEvents();
     }
 
+    /**
+     * Hide comments
+     */
     private hideComments = () => {
         for (let index = this.commentsNodes.length - 1; index >= 0; index--) {
             this.setAnimationRules(this.commentsNodes[index]);
@@ -41,6 +44,10 @@ export default class CommentsManager {
         this.commentsSectionElement.addEventListener('scroll', this.onScrollToBottom);
     }
 
+    /**
+     * Calling when news comment modal was scrolled to trigger point
+     * @param {CustomEvent} event
+     */
     private onScrollToBottom: EventListener = () => {
         if (this.canUpdateComments && ModelComment.canLoadAdditionalComments()) {
             const scrollTop = this.commentsSectionElement.scrollTop;
@@ -54,6 +61,10 @@ export default class CommentsManager {
         }
     }
 
+    /**
+     * Calling when news emit show-comments event
+     * @param {CustomEvent} event
+     */
     private onNewsSectionShowComments = (event: CustomEvent) => {
         this.canUpdateComments = true;
         this.currentNewsId = event.detail.newsId;
@@ -61,6 +72,10 @@ export default class CommentsManager {
         this.commentModelWindow.show();
     }
 
+    /**
+     * Load and render initial fetching comments
+     * @param newsId {number} - News identifier
+     */
     private loadAndRenderInitialComments(newsId: number) {
         this.setComments(newsId).then(() => {
             this.renderComments(newsId)
@@ -68,6 +83,9 @@ export default class CommentsManager {
         }).catch(error => console.error(error));
     }
 
+    /**
+     * Load and render additional fetching comments
+     */
     private loadAndRenderAdditionalComments = async () => {
         const modelComments: UserComment[] | null = await ModelComment.fetchAdditionalUserComments();
 
@@ -80,6 +98,10 @@ export default class CommentsManager {
         }
     }
 
+    /**
+     * Load comments and save theme to comments array
+     * @param newsId {number} - News identifier 
+     */
     private setComments = async (newsId: number): Promise<void> => {
         if (this.previousNewsId != newsId) {
             this.comments = await ModelComment.fetchInitialUserComments(newsId);
@@ -87,6 +109,10 @@ export default class CommentsManager {
     }
 
     //TODO: Протестировать все случаи
+    /**
+     * Render comments or update attributes existing or remove exhausting
+     * @param newsId {number} - News identifier 
+     */
     private renderComments(newsId: number) {
         const isNewNews = this.previousNewsId != newsId;
 
@@ -106,10 +132,20 @@ export default class CommentsManager {
         }
     }
 
+    /**
+     * Remove comments elements from commentsNodes between start and end indexes
+     * @param start {number} - Start index
+     * @param end {number} - End index
+     */
     private removeCommentsNodes(start: number, end: number) {
         this.commentsNodes.splice(start, end - start).forEach(deletedCommentNode => deletedCommentNode.remove());
     }
 
+    /**
+     * Render comments elements, maintain them to the DOM and prepare for show animation
+     * @param commentsModels 
+     * @param isPartModel 
+     */
     private attachCommentsNodes(commentsModels: UserComment[], isPartModel: boolean = false) {
         let addedComments: HTMLComment[] = [];
 
@@ -127,6 +163,11 @@ export default class CommentsManager {
         });
     }
 
+    /**
+     * Update attributes of the comments from model
+     * @param model {UserComment[]} - Comments model
+     * @param nodes {HTMLComment[]} - HTML elements as comments
+     */
     private updateCommentsAttribute(model: UserComment[], nodes: HTMLComment[]) {
         for (let i = 0; i < nodes.length; i++) {
             nodes[i].setAttribute('comment', model[i].comment);
@@ -134,11 +175,20 @@ export default class CommentsManager {
         }
     }
 
+    /**
+     * Hide comment and init on theme observer
+     * @param commentNode 
+     */
     private setAnimationRules(commentNode: HTMLComment) {
         commentNode.hide();
         this.observer.observe(commentNode);
     }
 
+    /**
+     * Show comments if it is visible 
+     * @param entries 
+     * @param observer 
+     */
     private onIntersectComment: IntersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
