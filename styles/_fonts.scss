@@ -1,6 +1,6 @@
 @use './mixins/set-font-size.scss' as *;
-@use './media-querie-variables.scss' as *;
-@use './media-queries.scss' as *;
+@use './_media-querie-variables.scss' as *;
+@use './_media-queries.scss' as *;
 
 $base-path-to-font-folder: '../../fonts';
 

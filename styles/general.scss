@@ -3,8 +3,8 @@
 
 @use './colors.scss' as *;
 @use './fonts.scss' as *;
-@use './media-queries.scss' as *;
-@use './media-querie-variables.scss' as *;
+@use './_media-queries.scss' as *;
+@use './_media-querie-variables.scss' as *;
 
 * {
     box-sizing: border-box;

@@ -1,8 +1,8 @@
 @use '../../components/ui/buttons/button.scss';
 @use '../../components/ui/note-error/note-error.scss';
 @use '../../components/ui/inputs/default-input/default-input.scss';
-@use '../../styles/media-queries.scss' as *;
-@use '../../styles/media-querie-variables.scss' as *;
+@use '../../styles/_media-queries.scss' as *;
+@use '../../styles/_media-querie-variables.scss' as *;
 
 .login {
     margin: 0 auto;

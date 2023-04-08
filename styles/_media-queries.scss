@@ -1,4 +1,4 @@
-@use './media-querie-variables.scss' as *;
+@use './_media-querie-variables.scss' as *;
 
 @mixin media-from($breakpoint) {
     @media screen and (min-width: $breakpoint) {

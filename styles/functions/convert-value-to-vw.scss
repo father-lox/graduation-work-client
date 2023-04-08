@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '../media-querie-variables.scss' as media-vars;
+@use '../_media-querie-variables.scss' as media-vars;
 
 //TODO: Вынести stripUnit в отдельный файл 
 @function stripUnit($number) {
