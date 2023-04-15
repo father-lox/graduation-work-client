@@ -1,22 +1,23 @@
 import messages from 'code/messages.js';
+import HTMLNoteError from 'code/ui-components/note-error/html-note-error.js';
+
+customElements.get(HTMLNoteError.tagName) || customElements.define(HTMLNoteError.tagName, HTMLNoteError);
 
 export default class DefaultInput {
     constructor(private defaultInputElement: HTMLElement) {
         this.hintMessageElement = this.defaultInputElement.querySelector(this.selectors.hintClass) as HTMLParagraphElement;
-        this.errorContainerElement = this.defaultInputElement.querySelector(this.selectors.errorClass) as HTMLDivElement;
-        this.errorMessageElement = this.errorContainerElement.querySelector('p') as HTMLParagraphElement;
+        this.noteErrorElement = this.defaultInputElement.querySelector(this.selectors.errorClass) as HTMLNoteError;
         this.labelElement = this.defaultInputElement.querySelector(this.selectors.labelClass) as HTMLParagraphElement;
         this.inputElement = this.defaultInputElement.querySelector(this.selectors.inputClass) as HTMLInputElement;
 
-        if (!this.errorContainerElement || 
+        if (!this.noteErrorElement || 
             !this.hintMessageElement || 
-            !this.errorMessageElement || 
             !this.labelElement || 
             !this.inputElement) {
                 throw Error("DefaultInput's markup is incorrect");
         }
 
-        if (!this.errorContainerElement.classList.contains(this.modifierClasses.errorHidden) &&
+        if (!this.noteErrorElement.classList.contains(this.modifierClasses.errorHidden) &&
         this.hintMessageElement.classList.contains(this.modifierClasses.hintHidden)) {
             this._isErrorShown = true;
         }
@@ -51,15 +52,16 @@ export default class DefaultInput {
     }
 
     showError() {
-        this.errorMessageElement.textContent = this._errorMessage.length > 0 ? this._errorMessage : this.inputElement.validationMessage
+        const errorMessage = this._errorMessage.length > 0 ? this._errorMessage : this.inputElement.validationMessage
         this.hintMessageElement.classList.add(this.modifierClasses.hintHidden);
-        this.errorContainerElement.classList.remove(this.modifierClasses.errorHidden);
+        this.noteErrorElement.setAttribute(HTMLNoteError.availableAttributes.errorMessage, errorMessage);
+        this.noteErrorElement.show();
         this.isErrorShown = true;
     }
 
     showHint() {
         this.hintMessageElement.classList.remove(this.modifierClasses.hintHidden);
-        this.errorContainerElement.classList.add(this.modifierClasses.errorHidden);
+        this.noteErrorElement.hide();
         this.isErrorShown = false;
     }
 
@@ -86,8 +88,7 @@ export default class DefaultInput {
     }
 
     private hintMessageElement: HTMLParagraphElement;
-    private errorContainerElement: HTMLDivElement;
-    private errorMessageElement: HTMLParagraphElement;
+    private noteErrorElement: HTMLNoteError;
     private labelElement: HTMLParagraphElement;
     private inputElement: HTMLInputElement;
     private _errorMessage: string = '';

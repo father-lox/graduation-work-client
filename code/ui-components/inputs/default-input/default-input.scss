@@ -142,7 +142,7 @@
         display: none;
     }
 
-    &__hint, .note-error {
+    &__hint, &__error {
         $hint-error-margin-top: 10rem;
 
         margin: $hint-error-margin-top 0 0;
@@ -163,7 +163,7 @@
         }
     }
 
-    &__error_hidden {
-        display: none;
+    &__error {
+        display: block;
     }
 }

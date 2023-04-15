@@ -24,4 +24,8 @@
             margin: 0 0 0 convertValueToVW(6rem);
         }
     }
+
+    &_hidden {
+        display: none;
+    }
 }

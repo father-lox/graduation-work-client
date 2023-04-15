@@ -3,6 +3,9 @@ import DefaultInput from 'code/ui-components/inputs/default-input/default-input.
 import validateUniqueInput from 'code/validation-rules-input/validate-unique-input.js'; 
 import validatePassword from 'code/validation-rules-input/validate-password.js'; 
 import validatePasswordRequired from 'code/validation-rules-input/validate-password-required.js'; 
+import HTMLNoteError from 'code/ui-components/note-error/html-note-error.js';
+
+customElements.get(HTMLNoteError.tagName) || customElements.define(HTMLNoteError.tagName, HTMLNoteError);
 
 const progressElement: HTMLButtonElement = document.querySelector('#progress') as HTMLButtonElement;
 const regressElement: HTMLButtonElement = document.querySelector('#regress') as HTMLButtonElement;

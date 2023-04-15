@@ -1,4 +1,4 @@
-include ../../note-error/note-error
+include ../../note-error/note-error-template
 
 mixin defaultInput(label, hintMessage = null, errorMessage = null)
     -
@@ -23,4 +23,4 @@ mixin defaultInput(label, hintMessage = null, errorMessage = null)
             p.default-input__name= label
         .default-input__hint-and-error
             p.default-input__hint= hintMessage
-            +noteError(errorMessage)(class="default-input__error default-input__error_hidden")
+            note-error(class="default-input__error" hidden="")
