@@ -1,0 +1,26 @@
+include ../../note-error/note-error
+
+mixin defaultInput(label, hintMessage = null, errorMessage = null)
+    -
+        let containerClass = ''
+        let containerId = ''
+
+        if(attributes.class) {
+            containerClass = attributes.class;
+            delete attributes.class;
+        }
+
+        if(attributes.id) {
+            containerId = attributes.id;
+            delete attributes.id;
+        }
+
+    .default-input(class=containerClass id=containerId)
+        input.default-input__input(placeholder="")&attributes(attributes)
+        .default-input__icon-and-name
+            .default-input__icon
+                block
+            p.default-input__name= label
+        .default-input__hint-and-error
+            p.default-input__hint= hintMessage
+            +noteError(errorMessage)(class="default-input__error default-input__error_hidden")

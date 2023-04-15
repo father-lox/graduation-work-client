@@ -1,0 +1,13 @@
+@use '../../../styles/_colors.scss' as *;
+
+.button_accent {
+    border: 1px solid $accent-color;
+
+    &:active {
+        border-color: $black-color;
+    }
+
+    &:disabled {
+        border-color: $walrus-color;
+    }
+}

@@ -15,13 +15,13 @@ export const path = {
     watch: {
         styles: [
             `${clientDirectory}pages/**/*.scss`,
-            `${clientDirectory}components/**/*.scss`, 
+            `${clientDirectory}code/**/*.scss`, 
             `${clientDirectory}layouts/**/*.scss`,
             `${clientDirectory}styles/**/*.scss`,
         ],
         templates: [
             `${clientDirectory}pages/**/*.pug`,
-            `${clientDirectory}components/**/*.pug`, 
+            `${clientDirectory}code/**/*.pug`, 
             `${clientDirectory}layouts/**/*.pug`
         ]
     },

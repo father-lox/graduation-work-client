@@ -1,8 +1,8 @@
 @use '../../styles/general.scss';
-@use '../../components/ui/news/news.scss';
-@use '../../components/ui/modal-window/modal-window.scss';
+@use '../../code/ui-components/news/news.scss';
+@use '../../code/ui-components/modal-window/modal-window.scss';
 @use './portions/comments/comments.scss';
-@use '../../components/ui/screen-scrolling/screen-scrolling.scss';
+@use '../../code/ui-components/screen-scrolling/screen-scrolling.scss';
 
 .index {
     padding: 0 30rem;

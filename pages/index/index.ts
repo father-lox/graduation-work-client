@@ -1,6 +1,6 @@
 import ModelNews from 'models/model-news.js';
-import HTMLNews from 'components/ui/news/html-news.js';
-import ScreenScrolling from 'components/ui/screen-scrolling/screen-scrolling.js';
+import HTMLNews from 'code/ui-components/news/html-news.js';
+import ScreenScrolling from 'code/ui-components/screen-scrolling/screen-scrolling.js';
 import RenderNews from 'renders/render-news.js'
 import CommentsManger from './portions/comments/comments-manager.js';
 

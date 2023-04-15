@@ -1,10 +1,16 @@
 @use './reset.scss' as *;
 @use './normalize.css' as *;
-
-@use './colors.scss' as *;
 @use './fonts.scss' as *;
+@use './colors.scss' as *;
+
+@forward './_media-queries.scss';
+@forward './_media-querie-variables.scss';
+@forward './functions/convert-value-to-vw.scss';
+
 @use './_media-queries.scss' as *;
 @use './_media-querie-variables.scss' as *;
+@use './functions/convert-value-to-vw.scss' as *;
+
 
 * {
     box-sizing: border-box;

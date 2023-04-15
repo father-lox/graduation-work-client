@@ -1,9 +1,9 @@
 import ModelComment from 'models/model-comment.js';
 import RenderComment from 'renders/render-comment.js';
 import UserComment from 'types/user-comment.js';
-import HTMLComment from 'components/ui/comment/html-comment.js';
-import ModalWindow from 'components/ui/modal-window/modal-window.js';
-import autoResizeHeightTextarea from 'components/ui/inputs/expressive-input/auto-resize-height-textarea.js'
+import HTMLComment from 'code/ui-components/comment/html-comment.js';
+import ModalWindow from 'code/ui-components/modal-window/modal-window.js';
+import autoResizeHeightTextarea from 'code/ui-components/inputs/expressive-input/auto-resize-height-textarea.js'
 
 export default class CommentsManager {
     constructor(

@@ -1,7 +1,5 @@
-@use '../../../styles/colors.scss' as *;
-@use '../../../styles/fonts.scss' as *;
-@use '../../../styles/_media-queries.scss' as *;
-@use '../../../styles/_media-querie-variables.scss' as *;
+@use '../../../styles/_base-includes' as *;
+@use '../../../styles/functions/convert-value-to-vw.scss' as *;
 
 .note-error {
     display: flex;
@@ -10,6 +8,7 @@
     &__image {
         max-width: 24rem;
         stroke: $accent-color;
+        align-self: flex-start;
 
         @include media-from($desktopMaxWidth) {
             max-width: convertValueToVW(24rem);

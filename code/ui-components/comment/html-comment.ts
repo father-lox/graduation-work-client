@@ -9,7 +9,6 @@ export default class HTMLComment extends HTMLElement {
 
         if (!(this.commentFragment || this.nicknameElement || this.commentElement)) {
             throw new Error("Template is incorrect");
-
         }
     }
 

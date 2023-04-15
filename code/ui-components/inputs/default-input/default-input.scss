@@ -4,6 +4,7 @@
 @use '../../../../styles/_media-querie-variables.scss' as *;
 @use '../../../../styles/fonts.scss' as *;
 @use '../../../../styles/mixins/set-font-size.scss' as *;
+@use '../../../../styles/functions/convert-value-to-vw.scss' as *;
 
 .default-input {
     $transition-duration: .5s;
@@ -71,23 +72,33 @@
         }
     }
 
-    &__icon {
+    &__icon,
+    ::slotted(svg) {
         // TODO: Убрать масштабирование обводки иконки
-        $icon-width: 18rem;
+        $icon-size: 18rem;
         $icon-margin-right: 8rem; 
 
-        width: 18rem;
+        width: $icon-size;
+        height: $icon-size;
         margin: 0 8rem 0 0;
 
         @include media-from($desktopMaxWidth) {
-            width: convertValueToVW($icon-width);
+            width: convertValueToVW($icon-size);
+            height: convertValueToVW($icon-size);
             margin: 0 convertValueToVW($icon-margin-right) 0 0;
         }
+    }
+
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
     }
 
     &__name {
         display: block;
         text-transform: lowercase;
+        margin: 0;
         color: $accent-color;
         @include setFontDefault(14rem);
     }
@@ -146,9 +157,13 @@
         @include setFontDefault(12rem);
         color: $walrus-color;
         text-transform: lowercase;
+
+        &_hidden {
+            display: none;
+        }
     }
 
-    .note-error {
+    &__error_hidden {
         display: none;
     }
 }

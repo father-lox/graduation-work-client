@@ -1,0 +1,16 @@
+include ../../note-error/note-error
+
+mixin field()
+    template#field
+        style 
+            include:scss ./default-input.scss
+            include:scss ./default-input_rich.scss
+
+        .default-input
+            input.default-input__input(type=inputType name=inputName placeholder="")
+            .default-input__icon-and-name
+                slot(name="icon")
+                p.default-input__name
+            .default-input__hint-and-error
+                p.default-input__hint
+                +noteError()(class="default-input__error default-input__error_hide")
