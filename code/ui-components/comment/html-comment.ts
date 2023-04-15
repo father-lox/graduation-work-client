@@ -1,5 +1,4 @@
 export default class HTMLComment extends HTMLElement {
-
     constructor(templateId: string = 'comment') {
         super();
         this.commentFragment = (document.getElementById(templateId) as HTMLTemplateElement).content.cloneNode(true) as unknown as DocumentFragment;
