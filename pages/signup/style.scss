@@ -56,8 +56,7 @@
             grid-template-columns: repeat(2, 1fr);
         }
 
-        //TODO: Заменить на класс .sign-up__input
-        .default-input {
+        &__input {
             height: fit-content;
         }
     }
