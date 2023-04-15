@@ -4,7 +4,8 @@ mixin baseLayout(classOfMainSection = 'index', nameJSBundle = 'index', nameCSSBu
         head 
             title News 
             link(rel="stylesheet", href=`./${nameCSSBundle}.css`)
-        body 
+        body
+            include ../assets/icons.svg 
             main(class=classOfMainSection)
                 block
             script(src=`./${nameJSBundle}.js`, type="module") 
