@@ -32,15 +32,12 @@
 
     &__form {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    &__inputs-stack {
         display: grid;
         align-items: center;
-        width: 100%;
+
+        @include media-from($width576) {
+            grid-template-columns: repeat(2, 1fr);
+        }
 
         $gap: 25rem;
 
@@ -51,31 +48,38 @@
         @include media-till($desktopMaxWidth) {
             gap: $gap;
         }
+    }
 
-        @include media-from($width576) {
-            grid-template-columns: repeat(2, 1fr);
-        }
+    &__input {
+        height: fit-content;
+    }
 
-        &__input {
-            height: fit-content;
-        }
+    &__error {
+        align-self: center;
     }
 
     &__controller {
         display: flex;
         align-self: flex-end;
 
+        justify-self: end;
+        align-self: flex-end;
+
         $gap: 25rem;
-        $submitButtonMarginTop: 25rem;
 
         @include media-till($desktopMaxWidth) {
-            margin: $submitButtonMarginTop 0 0;
             gap: $gap;
         }
 
         @include media-from($width576) {
             gap: convertValueToVW($gap);
-            margin: convertValueToVW($submitButtonMarginTop) 0 0;
+            grid-column-start: 2;
+            grid-column-end: 3;
+        }
+
+        @include media-till($width576) {
+            grid-column-start: 1;
+            grid-column-end: 2;
         }
     }
 
