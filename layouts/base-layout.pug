@@ -6,6 +6,7 @@ mixin baseLayout(classOfMainSection = 'index', nameJSBundle = 'index', nameCSSBu
             link(rel="stylesheet", href=`./${nameCSSBundle}.css`)
         body
             include ../assets/icons.svg 
+            include ../assets/social-networks.svg
             main(class=classOfMainSection)
                 block
             script(src=`./${nameJSBundle}.js`, type="module") 
