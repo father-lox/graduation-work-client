@@ -1,0 +1,13 @@
+mixin header()
+	nav.header(class!=attributes.class)
+		.header__left-side
+			a.button.button_accent.header__button
+				<svg class="header__social-network-logo"><use xlink:href="#user-plus"></use></svg>
+		.header__right-side
+			p.header__hint Subscribe to the news at
+			a.button.button_accent.header__button(href='//t.me/news_log_bot/' target="_blank")
+				<svg class="header__social-network-logo"><use xlink:href="#telegram"></use></svg>
+			a.button.button_accent.header__button(href='http://discord.com/' target="_blank")
+				<svg class="header__social-network-logo"><use xlink:href="#discord"></use></svg>
+			a.button.button_accent.header__button(href='http://vk.com/' target="_blank")
+				<svg class="header__social-network-logo"><use xlink:href="#vk"></use></svg>

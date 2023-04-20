@@ -1,0 +1,39 @@
+@use '../buttons/button.scss';
+@use '../buttons/_accent.scss';
+@use '../../../styles/base-includes' as *;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+
+    &__button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }   
+
+    &__social-network-logo {
+        display: block;
+        width: 18rem;
+        height: 18rem;
+    }
+
+    &__right-side {
+        display: flex;
+    }
+
+    &__right-side {
+        display: flex;
+        align-items: center;
+        gap: 10rem;
+    }
+
+    &__hint {
+        @include setFontDefault();
+        color: $walrus-color;
+
+        @include media-till($width576) {
+            display: none;
+        } 
+    }
+}
