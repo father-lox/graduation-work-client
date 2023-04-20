@@ -6,16 +6,17 @@
 
 .news {
     position: relative;
-    padding: 0 45rem 0 0;
-    max-width: 600rem;
+    // padding: 0 45rem 0 0;
+    // max-width: 600rem;
 
     @include media-from($desktopMaxWidth) {
-        max-width: convertValueToVW(600rem);
-        padding: 0 convertValueToVW(45rem) 0 0;
+        // max-width: convertValueToVW(600rem);
+        // padding: 0 convertValueToVW(45rem) 0 0;
     }
 
     &__title {
         @include setFontNewsTitle();
+        margin: 0;
     }
 
     &__author-comment-section {

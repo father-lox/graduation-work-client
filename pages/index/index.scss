@@ -1,15 +1,35 @@
-@use '../../styles/general.scss';
+@use '../../styles/general.scss' as *;
 @use '../../code/ui-components/news/news.scss';
 @use '../../code/ui-components/modal-window/modal-window.scss';
 @use './portions/comments/comments.scss';
 @use '../../code/ui-components/screen-scrolling/screen-scrolling.scss';
+@use '../..//code/ui-components/header/header.scss';
 
 .index {
     padding: 0 30rem;
 
     .comments {
-        display: none;
-        
+        display: none;   
+    }
+
+    &__header,
+    c-news {
+        max-width: 600rem;
+        width: calc(100% - 35rem);
+    }
+
+    &__header {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+
+        @include media-from($width576) {
+            margin: 51rem auto 0;
+        }
+
+        @include media-till($width576) {
+            margin: 21rem auto 0;
+        }
     }
 
     .news-section {

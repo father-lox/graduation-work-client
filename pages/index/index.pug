@@ -1,9 +1,11 @@
 include ../../code/ui-components/news/news-template
 include ../../code/ui-components/comment/comment-template
+include ../../code/ui-components/header/header
 include ../../layouts/base-layout
 include ./portions/comments/comments
 
 +baseLayout('index', 'index', 'index')
+	+header()(class="index__header")
 	+comments()
 	section.news-section
 	
