@@ -4,12 +4,16 @@ const outputDirectory = './pub/';
 export const path = {
     source: {
         styles: `${clientDirectory}pages/*/*.scss`,
-        templates: `${clientDirectory}pages/*/*.pug`
+        templates: `${clientDirectory}pages/*/*.pug`,
+        images: `${clientDirectory}img/**/*`,
+        fonts: `${clientDirectory}fonts/**/*`,
     },
 
     build: {
         styles: `${outputDirectory}pages`,
-        templates: `${outputDirectory}pages`
+        templates: `${outputDirectory}pages`,
+        images: `${outputDirectory}img/`,
+        fonts: `${outputDirectory}fonts/`,
     },
 
     watch: {
