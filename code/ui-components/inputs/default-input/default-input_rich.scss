@@ -49,16 +49,6 @@
     
     .default-input__hint-and-error {
         display: block;
-
-        $hint-and-error-margin-top: 3rem;
-
-        @include media-till($desktopMaxWidth) {
-            margin: $hint-and-error-margin-top 0 0;
-        }
-    
-        @include media-from($desktopMaxWidth) {
-            margin: convertValueToVW($hint-and-error-margin-top) 0 0;
-        }
     }
 
     .default-input__icon-and-name {

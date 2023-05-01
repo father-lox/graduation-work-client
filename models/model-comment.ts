@@ -1,4 +1,4 @@
-import APILinksNavigator from 'types/api-links-navigator.js';
+import { APILinksNavigator } from 'types/api.js';
 import UserComment from 'types/user-comment.js';
 
 export default class ModelComment {
@@ -34,6 +34,7 @@ export default class ModelComment {
             return null;
         }
 
+        //TODO: Think about move code below to APIManager class
         return fetch(requestUrl, {
             method: 'GET',
             headers: {

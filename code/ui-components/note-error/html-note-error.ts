@@ -25,12 +25,28 @@ export default class HTMLNoteError extends HTMLElement {
         return 'note-error';
     }
 
+    resetMessage() {
+        this.setMessage('');
+    }
+
     hide() {
         this.setAttribute(HTMLNoteError.availableAttributes.hidden, '');
     }
 
-    show() {        
+    show(message?: string) {
+        if (message) {
+            this.setMessage(message);
+        }
+        
         this.removeAttribute(HTMLNoteError.availableAttributes.hidden);
+    }
+
+    setMessage(message: string) {
+        this.setAttribute(HTMLNoteError.availableAttributes.errorMessage, message);
+    }
+
+    get isShown(): boolean {
+        return !this.hasAttribute(HTMLNoteError.availableAttributes.hidden);
     }
 
     connectedCallback() {

@@ -3,21 +3,22 @@ include ../../code/ui-components/inputs/default-input/default-input.pug
 include ../../code/ui-components/note-error/note-error-template.pug
 
 +baseLayout('sign-up')
-	form.sign-up__form
-		+defaultInput('you login', 'use login to sign in account', 'this login is used')(class="sign-up__input" id="login-field" type="text" pattern="^[-a-zA-Z._\\d]*$" minlength="4" maxlength="16" name="login" required)
+	form.form#sign-up
+		+defaultInput('you login', 'use login to sign in account', 'this login is used')(class="form__input" id="login-field" type="text" pattern="^[-a-zA-Z._\\d]*$" minlength="4" maxlength="16" name="login" required)
 			<svg><use xlink:href="#user"></use></svg>
 
-		+defaultInput("your nickname", "This field is required", "you public name")(class="sign-up__input" id="nickname-field" type="type" minlength="4" maxlength="16" name="nickname" required)
+		+defaultInput("your nickname", "This field is required", "you public name")(class="form__input" id="nickname-field" type="type" minlength="4" maxlength="16" name="nickname" required)
 			<svg><use xlink:href="#pen"></use></svg>
 
-		+defaultInput("password", 'password protects your account', "password is easy")(class="sign-up__input" id="password-field" type="password" name="password" pattern="^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,256}$" required)
+		+defaultInput("password", 'password protects your account', "password is easy")(class="form__input" id="password-field" type="password" name="password" pattern="^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,256}$" required)
 			<svg><use xlink:href="#lock"></use></svg>
 
-		+defaultInput("confirm password", 'check password is correct', "passwords are not matched")(class="sign-up__input" id="password-required-field" type="password" name="password-required" required)
+		+defaultInput("confirm password", 'check password is correct', "passwords are not matched")(class="form__input" id="password-required-field" type="password" name="password_confirmation" required)
 			<svg><use xlink:href="#lock"></use></svg>
 
-		note-error.sign-up__error(hidden error-message="API Server is die")
-		.sign-up__controller
+		note-error#error.form__error(error-message="API Server is die" hidden)
+
+		.form__controller
 			button#regress.button.button_accent(type="button") back
 			button#progress.button.button_accent(type="button") next
 

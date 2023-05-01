@@ -1,8 +1,9 @@
 @use '../../styles/general.scss' as *;
 @use '../../code/ui-components/buttons/button.scss';
 @use '../../code/ui-components/buttons/_accent.scss';
-@use '../../code/ui-components/note-error/note-error.scss';
+// @use '../../code/ui-components/note-error/note-error.scss';
 @use '../../code/ui-components/inputs/default-input/default-input.scss';
+@use './_form.scss';
 
 .sign-up {
     margin: 0 auto;
@@ -27,60 +28,6 @@
     @include media-till($width576) {
         max-width: 440rem;
         padding: 30rem;
-    }
-    
-
-    &__form {
-        width: 100%;
-        display: grid;
-        align-items: center;
-
-        @include media-from($width576) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        $gap: 25rem;
-
-        @include media-from($desktopMaxWidth) {
-            gap: convertValueToVW($gap);
-        }
-
-        @include media-till($desktopMaxWidth) {
-            gap: $gap;
-        }
-    }
-
-    &__input {
-        height: fit-content;
-    }
-
-    &__error {
-        align-self: center;
-    }
-
-    &__controller {
-        display: flex;
-        align-self: flex-end;
-
-        justify-self: end;
-        align-self: flex-end;
-
-        $gap: 25rem;
-
-        @include media-till($desktopMaxWidth) {
-            gap: $gap;
-        }
-
-        @include media-from($width576) {
-            gap: convertValueToVW($gap);
-            grid-column-start: 2;
-            grid-column-end: 3;
-        }
-
-        @include media-till($width576) {
-            grid-column-start: 1;
-            grid-column-end: 2;
-        }
     }
 
     .button:disabled {

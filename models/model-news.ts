@@ -18,6 +18,7 @@ export default class ModelNews {
     }
 
     static async loadInOrder(): Promise<Array<Object>> {
+        //TODO: Think about move code below to APIManager class
         return fetch(this.requestAddress, {
             method: 'GET',
             headers: {

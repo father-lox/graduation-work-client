@@ -1,0 +1,54 @@
+@use '../../styles/_base-includes.scss' as *;
+
+.form {
+    width: 100%;
+    display: grid;
+    align-items: center;
+
+    @include media-from($width576) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    $gap: 25rem;
+
+    @include media-from($desktopMaxWidth) {
+        gap: convertValueToVW($gap);
+    }
+
+    @include media-till($desktopMaxWidth) {
+        gap: $gap;
+    }
+
+    &__input {
+        height: fit-content;
+    }
+
+    &__error {
+        align-self: center;
+    }
+
+    &__controller {
+        display: flex;
+        align-self: flex-end;
+
+        justify-self: end;
+        align-self: flex-end;
+
+        $gap: 25rem;
+
+        @include media-till($desktopMaxWidth) {
+            gap: $gap;
+        }
+
+        @include media-from($width576) {
+            gap: convertValueToVW($gap);
+            grid-column-start: 2;
+            grid-column-end: 3;
+        }
+
+        @include media-till($width576) {
+            grid-column-start: 1;
+            grid-column-end: 2;
+        }
+    }
+}

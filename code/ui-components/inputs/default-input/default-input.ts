@@ -10,16 +10,11 @@ export default class DefaultInput {
         this.labelElement = this.defaultInputElement.querySelector(this.selectors.labelClass) as HTMLParagraphElement;
         this.inputElement = this.defaultInputElement.querySelector(this.selectors.inputClass) as HTMLInputElement;
 
-        if (!this.noteErrorElement || 
-            !this.hintMessageElement || 
-            !this.labelElement || 
+        if (!this.noteErrorElement ||
+            !this.hintMessageElement ||
+            !this.labelElement ||
             !this.inputElement) {
-                throw Error("DefaultInput's markup is incorrect");
-        }
-
-        if (!this.noteErrorElement.classList.contains(this.modifierClasses.errorHidden) &&
-        this.hintMessageElement.classList.contains(this.modifierClasses.hintHidden)) {
-            this._isErrorShown = true;
+            throw Error("DefaultInput's markup is incorrect");
         }
     }
 
@@ -36,11 +31,7 @@ export default class DefaultInput {
     }
 
     get isErrorShown(): boolean {
-        return this._isErrorShown;
-    }
-
-    set isErrorShown(value: boolean) {
-        this._isErrorShown = value;
+        return this.noteErrorElement.isShown;
     }
 
     get errorMessage() {
@@ -51,36 +42,50 @@ export default class DefaultInput {
         this._errorMessage = message;
     }
 
-    showError() {
-        const errorMessage = this._errorMessage.length > 0 ? this._errorMessage : this.inputElement.validationMessage
-        this.hintMessageElement.classList.add(this.modifierClasses.hintHidden);
-        this.noteErrorElement.setAttribute(HTMLNoteError.availableAttributes.errorMessage, errorMessage);
-        this.noteErrorElement.show();
-        this.isErrorShown = true;
+    displayInputError(errorMessage: string) {
+        this.noteErrorElement.show(errorMessage);
+        this.hideHint();
     }
 
-    showHint() {
-        this.hintMessageElement.classList.remove(this.modifierClasses.hintHidden);
+    displayInputHint() {
         this.noteErrorElement.hide();
-        this.isErrorShown = false;
+        this.showHint();
     }
 
+    /**
+     * Validate from. If error - display error message
+     * @param patternMismatchErrorMessage 
+     * @returns 
+     */
     validate(patternMismatchErrorMessage?: string): boolean {
-        if (this.inputElement.validity.valid) {
-            return this.inputElement.validity.valid;
+        if (!this.inputElement.validity.valid) {
+            this.setErrorMessage(patternMismatchErrorMessage);
+            this.displayInputError(this._errorMessage);
         }
 
+        return this.inputElement.validity.valid;
+    }
+
+    private showHint() {
+        this.hintMessageElement.classList.remove(this.modifierClasses.hintHidden);
+    }
+
+    private hideHint() {
+        this.hintMessageElement.classList.add(this.modifierClasses.hintHidden);
+    }
+
+    private setErrorMessage(patternMismatchErrorMessage?: string) {
         if (this.inputElement.validity.valueMissing) {
             this._errorMessage = messages.fieldRequired;
         } else if (this.inputElement.validity.patternMismatch) {
-            this._errorMessage = patternMismatchErrorMessage ? patternMismatchErrorMessage : '';
+            this._errorMessage = patternMismatchErrorMessage ? patternMismatchErrorMessage : this.inputElement.validationMessage;
         } else if (this.inputElement.validity.tooShort) {
             this._errorMessage = messages.valueTooShort(Number(this.inputElement.minLength));
         } else if (this.inputElement.validity.tooLong) {
             this._errorMessage = messages.valueTooLong(Number(this.inputElement.maxLength));
+        } else {
+            this._errorMessage = this.inputElement.validationMessage;
         }
-
-        return this.inputElement.validity.valid;
     }
 
     focus() {
@@ -92,7 +97,6 @@ export default class DefaultInput {
     private labelElement: HTMLParagraphElement;
     private inputElement: HTMLInputElement;
     private _errorMessage: string = '';
-    private _isErrorShown: boolean = false;
 
     private selectors: DefaultInputSelectors = {
         inputClass: '.default-input__input',

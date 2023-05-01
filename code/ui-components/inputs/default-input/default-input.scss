@@ -136,14 +136,18 @@
         &:not(:placeholder-shown) ~ .default-input__hint-and-error {
             display: block;
         }
+
+        &:not(:focus) ~ .default-input__hint-and-error, 
+        &:note(:focus-visible) ~ .default-input__hint-and-error,
+        &:placeholder-shown ~ .default-input__hint-and-error {
+            margin: 0;
+        }
     }
 
     &__hint-and-error {
         display: none;
-    }
 
-    &__hint, &__error {
-        $hint-error-margin-top: 10rem;
+        $hint-error-margin-top: 8rem;
 
         margin: $hint-error-margin-top 0 0;
 
@@ -165,5 +169,9 @@
 
     &__error {
         display: block;
+
+        &_hidden {
+            display: note;
+        }
     }
 }

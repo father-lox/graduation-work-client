@@ -1,4 +1,7 @@
 @forward './_colors.scss';
+@forward './_fonts.scss';
 @forward './_media-queries.scss';
 @forward './_media-querie-variables.scss';
-@forward './fonts.scss';
+@forward './functions/convert-value-to-vw.scss';
+@forward './mixins/set-font-size.scss';
+@forward './colors.scss';
