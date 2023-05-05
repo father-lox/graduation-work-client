@@ -1,6 +1,6 @@
 include ../../note-error/note-error-template
 
-mixin defaultInput(label, hintMessage = null, errorMessage = null)
+mixin defaultInput(label, hintMessage = null, isRich = false)
     -
         let containerClass = ''
         let containerId = ''
@@ -15,7 +15,7 @@ mixin defaultInput(label, hintMessage = null, errorMessage = null)
             delete attributes.id;
         }
 
-    .default-input(class=containerClass id=containerId)
+    .default-input(class=`${containerClass} ${isRich ? 'default-input_rich' : ''}` id=containerId)
         input.default-input__input(placeholder="")&attributes(attributes)
         .default-input__icon-and-name
             if (block)
