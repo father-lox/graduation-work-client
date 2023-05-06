@@ -10,6 +10,8 @@ export default class HTMLNoteError extends HTMLElement {
         }
 
         this.updateVisible();
+
+        this.noteErrorContainerElement.addEventListener('animationend', this.restartAnimation);
     }
 
     static availableAttributes: {errorMessage: string, hidden: string} = {
@@ -66,11 +68,23 @@ export default class HTMLNoteError extends HTMLElement {
         }
     }
 
+    shake = () => {
+        // this.noteErrorContainerElement.getAnimations().forEach(animation => {
+        //     animation.play();
+        // });
+        this.noteErrorContainerElement.classList.add(this.modifierClasses.animated);
+    }
+
+    private restartAnimation = () => {
+        this.noteErrorContainerElement.classList.remove(this.modifierClasses.animated);
+    }
+
     private noteErrorFragment: DocumentFragment;
     private noteErrorContainerElement: HTMLDivElement; 
     private errorTextElement: HTMLParagraphElement;
-    private modifierClasses: {hidden: string} = {
-        hidden: 'note-error_hidden'
+    private modifierClasses: {hidden: string, animated: string} = {
+        hidden: 'note-error_hidden',
+        animated: 'note-error_shake'
     }
     private shadowDOMProperty: ShadowRootInit = {
         mode: 'closed'

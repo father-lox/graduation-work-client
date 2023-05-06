@@ -1,9 +1,16 @@
 @use '../../../styles/_base-includes' as *;
+@use '../../../styles/animations/headShake.scss' as *;
 @use '../../../styles/functions/convert-value-to-vw.scss' as *;
 
 .note-error {
     display: flex;
     align-items: center;
+
+    &_shake {
+        animation-name: headShake;
+        animation-timing-function: ease-in-out;
+        animation-duration: .7s;
+    }
 
     &__image {
         max-width: 24rem;
