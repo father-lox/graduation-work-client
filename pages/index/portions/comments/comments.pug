@@ -3,8 +3,9 @@ include ./back-to-news
 mixin comments()
   dialog.comment-section.modal-window.modal-window_hide-below#comment-section
     .comment-section__container
-      form.comment-section__typing 
+      form#comment-form.comment-section__typing 
         textarea#comment-field.input-expressive.comment-section__field(type="text" name="comment" rows="1" placeholder="Enter your comment")
+        button
       #comment-list.comment-section__list
 
     +backToNews('comment-section__back')

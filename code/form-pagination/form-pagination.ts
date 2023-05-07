@@ -1,67 +1,104 @@
+import { FormFragment, FormPaginationOptions, ProgressElement, RegressElement, submitCallback, validateAdditionalCallback } from 'types/form-pagination';
+
 export default class FormPagination {
-    constructor(
-        items: HTMLElement[] | string,
-        visible: number = 1,
-        textButtonSubmittingForm: string = 'send',
-        progressElement?: HTMLButtonElement | string | undefined,
-        regressElement?: HTMLButtonElement | string | undefined,
-    ) {
-        if (typeof items === 'string') {
-            const elements = document.querySelectorAll(items);
+    constructor(options: FormPaginationOptions) {
+        if (typeof options.fragments === 'string') {
+            const elements = document.querySelectorAll(options.fragments);
 
             if (!elements.length) {
                 throw Error('The selector of items is not correct');
             }
 
-            this._items = Array.from(elements) as HTMLElement[];
+            this._items = Array.from(elements) as FormFragment[];
         } else {
-            this._items = items;
+            this._items = options.fragments;
         }
 
-        this.textButtonSubmittingForm = textButtonSubmittingForm;
-        this.countVisible = visible;
+        this._validateAdditional = options.validateAdditional;
+        this.submitButtonText = options.submitButtonText;
+        this.countVisible = options.visible;
+
+        this.setProgressElement(options.progressElement);
+        this.setRegressElement(options.regressElement);
         this.calculateCountShowingItems();
         this.init();
-        this.setProgressElement(progressElement);
-        this.setRegressElement(regressElement);
     }
 
-    next() {
-        if (this.canSwitchNext()) {
-            this.hideCurrent();
+    async next() {
+        const isValid = await this.validate();
 
-            this._indexCurrentItem += this.countVisible;
-            this.calculateCountShowingItems();
-
-            for (let i = 0; i < this._countShowingItems; i++) {
-                this.showElement(this._items[this._indexCurrentItem + i]);
-            }
+        if (!isValid) {
+            return;
         }
 
-        this.setStateControllers();
+        if (!this.canSwitchNext) {
+            this.progressElement.type = 'submit';
+            return;
+        }
+
+        this.hideCurrent();
+
+        this._indexCurrentItem += this.countVisible;
+        this.calculateCountShowingItems();
+
+        for (let i = 0; i < this._countShowingItems; i++) {
+            this.showFragment(this._items[this._indexCurrentItem + i]);
+        }
+
+        this.manageStateFormControllers();
     }
 
     back() {
-        if (this.canSwitchPrevious()) {
-            this.hideCurrent();
-
-            this._indexCurrentItem -= this.countVisible;
-            this.calculateCountShowingItems();
-
-            for (let i = 0; i < this._countShowingItems; i++) {
-                this.showElement(this._items[this._indexCurrentItem + i]);
-            }
+        if (!this.canSwitchPrevious) {
+            return;
         }
 
-        this.setStateControllers();
+        this.hideCurrent();
+
+        this._indexCurrentItem -= this.countVisible;
+        this.calculateCountShowingItems();
+
+        for (let i = 0; i < this._countShowingItems; i++) {
+            this.showFragment(this._items[this._indexCurrentItem + i]);
+        }
+
+        this.manageStateFormControllers();
     }
 
+    private async validate(): Promise<boolean> {
+        let areInputsValid: boolean = true;
+        let isFocusSet = false;
 
-    canSwitchNext(): boolean {
+        for await (const fragment of this.currentFields) {
+            const input: HTMLInputElement | null = fragment.querySelector('input');
+
+            if (input === null) {
+                throw Error('Field is not fillable');
+            }
+
+            let isValid = input.checkValidity();
+
+            if (isValid && this._validateAdditional) {
+                isValid = await this._validateAdditional(fragment)
+            }
+
+            if (!isFocusSet && !isValid) {
+                //Set the focus to the first incorrect input, if it is not already set
+                input.focus();
+                isFocusSet = true;
+            }
+
+            areInputsValid &&= isValid;
+        };
+
+        return areInputsValid;
+    }
+
+    get canSwitchNext(): boolean {
         return this._indexCurrentItem < this._items.length - this.countVisible;
     }
 
-    canSwitchPrevious(): boolean {
+    get canSwitchPrevious(): boolean {
         return this._indexCurrentItem !== 0;
     }
 
@@ -69,54 +106,53 @@ export default class FormPagination {
         return this._indexCurrentItem;
     }
 
-    get currentFields(): HTMLElement[] {
+    get currentFields(): FormFragment[] {
         return this._items.slice(this._indexCurrentItem, this._indexCurrentItem + this._countShowingItems);
     }
 
-    private progressElement: HTMLButtonElement | undefined;
-    private regressElement: HTMLButtonElement | undefined;
-    private textButtonSubmittingForm: string;
+    private progressElement!: ProgressElement;
+    private regressElement!: RegressElement;
+    private submitButtonText: string;
     private countVisible: number;
-    private _items: HTMLElement[];
+    private _items: FormFragment[];
     private _indexCurrentItem = 0;
     private _countShowingItems = 0;
+    private _validateAdditional: validateAdditionalCallback | undefined;
 
     private init() {
         for (let i = this.countVisible; i < this._items.length; i++) {
-            this.hideElement(this._items[i]);
+            this.hideFragment(this._items[i]);
         }
 
-        this.setStateControllers();
+        this.manageStateFormControllers();
     }
 
-    private setStateControllers() {
+    private manageStateFormControllers() {
         this.manageStateProgressElement();
         this.manageStateRegressElement();
     }
-
+    
     private manageStateProgressElement() {
-        if (!this.canSwitchNext() && this.progressElement && !this.progressElement.disabled) {
-            this.progressElement.type = 'submit';
-            this.progressElement.innerText = this.textButtonSubmittingForm;
-        } else if (this.canSwitchNext() && this.progressElement && this.progressElement.disabled) {
-            this.progressElement.type = 'button';
+        if (!this.canSwitchNext) {
+            this.progressElement.innerText = this.submitButtonText;
+        } else if (this.canSwitchNext) {
             this.progressElement.innerText = 'next';
         }
     }
-
+    
     private manageStateRegressElement() {
-        if (!this.canSwitchPrevious() && this.regressElement && !this.regressElement.disabled) {
-            this.regressElement.disabled = true
-        } else if (this.canSwitchPrevious() && this.regressElement && this.regressElement.disabled) {
+        if (this.progressElement.type == 'submit') {
+            this.progressElement.type = 'button';
+        }
+    
+        if (!this.canSwitchPrevious) {
+            this.regressElement.disabled = true;
+        } else if (this.canSwitchPrevious) {
             this.regressElement.disabled = false;
         }
     }
 
-    private setProgressElement(progressElement: HTMLButtonElement | string | undefined) {
-        if (progressElement === undefined) {
-            return;
-        }
-
+    private setProgressElement(progressElement: HTMLButtonElement | string ) {
         if (typeof progressElement === 'string') {
             const controller = document.querySelector(progressElement);
 
@@ -124,7 +160,7 @@ export default class FormPagination {
                 throw Error('The selector of progressElement is not correct');
             }
 
-            this.progressElement = controller as HTMLButtonElement;
+            this.progressElement = controller as ProgressElement;
         } else {
             this.progressElement = progressElement;
         }
@@ -146,7 +182,7 @@ export default class FormPagination {
                 throw Error('The selector of regressElement is not correct');
             }
 
-            this.regressElement = controller as HTMLButtonElement;
+            this.regressElement = controller as RegressElement;
         } else {
             this.regressElement = regressElement;
         }
@@ -160,7 +196,7 @@ export default class FormPagination {
 
     private hideCurrent() {
         for (let i = 0; i < this._countShowingItems; i++) {
-            this.hideElement(this._items[this._indexCurrentItem + i]);
+            this.hideFragment(this._items[this._indexCurrentItem + i]);
         }
     }
 
@@ -172,11 +208,11 @@ export default class FormPagination {
         }
     }
 
-    private hideElement(element: HTMLElement) {
+    private hideFragment(element: FormFragment) {
         element.style.display = 'none';
     }
 
-    private showElement(element: HTMLElement) {
+    private showFragment(element: FormFragment) {
         element.style.display = 'flex';
     }
 }

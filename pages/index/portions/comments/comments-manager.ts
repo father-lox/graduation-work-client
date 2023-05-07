@@ -4,6 +4,7 @@ import UserComment from 'types/user-comment.js';
 import HTMLComment from 'code/ui-components/comment/html-comment.js';
 import ModalWindow from 'code/ui-components/modal-window/modal-window.js';
 import autoResizeHeightTextarea from 'code/ui-components/inputs/expressive-input/auto-resize-height-textarea.js'
+import sendComment from './send-comment.js';
 
 export default class CommentsManager {
     constructor(
@@ -11,6 +12,7 @@ export default class CommentsManager {
         private commentsListElement: HTMLDivElement = document.getElementById('comment-list') as HTMLDivElement,
         private backToNewsElement: HTMLButtonElement = document.getElementById('back-to-news') as HTMLButtonElement,
         private commentField: HTMLTextAreaElement = document.getElementById('comment-field') as HTMLTextAreaElement,
+        private commentForm: HTMLFormElement = document.getElementById('comment-form') as HTMLFormElement,
         private commentRenderer = new RenderComment()
     ) {
         autoResizeHeightTextarea(this.commentField);
@@ -25,6 +27,17 @@ export default class CommentsManager {
 
     init() {
         this.initEvents();
+
+        this.commentForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const message: string = new FormData(this.commentForm).get('comment') as string;
+
+            sendComment(this.currentNewsId, message).then(result => {
+                console.log(result);
+                this.commentForm.reset();
+            });
+        })
     }
 
     /**

@@ -1,0 +1,21 @@
+include ../../../code/ui-components/inputs/default-input/default-input.pug
+include ../../../code/ui-components/note-error/note-error-template.pug
+include ../../../layouts/base-layout
+
++baseLayout('candidacy')
+	section.candidacy__container
+		div.candidacy__actions
+			a.button(href="../index/index.html") Home
+			form#candidacy.candidacy__form
+				+defaultInput('your full name', 'is used when addressing', true)(class="candidacy__input" pattern="^[a-zA-Z ,.'-]+$" title="Write your full name in Latin letters. Available characters «,», «.», «’», «-»" type="text" name="full_name" required minlength="3" maxlength="32")
+				+defaultInput('e-mail', 'is used to communicate', true)(class="candidacy__input" type="email" name='email' required)
+				+defaultInput('about yourself', 'is used to communicate', true)(class="candidacy__input" type="text" name='message' required minlength="32" maxlength="256")
+				.candidacy__controller
+					button#regress.button.button_accent(class="candidacy__button" type="button") back
+					button#progress.button.button_accent(class="candidacy__button" type="button") Next
+			p.candidacy__info <span class="candidacy__info-highlight">Application for Authorship</span>: We are actively seeking talented authors. Fill in the fields on the form and submit it. We will contact you after reviewing the application.
+		picture
+			source(media="(max-width: 1024px)", srcset="../../../img/man-mobile.webp" alt='Old Phone')
+			img.candidacy__illustration(src="../../../img/man.png", alt="A man is sitting on the ground")
+
+	+noteError()

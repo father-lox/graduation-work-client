@@ -16,6 +16,21 @@ export default class DefaultInput {
             !this.inputElement) {
             throw Error("DefaultInput's markup is incorrect");
         }
+
+        this.inputElement.addEventListener('invalid', () => {
+            this.setErrorMessage();
+            this.displayInputError(this._errorMessage);
+        });
+
+        this.inputElement.addEventListener('input', this.triggerErrorMessage);
+    }
+
+    private triggerErrorMessage = () => {
+        if (this.isErrorShown && !this.validate()) {
+            this.noteErrorElement.shake()
+        } else {
+            this.displayInputHint();
+        }
     }
 
     get field(): HTMLElement {
@@ -57,13 +72,17 @@ export default class DefaultInput {
      * @param patternMismatchErrorMessage 
      * @returns 
      */
-    validate(patternMismatchErrorMessage?: string): boolean {
+    validate(): boolean {
         if (!this.inputElement.validity.valid) {
-            this.setErrorMessage(patternMismatchErrorMessage);
+            this.setErrorMessage();
             this.displayInputError(this._errorMessage);
         }
 
         return this.inputElement.validity.valid;
+    }
+
+    focus() {
+        this.inputElement.focus();
     }
 
     private showHint() {
@@ -74,11 +93,11 @@ export default class DefaultInput {
         this.hintMessageElement.classList.add(this.modifierClasses.hintHidden);
     }
 
-    private setErrorMessage(patternMismatchErrorMessage?: string) {
+    private setErrorMessage() {
         if (this.inputElement.validity.valueMissing) {
             this._errorMessage = messages.fieldRequired;
         } else if (this.inputElement.validity.patternMismatch) {
-            this._errorMessage = patternMismatchErrorMessage ? patternMismatchErrorMessage : this.inputElement.validationMessage;
+            this._errorMessage = this.inputElement.validationMessage;
         } else if (this.inputElement.validity.tooShort) {
             this._errorMessage = messages.valueTooShort(Number(this.inputElement.minLength));
         } else if (this.inputElement.validity.tooLong) {
@@ -86,10 +105,6 @@ export default class DefaultInput {
         } else {
             this._errorMessage = this.inputElement.validationMessage;
         }
-    }
-
-    focus() {
-        this.inputElement.focus();
     }
 
     private hintMessageElement: HTMLParagraphElement;

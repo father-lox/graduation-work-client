@@ -1,0 +1,26 @@
+@use '../../../styles/general.scss' as *;
+@use '../../../code/ui-components/buttons/button.scss';
+@use '../../../code/ui-components/note-error/note-error.scss';
+@use '../../../code/ui-components/inputs/default-input/default-input.scss';
+@use '../../../styles/_media-queries.scss' as *;
+@use '../../../styles/_media-querie-variables.scss' as *;
+@use '../signup/_form.scss';
+
+.login {
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    $login-max-width: 560rem;
+
+    @include media-till($desktopMaxWidth) {
+        max-width: $login-max-width;
+    }
+
+    @include media-from($desktopMaxWidth) {
+        max-width: convertValueToVW($login-max-width);
+    }
+}

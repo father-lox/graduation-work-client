@@ -1,4 +1,4 @@
-import { APIToken, CheckableUniqueProperties, ErrorMessage, RegistrationData } from "types/api.js";
+import { APIToken, CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData } from "types/api.js";
 import URLManager from "../url-manager.js";
 import APIRequestManager from "./api-request-manager.js";
 
@@ -26,6 +26,37 @@ export default class APIManager {
             this.storeAPIToken(serverResponse.token);
             onSuccess();
         }
+    }
+
+    public async sendApplication(
+        applicationData: ApplicationDate,
+        onSuccess: () => void,
+        onReject: (message: ErrorMessage) => void
+        ) {
+            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.newApplication, applicationData);
+            let serverResponse = await response.json();
+
+            if (response.ok) {
+                onSuccess();
+            } else if (serverResponse.hasOwnProperty('error')) {
+                onReject(this.formateServerErrorMessage(serverResponse.message));
+            }
+    }
+
+    public async login(
+        loginData: LoginData,
+        onSuccess: () => void,
+        onReject: (message: ErrorMessage) => void
+        ) {
+            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.login, loginData);
+            let serverResponse = await response.json();
+
+            if (response.status === 201 && 'user' in serverResponse && 'token' in serverResponse) {
+                this.storeAPIToken(serverResponse.token);
+                onSuccess();
+            } else if ('errors' in serverResponse || 'message' in serverResponse) {
+                onReject(this.formateServerErrorMessage(serverResponse.message));
+            }
     }
 
     public async isValueUnique(property: CheckableUniqueProperties, value: string): Promise<boolean> {

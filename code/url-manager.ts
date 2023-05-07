@@ -17,4 +17,6 @@ export default class URLManager {
     get isValueUnique() {
         return new URL('/api/is-value-unique', this.server);
     }
+
+    readonly client = new URL('http://127.0.0.1:5500/');
 }
