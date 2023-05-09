@@ -17,6 +17,10 @@ export default class APIRequestManager {
         localStorage.setItem(this.localStorageAPITokenKey, token);
     }
 
+    public isAPITokenSet(): boolean {
+        return this.getAPIToken() !== null;
+    }
+
     private headers = new Headers();
     private localStorageAPITokenKey: string = 'token';
 
