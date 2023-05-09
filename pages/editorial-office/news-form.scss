@@ -1,0 +1,29 @@
+.news-form {
+    display: flex;
+    flex-direction: column;
+
+    $spaceBetweenRows: 25rem;
+    gap: $spaceBetweenRows;
+
+    &__title {
+        max-height: 200rem;
+        min-height: 53rem;
+        height: 53rem;
+        margin: 0 0 $spaceBetweenRows;
+    }
+
+    &__input {
+        width: 100%;
+    }
+
+    &__source {
+        display: flex;
+        gap: 25rem;
+    }
+
+    &__controllers {
+        display: flex;
+        justify-content: end;
+        gap: 15rem;
+    }
+}

@@ -4,9 +4,9 @@ include ../../../code/ui-components/note-error/note-error-template.pug
 
 +baseLayout('login')
 	form.form#login-form
-		+defaultInput('you login', 'use login to sign in account', 'this login is used')(class="form__input" id="login-field" type="text" pattern="^[-a-zA-Z._\\d]*$" title="The login value can only contain latin characters, digits and some special characters «.», «_», «-»." minlength="4" maxlength="16" name="login" required)
+		+defaultInput('you login', 'use login to sign in account')(class="form__input" id="login-field" type="text" pattern="^[-a-zA-Z._\\d]*$" title="The login value can only contain latin characters, digits and some special characters «.», «_», «-»." minlength="4" maxlength="16" name="login" required)
 			<svg><use xlink:href="#user"></use></svg>
-		+defaultInput("password", 'password protects your account', "password is easy")(class="form__input" id="password-field" type="password" title="Password is incorrect formate" name="password" pattern="^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,256}$" required)
+		+defaultInput("password", 'password protects your account')(class="form__input" id="password-field" type="password" title="Password is incorrect formate" name="password" pattern="^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,256}$" required)
 			<svg><use xlink:href="#lock"></use></svg>
 
 		note-error.form__error(hidden id="error-form")

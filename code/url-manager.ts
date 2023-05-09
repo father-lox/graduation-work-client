@@ -18,5 +18,9 @@ export default class URLManager {
         return new URL('/api/is-value-unique', this.server);
     }
 
+    get postNews() {
+        return new URL('/api/post-news', this.server);
+    }
+
     readonly client = new URL('http://127.0.0.1:5500/');
 }

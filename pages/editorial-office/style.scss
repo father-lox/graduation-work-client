@@ -1,0 +1,13 @@
+@use '../../styles/general.scss' as *;
+@use '../../code/ui-components/inputs/default-input/default-input.scss';
+@use '../../code/ui-components/inputs/default-input/default-input_rich.scss';
+@use '../../code/ui-components/inputs/expressive-input/expressive-input.scss';
+@use '../../code/ui-components/buttons/button.scss';
+@use '../../code/ui-components/buttons/_accent.scss';
+@use './news-form.scss';
+
+.editorial-office {
+    padding: 100rem 0 0;
+    max-width: 600rem;
+    margin: 0 auto;
+}

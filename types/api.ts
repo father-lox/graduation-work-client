@@ -68,19 +68,26 @@ export const enum LoginDataFields {
     password = 'password',
 }
 
-export function isLoginData(value: any): value is LoginData {
-    if (isObject(value) &&
-        LoginDataFields.login in value &&
-        typeof value[LoginDataFields.login] === 'string' &&
-        LoginDataFields.password in value &&
-        typeof value[LoginDataFields.password] === 'string'
-        ) {
-            return true;
-        }
+/* News */
 
-    return false;
+export type Source = {
+    href: string | URL,
+    title: string
 }
 
-function isObject(value: unknown): value is {} {
-    return typeof value === 'object' && value !== null
+export const enum SourceFields {
+    href = 'href',
+    title = 'title'
+}
+
+export type NewsData = {
+    title: string,
+    author_comment?: string,
+    sources: Source[],
+}
+
+export const enum NewsDataFields {
+    title = 'title',
+    authorComment = 'author_comment',
+    sources = 'sources'
 }

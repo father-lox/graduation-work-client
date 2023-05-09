@@ -1,0 +1,23 @@
+include ../../code/ui-components/inputs/default-input/default-input
+include ../../code/ui-components/note-error/note-error-template
+include ../../code/ui-components/header/header
+include ../../layouts/base-layout
+
++baseLayout('editorial-office')
+	//- +header()(class="index__header")
+	section.make-news-section
+		form.news-form.make-news-section__form#news-form
+			fieldset.news-form__main(form='make-news-form')
+				textarea#news-title.news-form__title.input-expressive(placeholder="Write awesome news title" required name='title' maxlength='128' minlength="5")
+				+defaultInput("your comment", 'Tell what think about it', true)(class='news-form__input' name='author_comment' maxlength='512' minlength="15")
+			fieldset.news-form__source(name='sources' form='make-news-form')
+				+defaultInput("source reference", 'provide a link to the news to which you are referring')(class='news-form__input' name='href' required type="url")
+					<svg><use xlink:href="#link"></use></svg>
+				+defaultInput("reference's title", 'Enter the title of that article')(class='news-form__input' name='article_title' required)
+					<svg><use xlink:href="#pen"></use></svg>
+			.news-form__controllers
+				//- button.button(type="button") Add Source
+				button.button.button_accent Post
+
+	+noteError()
+

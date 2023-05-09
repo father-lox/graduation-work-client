@@ -1,7 +1,7 @@
 import APIManager from 'code/api/api-manager.js';
 import HTMLNoteError from 'code/ui-components/note-error/html-note-error.js';
 import URLManager from 'code/url-manager.js';
-import { isLoginData } from 'types/api.js';
+import { isLoginData } from 'types/type-guards.js';
 import DefaultInput from 'code/ui-components/inputs/default-input/default-input.js';
 
 customElements.get(HTMLNoteError.tagName) || customElements.define(HTMLNoteError.tagName, HTMLNoteError);

@@ -1,4 +1,4 @@
-import { APIToken, CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData } from "types/api.js";
+import { APIToken, CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData, NewsData } from "types/api.js";
 import URLManager from "../url-manager.js";
 import APIRequestManager from "./api-request-manager.js";
 
@@ -23,7 +23,7 @@ export default class APIManager {
         }
 
         if (serverResponse.hasOwnProperty('token')) {
-            this.storeAPIToken(serverResponse.token);
+            this.apiRequestManager.storeAPIToken(serverResponse.token);
             onSuccess();
         }
     }
@@ -52,7 +52,7 @@ export default class APIManager {
             let serverResponse = await response.json();
 
             if (response.status === 201 && 'user' in serverResponse && 'token' in serverResponse) {
-                this.storeAPIToken(serverResponse.token);
+                this.apiRequestManager.storeAPIToken(serverResponse.token);
                 onSuccess();
             } else if ('errors' in serverResponse || 'message' in serverResponse) {
                 onReject(this.formateServerErrorMessage(serverResponse.message));
@@ -72,17 +72,22 @@ export default class APIManager {
         return false;
     }
 
-    private localStorageAPITokenKey: string = 'token';
+    public async postNews(
+        news: NewsData,
+        onSuccess: () => void,
+        onReject: (message: ErrorMessage, errorCode: number) => void) {
+            const response: Response = await this.apiRequestManager.sendRequest(this.urlManager.postNews, news, true);
+
+            if (response.ok) {
+                onSuccess();
+            } else {
+                const serverMessage = await response.json();
+                onReject(serverMessage.message, response.status);
+            }
+        }
+
     private urlManager = new URLManager();
     private apiRequestManager = new APIRequestManager();
-
-    private storeAPIToken = (token: APIToken) => {
-        localStorage.setItem(this.localStorageAPITokenKey, token);
-    }
-
-    private getAPIToken(): APIToken | null {
-        return localStorage.getItem(this.localStorageAPITokenKey);
-    }
 
     private formateServerErrorMessage(serverErrorMessage: ErrorMessage): ErrorMessage {
         return `Server responses error: ${serverErrorMessage}`;

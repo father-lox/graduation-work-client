@@ -1,21 +1,40 @@
+import { APIToken } from "types/api.js";
+
 /**
  * Use for send requests to API server;
  */
 export default class APIRequestManager {
-    public sendRequest = async (url: URL, body: any): Promise<Response> => {
-        return fetch(url, this.requestOptionBuilder(body));
+    constructor() {
+        this.headers.append('Accept', 'application/json');
+        this.headers.append('Content-Type', 'application/json');
     }
 
-    private headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-    };
+    public sendRequest = async (url: URL, body: any, useAuthToken?: boolean): Promise<Response> => {
+        return fetch(url, this.requestOptionBuilder(body, useAuthToken));
+    }
 
-    private requestOptionBuilder(body: any): RequestInit {
+    public storeAPIToken = (token: APIToken) => {
+        localStorage.setItem(this.localStorageAPITokenKey, token);
+    }
+
+    private headers = new Headers();
+    private localStorageAPITokenKey: string = 'token';
+
+    private requestOptionBuilder(body: any, useAuthToken?: boolean): RequestInit {
+        if (useAuthToken && !this.headers.has('Authorization')) {
+            this.headers.append('Authorization', `Bearer ${this.getAPIToken()}`);
+        } else if (!useAuthToken && this.headers.has('Authorization')) {
+            this.headers.delete('Authorization');
+        }
+
         return {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify(body)
         }
+    }
+
+    private getAPIToken(): APIToken | null {
+        return localStorage.getItem(this.localStorageAPITokenKey);
     }
 }
