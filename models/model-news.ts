@@ -1,32 +1,43 @@
 import UserComment from 'types/user-comment.js';
+import { ReadableNewsFields, Source } from 'types/api.js';
 
 export default class ModelNews {
     constructor(
         readonly id: number,
         readonly title: string,
-        readonly authorComment: UserComment,
-        //TODO: Заменить моковые данные на реальные
-        readonly countViews: number = 999,
-        readonly countComments: number = 666,
-    ) {}
+        readonly countViews: number,
+        readonly countComments: number,
+        readonly sources: Source[],
+        readonly authorComment?: UserComment,
+    ) { }
 
-    static requestAddress: string = 'http://localhost/api/posts';
+    static requestAddress: string | null = 'http://localhost/api/news';
 
-    static async getNews(): Promise<ModelNews[]> {
-        const unserializedNews: Array<any> = await this.loadInOrder();
+    static async getNews(): Promise<ModelNews[] | null> {
+        const unserializedNews: Array<any> | null = await this.loadInOrder();
+
+        if (!unserializedNews) {
+            return null;
+        }
+        
         return this.serializeMany(unserializedNews);
     }
 
-    static async loadInOrder(): Promise<Array<Object>> {
+    static async loadInOrder(): Promise<Array<Object> | null> {
         //TODO: Think about move code below to APIManager class
+        if (this.requestAddress === null) {
+            return null;
+        }
+
         return fetch(this.requestAddress, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json;charset=utf-8',
+                'Accept': 'application/json'
             },
         }).then(response => {
             return response.json();
-        }).then(({data: arrayNews, links}) => {
+        }).then(({ data: arrayNews, links }) => {
             this.requestAddress = links.next;
             return arrayNews;
         });
@@ -37,14 +48,30 @@ export default class ModelNews {
         title: string,
         nickname: string,
         comment: string,
+        countViews: number,
+        countComments: number,
+        sources: Source[]
     ): ModelNews {
-        const commentByAuthor: UserComment = {nickname, comment, isAuthor: true};
-        return new ModelNews(id, title, commentByAuthor);
+        let commentByAuthor: UserComment | undefined;
+
+        if (comment) {
+            commentByAuthor = { nickname, comment, isAuthor: true };
+        }
+
+        return new ModelNews(id, title, countViews, countComments, sources, commentByAuthor);
     }
 
     static serializeMany(unserializedNews: Array<any>): ModelNews[] {
         return unserializedNews.map(news => {
-            return this.serializeOne(Number(news.id), news.title, news['author'], news['author_comment'])
+            return this.serializeOne(
+                Number(news[ReadableNewsFields.id]),
+                news[ReadableNewsFields.title],
+                news[ReadableNewsFields.nickname],
+                news[ReadableNewsFields.authorComment],
+                news[ReadableNewsFields.countViews],
+                news[ReadableNewsFields.countComments],
+                news[ReadableNewsFields.sources],
+            )
         }) as ModelNews[];
     }
 }

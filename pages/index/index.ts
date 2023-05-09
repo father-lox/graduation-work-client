@@ -19,7 +19,12 @@ if (!newsContainer) {
 new ScreenScrolling(newsContainer, newsElements, loadNews);
 
 
-async function loadNews(): Promise<HTMLNews[]> {
-    const modelsNews: ModelNews[] = await ModelNews.getNews();
+async function loadNews(): Promise<HTMLNews[] | null> {
+    const modelsNews: ModelNews[] | null = await ModelNews.getNews();
+
+    if (!modelsNews) {
+        return null;
+    }
+
     return rendererNews.renderMany(modelsNews) as HTMLNews[];
 }

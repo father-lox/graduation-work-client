@@ -1,6 +1,6 @@
 import autoResizeHeightTextarea from 'code/ui-components/inputs/expressive-input/auto-resize-height-textarea.js'
 import DefaultInput from 'code/ui-components/inputs/default-input/default-input.js';
-import { NewsData } from 'types/api.js';
+import { PublishedNews } from 'types/api.js';
 import { isNewsData } from 'types/type-guards.js';
 import APIManager from 'code/api/api-manager.js';
 import ClientRoutes from 'code/client-routes.js';
@@ -30,7 +30,7 @@ function sendNews(event: Event) {
     }
 }
 
-function buildNews(formData: FormData): NewsData {
+function buildNews(formData: FormData): PublishedNews {
     let news: any = {
         title: formData.get('title'),
         sources: [

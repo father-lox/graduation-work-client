@@ -3,6 +3,7 @@ import RenderComment from './render-comment.js';
 import HTMLNews from 'code/ui-components/news/html-news.js';
 import HTMLComment from 'code/ui-components/comment/html-comment.js';
 import ModelNews from 'models/model-news.js';
+import { Source } from 'types/api.js';
 
 export default class RenderNews implements IRender {
     constructor(private commentRenderer = new RenderComment()) {
@@ -25,10 +26,17 @@ export default class RenderNews implements IRender {
 
     renderOne(newsModel: ModelNews, place?: HTMLElement): HTMLNews | void {
         const newsNode: HTMLNews = document.createElement('c-news') as HTMLNews;
-        const authorCommentNode: HTMLComment = this.commentRenderer.renderOne(newsModel.authorComment) as HTMLComment;
-        this.setAttributes(newsNode, authorCommentNode, newsModel);
+        let authorCommentNode: HTMLComment | undefined; 
+        
+        if (newsModel.authorComment) {
+            authorCommentNode = this.commentRenderer.renderOne(newsModel.authorComment) as HTMLComment;
+        }
+        
+        this.setAttributes(newsNode, newsModel, authorCommentNode);
 
-        newsNode.append(authorCommentNode);
+        if (authorCommentNode) {
+            newsNode.append(authorCommentNode);
+        }
 
         if (place) {
             place.append(newsNode);
@@ -37,11 +45,16 @@ export default class RenderNews implements IRender {
         }
     }
 
-    private setAttributes(newsNode: HTMLNews, authorCommentNode: HTMLComment, model: ModelNews) {
+    private setAttributes(newsNode: HTMLNews, model: ModelNews, authorCommentNode?: HTMLComment) {
         newsNode.setAttribute('id', model.id.toString());
         newsNode.setAttribute('title', model.title);
         newsNode.setAttribute('views', model.countViews.toString());
         newsNode.setAttribute('comments', model.countComments.toString());
-        authorCommentNode.setAttribute('slot', 'author-comment');
+        newsNode.setAttribute(HTMLNews.availableAttributes.sourceLink, model.sources[0].href.toString());
+        newsNode.setAttribute(HTMLNews.availableAttributes.sourceTitle, model.sources[0].title);
+
+        if (authorCommentNode) {
+            authorCommentNode.setAttribute('slot', 'author-comment');
+        }
     }
 }

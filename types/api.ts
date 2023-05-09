@@ -68,7 +68,21 @@ export const enum LoginDataFields {
     password = 'password',
 }
 
-/* News */
+/* Published Sews */
+
+export type PublishedNews = {
+    title: string,
+    author_comment?: string,
+    sources: Source[],
+}
+
+export const enum PublishedNewsFields {
+    title = 'title',
+    authorComment = 'author_comment',
+    sources = 'sources'
+}
+
+/* Source */
 
 export type Source = {
     href: string | URL,
@@ -80,14 +94,24 @@ export const enum SourceFields {
     title = 'title'
 }
 
-export type NewsData = {
+/* Readable News */
+
+export type ReadableNews = {
+    id: number,
     title: string,
     author_comment?: string,
-    sources: Source[],
+    nickname: string,
+    count_views: number,
+    count_comments: number,
+    sources: Source[]
 }
 
-export const enum NewsDataFields {
+export const enum ReadableNewsFields {
+    id = 'id',
     title = 'title',
     authorComment = 'author_comment',
+    nickname = 'nickname',
+    countViews = 'count_views',
+    countComments = 'count_comments',
     sources = 'sources'
 }

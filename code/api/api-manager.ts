@@ -1,4 +1,4 @@
-import { APIToken, CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData, NewsData } from "types/api.js";
+import { APIToken, CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData, PublishedNews } from "types/api.js";
 import URLManager from "../url-manager.js";
 import APIRequestManager from "./api-request-manager.js";
 
@@ -73,7 +73,7 @@ export default class APIManager {
     }
 
     public async postNews(
-        news: NewsData,
+        news: PublishedNews,
         onSuccess: () => void,
         onReject: (message: ErrorMessage, errorCode: number) => void) {
             const response: Response = await this.apiRequestManager.sendRequest(this.urlManager.postNews, news, true);

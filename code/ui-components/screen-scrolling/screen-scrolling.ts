@@ -2,7 +2,7 @@ export default class ScreenScrolling {
     constructor(
         private containerScreens: HTMLElement,
         private screens: HTMLElement[],
-        private loadScreens?: () => Promise<HTMLElement[]>
+        private loadScreens?: () => Promise<HTMLElement[] | null>
     ) {
         if (screens.length === 0 && loadScreens) {
             this.attachLoadedScreens().then(() => {
@@ -34,11 +34,11 @@ export default class ScreenScrolling {
         nextScreen: string,
         previousScreen: string
     } = {
-        container: 'screen-scrolling',
-        screens: 'screen-scrolling__item',
-        nextScreen: 'screen-scrolling_next',
-        previousScreen: 'screen-scrolling_previous'
-    }
+            container: 'screen-scrolling',
+            screens: 'screen-scrolling__item',
+            nextScreen: 'screen-scrolling_next',
+            previousScreen: 'screen-scrolling_previous'
+        }
 
     private canNextSwitch = (): boolean => {
         return this.switchAccumulator >= this.nextSwitchThreshold && this.isSwitchable;
@@ -91,17 +91,17 @@ export default class ScreenScrolling {
         if (window.pageYOffset !== window.scrollY) {
             return;
         }
-    
+
         if (this.currentScreen + 1 < this.screens.length) {
-            this.blockSwitching();    
+            this.blockSwitching();
             this.screens[this.currentScreen].classList.add(this.classes.previousScreen);
-            this.currentScreen++;   
+            this.currentScreen++;
             this.screens[this.currentScreen].classList.remove(this.classes.nextScreen);
         }
         if (this.currentScreen === this.screens.length - 1 && this.loadScreens) {
             this.attachLoadedScreens();
         }
-    
+
         window.scroll(0, 0);
     }
 
@@ -117,12 +117,19 @@ export default class ScreenScrolling {
     }
 
     private attachLoadedScreens = async () => {
-        if (this.loadScreens) {
-            (await this.loadScreens()).forEach(element => {
-                element.classList.add(this.classes.nextScreen, this.classes.screens);
-                this.containerScreens.append(element);
-                this.screens.push(element);
-            });
+        if (!this.loadScreens) {
+            return;
         }
+        const data = await this.loadScreens();
+
+        if (data === null) {
+            return;
+        }
+
+        data.forEach(element => {
+            element.classList.add(this.classes.nextScreen, this.classes.screens);
+            this.containerScreens.append(element);
+            this.screens.push(element);
+        });
     }
 }

@@ -7,6 +7,7 @@ export default class HTMLNews extends HTMLElement {
         
         this.titleElement = this.newsNode.querySelector('#title') as HTMLHeadingElement;
         this.commentButtonElement = this.newsNode.querySelector('#comment-button') as HTMLButtonElement;
+        this.sourceElement = this.newsNode.querySelector('#source') as HTMLLinkElement;
 
         this.viewsCountElement = this.newsNode.querySelector('#views') as HTMLLIElement;      
         this.viewsCountTextNode = document.createTextNode('');  
@@ -15,7 +16,8 @@ export default class HTMLNews extends HTMLElement {
         this.commentsCountTextNode = document.createTextNode('');  
 
         if (!(this.template || 
-            this.newsNode || 
+            this.newsNode ||
+            this.sourceElement || 
             this.titleElement ||
             this.viewsCountElement ||
             this.commentsCountElement ||
@@ -33,6 +35,11 @@ export default class HTMLNews extends HTMLElement {
 
     static get observedAttributes() {
         return ['title', 'views', 'comments'];
+    }
+
+    static availableAttributes: {sourceLink: string, sourceTitle: string} = {
+        sourceLink: 'source-link',
+        sourceTitle: 'source-title'
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -59,6 +66,7 @@ export default class HTMLNews extends HTMLElement {
     private commentsCountElement: HTMLLIElement;
     private commentsCountTextNode: Text;
     private commentButtonElement: HTMLButtonElement;
+    private sourceElement: HTMLLinkElement;
 
     private shadowDOMProperty: ShadowRootInit = {
         mode: 'closed'
@@ -68,6 +76,7 @@ export default class HTMLNews extends HTMLElement {
         this.setTitle();
         this.setViewsCount();
         this.setCommentsCount();
+        this.setSources();
     }
 
     private initEvents() {
@@ -125,6 +134,20 @@ export default class HTMLNews extends HTMLElement {
         }
 
         this.commentsCountElement.append(commentsCount.toString());
+    }
+
+    private setSources() {
+        const href: string = this.getAttribute(HTMLNews.availableAttributes.sourceLink) || '';
+        const title: string = this.getAttribute(HTMLNews.availableAttributes.sourceTitle) || '';
+
+        if (href.length === 0) {
+            throw new Error(`${HTMLNews.availableAttributes.sourceLink} attribute is required`);
+        } else if (title.length === 0) {
+            throw new Error(`${HTMLNews.availableAttributes.sourceTitle} attribute is required`);
+        }
+
+        this.sourceElement.href = href;
+        this.sourceElement.title = title;
     }
 
     private updateTitle(newValue: string) {

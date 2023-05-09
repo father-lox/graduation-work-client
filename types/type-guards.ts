@@ -1,8 +1,8 @@
 import {
     LoginDataFields, 
     LoginData,
-    NewsData,
-    NewsDataFields,
+    PublishedNews,
+    PublishedNewsFields,
     Source,
     SourceFields
 } from './api.js';
@@ -24,11 +24,11 @@ export function isLoginData(value: any): value is LoginData {
 
 /* News */
 
-export function isNewsData(value: any): value is NewsData {
+export function isNewsData(value: any): value is PublishedNews {
     const isObj = isObject(value);
-    const hasTitle = NewsDataFields.title in value && typeof value.title === 'string';
-    const isCommentCorrect = !(NewsDataFields.authorComment in value) || (NewsDataFields.authorComment in value && typeof value.author_comment === 'string')
-    const hasSources = NewsDataFields.sources in value && Array.isArray(value.sources);
+    const hasTitle = PublishedNewsFields.title in value && typeof value.title === 'string';
+    const isCommentCorrect = !(PublishedNewsFields.authorComment in value) || (PublishedNewsFields.authorComment in value && typeof value.author_comment === 'string')
+    const hasSources = PublishedNewsFields.sources in value && Array.isArray(value.sources);
     const isSourcesCorrect = checkSources(value.sources);
 
 
@@ -60,6 +60,9 @@ export function isSource(value: any): value is Source {
 
     return false;
 }
+
+/* Readable News */
+//TODO: Add type Guard for ReadableNews
 
 function isObject(value: unknown): value is {} {
     return typeof value === 'object' && value !== null
