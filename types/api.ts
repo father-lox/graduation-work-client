@@ -10,6 +10,8 @@ export type ErrorMessage = string;
 
 export type CheckableUniqueProperties = 'login' | 'nickname';
 
+export type NewsID = number;
+
 /**
  * Объект API ссылок, приходящих ответом от сервера
  */
@@ -114,4 +116,16 @@ export const enum ReadableNewsFields {
     countViews = 'count_views',
     countComments = 'count_comments',
     sources = 'sources'
+}
+
+/* Submitted Comment */
+
+export type SubmittedComment = {
+    news_id: NewsID,
+    comment: 'string',
+}
+
+export const enum SubmittedCommentFields {
+    newsId = 'news_id',
+    comment = 'comment',
 }
