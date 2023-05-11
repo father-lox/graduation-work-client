@@ -3,7 +3,6 @@ import RenderComment from './render-comment.js';
 import HTMLNews from 'code/ui-components/news/html-news.js';
 import HTMLComment from 'code/ui-components/comment/html-comment.js';
 import ModelNews from 'models/model-news.js';
-import { Source } from 'types/api.js';
 
 export default class RenderNews implements IRender {
     constructor(private commentRenderer = new RenderComment()) {
@@ -29,7 +28,7 @@ export default class RenderNews implements IRender {
         let authorCommentNode: HTMLComment | undefined; 
         
         if (newsModel.authorComment) {
-            authorCommentNode = this.commentRenderer.renderOne(newsModel.authorComment) as HTMLComment;
+            authorCommentNode = this.commentRenderer.renderOne(newsModel.authorComment, true) as HTMLComment;
         }
         
         this.setAttributes(newsNode, newsModel, authorCommentNode);

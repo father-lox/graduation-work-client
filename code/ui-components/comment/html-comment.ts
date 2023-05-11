@@ -3,16 +3,21 @@ export default class HTMLComment extends HTMLElement {
         super();
         this.commentFragment = (document.getElementById(templateId) as HTMLTemplateElement).content.cloneNode(true) as unknown as DocumentFragment;
         this.commentContainer = this.commentFragment.querySelector('.comment') as HTMLDivElement;
-        this.nicknameElement = this.commentFragment.querySelector('.comment__nickname') as HTMLParagraphElement;
+        this.autographElement = this.commentFragment.querySelector('.comment__autograph') as HTMLParagraphElement;
         this.commentElement = this.commentFragment.querySelector('.comment__text') as HTMLParagraphElement;
 
-        if (!(this.commentFragment || this.nicknameElement || this.commentElement)) {
+        if (!(this.commentFragment || this.autographElement || this.commentElement)) {
             throw new Error("Template is incorrect");
         }
     }
 
     static get observedAttributes() {
-        return ['nickname', 'comment'];
+        return ['autograph', 'comment'];
+    }
+
+    static availableAttributes = {
+        autograph: 'autograph',
+        comment: 'comment'
     }
 
     hide() {
@@ -37,10 +42,10 @@ export default class HTMLComment extends HTMLElement {
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         switch (name) {
-            case 'nickname':
-                this.updateNickname(newValue);
+            case HTMLComment.availableAttributes.autograph:
+                this.updateAutograph(newValue);
                 break;
-            case 'comment':
+            case HTMLComment.availableAttributes.comment:
                 this.updateComment(newValue);
                 break;
             default:
@@ -50,38 +55,41 @@ export default class HTMLComment extends HTMLElement {
 
     private commentFragment: DocumentFragment;
     private commentContainer: HTMLDivElement;
-    private nicknameElement: HTMLParagraphElement;
+    private autographElement: HTMLParagraphElement;
     private commentElement: HTMLParagraphElement;
     private shadowDOMProperty: ShadowRootInit = {
         mode: 'closed'
     }
 
+    private modifierClasses = {
+        writerAutograph: 'comment__autograph_writer',
+        writerText: 'comment__text_writer'
+    }
+
     private processAttributes() {
-        this.setNickname();
+        this.setaAutograph();
         this.setComment();
     }
 
-    private setNickname() {
-        const nickname: string = this.getAttribute('nickname') || '';
+    private setaAutograph() {
+        const autograph: string = this.getAttribute(HTMLComment.availableAttributes.autograph) || '';
 
-        if (nickname.length === 0) {
-            throw new Error('"nickname" attribute is required');
-
+        if (autograph.length === 0) {
+            throw new Error(`"${HTMLComment.availableAttributes.autograph}" attribute is required`);
         }
 
-        this.nicknameElement.innerText = 'Comment by @' + nickname;
+        this.autographElement.innerText = autograph;
     }
 
-    private updateNickname(nickname: string) {
-        this.nicknameElement.innerText = 'Comment by @' + nickname;
+    private updateAutograph(autograph: string) {
+        this.autographElement.innerText = autograph;
     }
 
     private setComment() {
-        const comment: string = this.getAttribute('comment') || '';
+        const comment: string = this.getAttribute(HTMLComment.availableAttributes.comment) || '';
 
         if (comment.length === 0) {
-            throw new Error('"comment" attribute is required');
-
+            throw new Error(`"${HTMLComment.availableAttributes.comment}" attribute is required`);
         }
 
         this.commentElement.innerText = comment;
@@ -92,7 +100,7 @@ export default class HTMLComment extends HTMLElement {
     }
 
     private styleAsAuthorComment() {
-        this.nicknameElement.classList.add('comment__nickname_writer');
-        this.commentElement.classList.add('comment__text_writer');
+        this.autographElement.classList.add(this.modifierClasses.writerAutograph);
+        this.commentElement.classList.add(this.modifierClasses.writerText);
     }
 }

@@ -1,10 +1,9 @@
 import ModelComment from 'models/model-comment.js';
 import RenderComment from 'renders/render-comment.js';
-import UserComment from 'types/user-comment.js';
+import { UserComment } from 'types/api.js';
 import HTMLComment from 'code/ui-components/comment/html-comment.js';
 import ModalWindow from 'code/ui-components/modal-window/modal-window.js';
 import autoResizeHeightTextarea from 'code/ui-components/inputs/expressive-input/auto-resize-height-textarea.js'
-import sendComment from './send-comment.js';
 
 export default class CommentsManager {
     constructor(
@@ -12,7 +11,6 @@ export default class CommentsManager {
         private commentsListElement: HTMLDivElement = document.getElementById('comment-list') as HTMLDivElement,
         private backToNewsElement: HTMLButtonElement = document.getElementById('back-to-news') as HTMLButtonElement,
         private commentField: HTMLTextAreaElement = document.getElementById('comment-field') as HTMLTextAreaElement,
-        private commentForm: HTMLFormElement = document.getElementById('comment-form') as HTMLFormElement,
         private commentRenderer = new RenderComment()
     ) {
         autoResizeHeightTextarea(this.commentField);
@@ -27,17 +25,14 @@ export default class CommentsManager {
 
     init() {
         this.initEvents();
+    }
 
-        this.commentForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const message: string = new FormData(this.commentForm).get('comment') as string;
-
-            sendComment(this.currentNewsId, message).then(result => {
-                console.log(result);
-                this.commentForm.reset();
-            });
-        })
+    insertComment = (comment: UserComment) => {
+        this.comments.unshift(comment);
+        let commentElement: HTMLComment = this.commentRenderer.renderOne(comment) as HTMLComment;
+        this.commentsNodes.unshift(commentElement);
+        this.setAnimationRules(commentElement);
+        this.commentsListElement.prepend(commentElement);
     }
 
     /**
@@ -121,7 +116,7 @@ export default class CommentsManager {
         }
     }
 
-    //TODO: Протестировать все случаи
+    //TODO: Test all cases
     /**
      * Render comments or update attributes existing or remove exhausting
      * @param newsId {number} - News identifier 
@@ -183,8 +178,9 @@ export default class CommentsManager {
      */
     private updateCommentsAttribute(model: UserComment[], nodes: HTMLComment[]) {
         for (let i = 0; i < nodes.length; i++) {
+            const nickname: string = (model[i].nickname ? model[i].nickname : '🥷') as string;
             nodes[i].setAttribute('comment', model[i].comment);
-            nodes[i].setAttribute('nickname', model[i].nickname);
+            nodes[i].setAttribute('nickname', nickname);
         }
     }
 

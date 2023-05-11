@@ -22,5 +22,9 @@ export default class URLManager {
         return new URL('/api/post-news', this.server);
     }
 
+    get sendComment() {
+        return new URL('/api/send-comment', this.server);
+    }
+
     readonly client = new URL('http://127.0.0.1:5500/');
 }

@@ -122,10 +122,22 @@ export const enum ReadableNewsFields {
 
 export type SubmittedComment = {
     news_id: NewsID,
-    comment: 'string',
+    comment: string,
 }
 
 export const enum SubmittedCommentFields {
     newsId = 'news_id',
     comment = 'comment',
+}
+
+/* Comment */
+
+export type UserComment = {
+    nickname?: string,
+    comment: string,
+}
+
+export enum UserCommentFields {
+    comment = 'comment',
+    nickname = 'nickname'
 }

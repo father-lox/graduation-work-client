@@ -4,7 +4,9 @@ import {
     PublishedNews,
     PublishedNewsFields,
     Source,
-    SourceFields
+    SourceFields,
+    UserCommentFields,
+    UserComment
 } from './api.js';
 
 /* Login Data */
@@ -59,6 +61,15 @@ export function isSource(value: any): value is Source {
     }
 
     return false;
+}
+
+/* Comment */
+
+export function isUserComment(value: any): value is UserComment {
+    const isObj = isObject(value);
+    const hasComment = UserCommentFields.comment in value;
+
+    return isObj && hasComment;
 }
 
 /* Readable News */

@@ -1,5 +1,4 @@
-import { APILinksNavigator } from 'types/api.js';
-import UserComment from 'types/user-comment.js';
+import { APILinksNavigator, UserComment } from 'types/api.js';
 
 export default class ModelComment {
     static requestAddress: string = 'http://localhost/api/comments';

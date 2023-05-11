@@ -3,8 +3,11 @@ import HTMLNews from 'code/ui-components/news/html-news.js';
 import ScreenScrolling from 'code/ui-components/screen-scrolling/screen-scrolling.js';
 import RenderNews from 'renders/render-news.js'
 import CommentsManger from './portions/comments/comments-manager.js';
+import CommentForm from './portions/comments/comment-form.js';
 
-new CommentsManger().init();
+const commentsManger = new CommentsManger();
+
+commentsManger.init();
 
 const rendererNews: RenderNews = new RenderNews();
 const newsContainer: HTMLDivElement = document.querySelector('.news-section') as HTMLDivElement;
@@ -18,6 +21,8 @@ if (!newsContainer) {
 
 new ScreenScrolling(newsContainer, newsElements, loadNews);
 
+new CommentForm(document.getElementById('comment-form') as HTMLFormElement, commentsManger.insertComment, onReject);
+
 
 async function loadNews(): Promise<HTMLNews[] | null> {
     const modelsNews: ModelNews[] | null = await ModelNews.getNews();
@@ -27,4 +32,8 @@ async function loadNews(): Promise<HTMLNews[] | null> {
     }
 
     return rendererNews.renderMany(modelsNews) as HTMLNews[];
+}
+
+function onReject() {
+    alert('Comment was not sended');
 }

@@ -1,4 +1,5 @@
-import { APIToken, CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData, PublishedNews } from "types/api.js";
+import { CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData, PublishedNews, SubmittedComment, UserComment } from "types/api.js";
+import { isUserComment } from "types/type-guards.js";
 import URLManager from "../url-manager.js";
 import APIRequestManager from "./api-request-manager.js";
 
@@ -84,7 +85,21 @@ export default class APIManager {
                 const serverMessage = await response.json();
                 onReject(serverMessage.message, response.status);
             }
-        }
+    }
+
+    public async sendComment(
+        comment: SubmittedComment,
+        onSuccess: (comment: UserComment) => void,
+        onReject: (message: ErrorMessage, errorCode: number) => void) {
+            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.sendComment, comment, this.apiRequestManager.isAPITokenSet());
+            const serverMessage = await response.json();
+
+            if (response.ok && isUserComment(serverMessage)) {
+                onSuccess(serverMessage);
+            } else {
+                onReject(serverMessage.message, response.status);
+            }
+    }
 
     private urlManager = new URLManager();
     private apiRequestManager = new APIRequestManager();

@@ -1,5 +1,4 @@
-import UserComment from 'types/user-comment.js';
-import { ReadableNewsFields, Source } from 'types/api.js';
+import { ReadableNewsFields, Source, UserComment } from 'types/api.js';
 
 export default class ModelNews {
     constructor(
@@ -55,7 +54,7 @@ export default class ModelNews {
         let commentByAuthor: UserComment | undefined;
 
         if (comment) {
-            commentByAuthor = { nickname, comment, isAuthor: true };
+            commentByAuthor = { nickname, comment };
         }
 
         return new ModelNews(id, title, countViews, countComments, sources, commentByAuthor);

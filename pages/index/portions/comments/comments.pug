@@ -4,8 +4,8 @@ mixin comments()
   dialog.comment-section.modal-window.modal-window_hide-below#comment-section
     .comment-section__container
       form#comment-form.comment-section__typing 
-        textarea#comment-field.input-expressive.comment-section__field(type="text" name="comment" rows="1" placeholder="Enter your comment")
-        button
+        textarea#comment-field.input-expressive.comment-section__field(type="text" name="comment" required rows="1" placeholder="Enter your comment")
+        button.button Send
       #comment-list.comment-section__list
 
     +backToNews('comment-section__back')
