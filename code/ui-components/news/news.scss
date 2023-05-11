@@ -69,16 +69,27 @@
     }
 
     &__source {
-        width: 25rem;
-        height: 25rem;
+        $size: 40rem;
+        $sizeMobile: 32rem;
+
         border-radius: 50%;
         background-color: $accent-color;
         transition-property: width, height;
         transition: .15s cubic-bezier(0.33, 1, 0.68, 1);
     
+        @include media-from($width576) {
+            width: $size;
+            height: $size;
+        }
+
         @include media-from($desktopMaxWidth) {
-            width: convertValueToVW(25rem);
-            height: convertValueToVW(25rem);
+            width: convertValueToVW($size);
+            height: convertValueToVW($size);
+        }
+
+        @include media-till($width576) {
+            width: $sizeMobile;
+            height: $sizeMobile;
         }
         
         &:hover {
@@ -87,7 +98,14 @@
     }
 
     &__source-icon {
-        transform: scale(.7);
+        @include media-from($width576) {
+            transform: scale(.7);
+        }
+
+        @include media-till($width576) {
+            //Fix alignment
+        transform: scale(.7) translateX(.7rem);
+        }
     }
 
     .button {
