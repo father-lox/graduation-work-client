@@ -4,7 +4,9 @@ import ScreenScrolling from 'code/ui-components/screen-scrolling/screen-scrollin
 import RenderNews from 'renders/render-news.js'
 import CommentsManger from './portions/comments/comments-manager.js';
 import CommentForm from './portions/comments/comment-form.js';
+import Header from 'code/ui-components/header/header.js';
 
+new Header();
 const commentsManger = new CommentsManger();
 
 commentsManger.init();

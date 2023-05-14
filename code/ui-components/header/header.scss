@@ -1,15 +1,25 @@
 @use '../buttons/button.scss';
 @use '../buttons/_accent.scss';
+@use '../buttons/_icon.scss';
 @use '../../../styles/base-includes' as *;
 
 .header {
     display: flex;
     justify-content: space-between;
+    transition: opacity .4s ease;
+
+    &_hidden {
+        opacity: 0;
+    }
 
     &__button {
         display: flex;
         justify-content: center;
         align-items: center;
+
+        &_logout {
+            margin: 0 0 0 10rem;
+        }
     }   
 
     &__social-network-logo {
@@ -18,8 +28,15 @@
         height: 18rem;
     }
 
-    &__right-side {
+    &__left-side {
         display: flex;
+
+        $spaceBetweenButtons: 10rem;
+        gap: $spaceBetweenButtons;
+
+        @include media-from($desktopMaxWidth) {
+            gap: convertValueToVM($spaceBetweenButtons);
+        }
     }
 
     &__right-side {

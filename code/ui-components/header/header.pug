@@ -1,13 +1,19 @@
 mixin header()
-	nav.header(class!=attributes.class)
+	nav.header.header_hidden#header(class!=attributes.class)
 		.header__left-side
-			a.button.button_accent.header__button
-				<svg class="header__social-network-logo"><use xlink:href="#user-plus"></use></svg>
+			a.button.button_accent.button_icon.header__button#candidacy(data-role="guest")
+				<svg class="header__social-network-logo"><use xlink:href="#fill-user-plus"></use></svg>
+			a.button.button_accent.button_icon.header__button#main(title="Read News" data-role="auth")
+				<svg class="header__social-network-logo"><use xlink:href="#fill-home"></use></svg>
+			a.button.button_accent.button_icon.header__button#editorial-office(title="Write News" data-role="auth")
+				<svg class="header__social-network-logo"><use xlink:href="#fill-pen"></use></svg> write
 		.header__right-side
-			p.header__hint Subscribe to the news at
-			a.button.button_accent.header__button(href='//t.me/news_log_bot/' target="_blank")
+			p.header__hint(data-role="guest") Subscribe to the news at
+			a.button.button_accent.button_icon.header__button#telegram(href='#' target="_blank")
 				<svg class="header__social-network-logo"><use xlink:href="#telegram"></use></svg>
-			a.button.button_accent.header__button(href='http://discord.com/' target="_blank")
+			a.button.button_accent.button_icon.header__button#discord(href='#' target="_blank")
 				<svg class="header__social-network-logo"><use xlink:href="#discord"></use></svg>
-			a.button.button_accent.header__button(href='http://vk.com/' target="_blank")
+			a.button.button_accent.button_icon.header__button#vk(href='#' target="_blank")
 				<svg class="header__social-network-logo"><use xlink:href="#vk"></use></svg>
+			a.button.button_accent.button_icon.header__button.header__button_logout#logout(title="Logout" data-role="auth")
+				<svg class="header__social-network-logo"><use xlink:href="#fill-outdoor"></use></svg>
