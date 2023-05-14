@@ -1,6 +1,6 @@
 import FormPagination from 'code/form-pagination/form-pagination.js';
 import HTMLNoteError from 'code/ui-components/note-error/html-note-error.js';
-import URLManager from 'code/url-manager.js';
+import URLManager from 'code/routes/url-manager.js';
 import APIManager from 'code/api/api-manager.js';
 import { ApplicationDate } from 'types/api.js';
 import DefaultInput from 'code/ui-components/inputs/default-input/default-input.js';
@@ -42,7 +42,7 @@ function onApplicationSended() {
 }
 
 function redirectToMain() {
-    location.href = new URLManager().client.href;
+    location.href = new URLManager().client.main.href;
 }
 
 function onApplicationSendingError(errorMessage: string) {

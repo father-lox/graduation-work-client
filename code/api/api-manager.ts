@@ -1,6 +1,6 @@
 import { CheckableUniqueProperties, ErrorMessage, RegistrationData, ApplicationDate, LoginData, PublishedNews, SubmittedComment, UserComment } from "types/api.js";
 import { isUserComment } from "types/type-guards.js";
-import URLManager from "../url-manager.js";
+import URLManager from "../routes/url-manager.js";
 import APIRequestManager from "./api-request-manager.js";
 
 export default class APIManager {
@@ -9,7 +9,7 @@ export default class APIManager {
         onSuccess: () => void,
         onReject: (message: ErrorMessage) => void) => {
 
-        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.signup, body);
+        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.signup, body);
 
         if (response.status >= 300) {
             onReject(`Error ${response.status}: ${response.statusText}`);
@@ -34,7 +34,7 @@ export default class APIManager {
         onSuccess: () => void,
         onReject: (message: ErrorMessage) => void
         ) {
-            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.newApplication, applicationData);
+            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.newApplication, applicationData);
             let serverResponse = await response.json();
 
             if (response.ok) {
@@ -49,7 +49,7 @@ export default class APIManager {
         onSuccess: () => void,
         onReject: (message: ErrorMessage) => void
         ) {
-            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.login, loginData);
+            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.login, loginData);
             let serverResponse = await response.json();
 
             if (response.status === 201 && 'user' in serverResponse && 'token' in serverResponse) {
@@ -63,7 +63,7 @@ export default class APIManager {
     public async isValueUnique(property: CheckableUniqueProperties, value: string): Promise<boolean> {
         const body = { [property]: value }
 
-        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.isValueUnique, body);
+        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.isValueUnique, body);
         let serverMessage: any = await response.json();
 
         if (serverMessage.hasOwnProperty('isUnique')) {
@@ -77,7 +77,7 @@ export default class APIManager {
         news: PublishedNews,
         onSuccess: () => void,
         onReject: (message: ErrorMessage, errorCode: number) => void) {
-            const response: Response = await this.apiRequestManager.sendRequest(this.urlManager.postNews, news, true);
+            const response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.postNews, news, true);
 
             if (response.ok) {
                 onSuccess();
@@ -91,7 +91,7 @@ export default class APIManager {
         comment: SubmittedComment,
         onSuccess: (comment: UserComment) => void,
         onReject: (message: ErrorMessage, errorCode: number) => void) {
-            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.sendComment, comment, this.apiRequestManager.isAPITokenSet());
+            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.sendComment, comment, this.apiRequestManager.isAPITokenSet());
             const serverMessage = await response.json();
 
             if (response.ok && isUserComment(serverMessage)) {

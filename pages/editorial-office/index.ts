@@ -3,14 +3,14 @@ import DefaultInput from 'code/ui-components/inputs/default-input/default-input.
 import { PublishedNews } from 'types/api.js';
 import { isNewsData } from 'types/type-guards.js';
 import APIManager from 'code/api/api-manager.js';
-import ClientRoutes from 'code/client-routes.js';
+import URLManager from 'code/routes/url-manager';
 
 autoResizeHeightTextarea(document.getElementById('news-title') as HTMLTextAreaElement);
 
 const inputs: DefaultInput[] = Array.from(document.querySelectorAll('.news-form__input')).map(input => new DefaultInput(input as HTMLDivElement)) as DefaultInput[];
 const form: HTMLFormElement = document.getElementById('news-form') as HTMLFormElement;
 const apiManager: APIManager = new APIManager();
-const clientRoutes: ClientRoutes = new ClientRoutes();
+const urlManager: URLManager = new URLManager();
 
 form.addEventListener('submit', sendNews);
 
@@ -56,13 +56,13 @@ function buildNews(formData: FormData): PublishedNews {
 
 function onSuccess(): void {
     alert('News was public');
-    location.href = clientRoutes.news.href;
+    location.href = urlManager.client.main.href;
 }
 
 function onReject(message: string, errorCode: number): void {
     if (errorCode === 401) {
         alert(message);
-        location.href = clientRoutes.login.href;
+        location.href = urlManager.client.loginAuthor.href;
     } else {
         alert(message);
     }

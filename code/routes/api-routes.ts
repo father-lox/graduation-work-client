@@ -1,6 +1,5 @@
-export default class URLManager {
+export default class APIRoutes {
     private readonly server = new URL('http://localhost/');
-    // private readonly client = new URL()
 
     get signup() {
         return new URL('/api/signup', this.server);
@@ -25,6 +24,4 @@ export default class URLManager {
     get sendComment() {
         return new URL('/api/send-comment', this.server);
     }
-
-    readonly client = new URL('http://127.0.0.1:5500/');
 }

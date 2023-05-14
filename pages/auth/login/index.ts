@@ -1,6 +1,6 @@
 import APIManager from 'code/api/api-manager.js';
 import HTMLNoteError from 'code/ui-components/note-error/html-note-error.js';
-import URLManager from 'code/url-manager.js';
+import URLManager from 'code/routes/url-manager.js';
 import { isLoginData } from 'types/type-guards.js';
 import DefaultInput from 'code/ui-components/inputs/default-input/default-input.js';
 
@@ -30,7 +30,7 @@ function onFormSubmit(event: Event) {
 }
 
 function onLogin() {
-    location.href = urlManager.client.href;
+    location.href = urlManager.client.loginAuthor.href;
 }
 
 function onLoginError(errorMessage: string) {
