@@ -1,0 +1,27 @@
+@use '../../../styles/_colors.scss' as *;
+
+.button_states {
+    &:focus-visible:not(:disabled) {
+        background-color: $accent-color;
+        outline: 1px solid $black-color;
+        color: $white-color;
+    }
+
+    &:hover:not(:disabled) {
+        background-color: $accent-color;
+        color: $white-color;
+        cursor: pointer;
+    }
+
+    &:active:not(:disabled) {
+        background-color: $black-color;
+        color: $accent-color;
+        outline: none;
+    }
+
+    &:disabled {
+        outline-color: $walrus-color;
+        color: $walrus-color;
+        cursor: not-allowed;
+    }
+}

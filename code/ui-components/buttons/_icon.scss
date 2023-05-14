@@ -1,0 +1,32 @@
+@use '../../../styles/_colors.scss' as *;
+@use '../../../styles/_base-includes.scss' as *;
+
+.button_icon {
+    stroke: $accent-color;
+    fill: $accent-color;
+    gap: 6rem;
+
+    @include media-from($desktopMaxWidth) {
+        gap: convertValueToVW(6rem);
+    }
+
+    &:focus-visible {
+        stroke: $white-color;
+        fill: $white-color;
+    }
+
+    &:hover {
+        stroke: $white-color;
+        fill: $white-color;
+    }
+
+    &:active {
+        stroke: $accent-color;
+        fill: $accent-color;
+    }
+
+    &:disabled {
+        stroke: $walrus-color;
+        fill: $walrus-color;
+    }
+}

@@ -1,5 +1,6 @@
 @use '../../../styles/_base-includes.scss' as *;
 @use '../../../styles/functions/convert-value-to-vw.scss' as *;
+@use './_states.scss';
 
 .button {
     @include setFontButton();
@@ -9,35 +10,37 @@
     padding: 4rem 10rem;
     min-width: fit-content;
     border-radius: 4rem;
-    outline: none;
+    text-decoration: none;
 
     @include media-from($desktopMaxWidth) {
         padding: convertValueToVW(4rem) convertValueToVW(10rem);
         border-radius: convertValueToVW(4rem);
     }
 
-    &:hover {
-        cursor: pointer;
-    }
+    @extend .button_states;
 
-    &:hover:not(:disabled) {
-        color: $white-color;
-        background-color: $accent-color;
-    }
+    // &:hover {
+    //     cursor: pointer;
+    // }
 
-    &:active:not(:disabled) {
-        color: $white-color;
-        background-color: $black-color;
-    }
+    // &:hover:not(:disabled) {
+    //     color: $white-color;
+    //     background-color: $accent-color;
+    // }
 
-    &:active:active:not(:disabled),
-    &:focus:active:not(:disabled) {
-        color: $white-color;
-        background-color: $accent-color;
-    }
+    // &:active:not(:disabled) {
+    //     color: $white-color;
+    //     background-color: $black-color;
+    // }
 
-    &:disabled {
-        cursor: not-allowed;
-        color: $walrus-color;
-    }
+    // &:active:active:not(:disabled),
+    // &:focus:active:not(:disabled) {
+    //     color: $white-color;
+    //     background-color: $accent-color;
+    // }
+
+    // &:disabled {
+    //     cursor: not-allowed;
+    //     color: $walrus-color;
+    // }
 }
