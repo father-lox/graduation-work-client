@@ -8,12 +8,8 @@ export default class HTMLNews extends HTMLElement {
         this.titleElement = this.newsNode.querySelector('#title') as HTMLHeadingElement;
         this.commentButtonElement = this.newsNode.querySelector('#comment-button') as HTMLButtonElement;
         this.sourceElement = this.newsNode.querySelector('#source') as HTMLLinkElement;
-
-        this.viewsCountElement = this.newsNode.querySelector('#views') as HTMLLIElement;      
-        this.viewsCountTextNode = document.createTextNode('');  
-        
+        this.viewsCountElement = this.newsNode.querySelector('#views') as HTMLLIElement;            
         this.commentsCountElement = this.newsNode.querySelector('#comments') as HTMLLIElement;
-        this.commentsCountTextNode = document.createTextNode('');  
 
         if (!(this.template || 
             this.newsNode ||
@@ -26,6 +22,20 @@ export default class HTMLNews extends HTMLElement {
         }
     }
 
+    increaseCountViews() {
+        let views: number = Number.parseInt(this.getAttribute(HTMLNews.availableAttributes.views) || '') || 0;
+
+        views++;
+        this.setAttribute(HTMLNews.availableAttributes.views, views.toString());
+    }
+
+    increaseCountComments() {
+        let views: number = Number.parseInt(this.getAttribute(HTMLNews.availableAttributes.comments) || '') || 0;
+
+        views++;
+        this.setAttribute(HTMLNews.availableAttributes.comments, views.toString());
+    }
+
     connectedCallback() {
         const root: ShadowRoot = this.attachShadow(this.shadowDOMProperty);
         root.appendChild(this.newsNode);
@@ -34,23 +44,30 @@ export default class HTMLNews extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['title', 'views', 'comments'];
+        return [
+            HTMLNews.availableAttributes.title, 
+            HTMLNews.availableAttributes.comments,
+            HTMLNews.availableAttributes.comments
+        ];
     }
 
-    static availableAttributes: {sourceLink: string, sourceTitle: string} = {
+    static availableAttributes = {
         sourceLink: 'source-link',
-        sourceTitle: 'source-title'
+        sourceTitle: 'source-title',
+        title: 'title',
+        views: 'views',
+        comments: 'comments'
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         switch (name) {
-            case 'title':
+            case HTMLNews.availableAttributes.title:
                 this.updateTitle(newValue);
                 break;
-            case 'views':
+            case HTMLNews.availableAttributes.views:
                 this.updateViewsCount(newValue);
                 break;
-            case 'comments':
+            case HTMLNews.availableAttributes.comments:
                 this.updateCommentsCount(newValue);
                 break;
             default:
@@ -62,9 +79,7 @@ export default class HTMLNews extends HTMLElement {
     private newsNode: HTMLDivElement;
     private titleElement: HTMLHeadingElement;
     private viewsCountElement: HTMLLIElement;
-    private viewsCountTextNode: Text;
     private commentsCountElement: HTMLLIElement;
-    private commentsCountTextNode: Text;
     private commentButtonElement: HTMLButtonElement;
     private sourceElement: HTMLLinkElement;
 
@@ -104,7 +119,7 @@ export default class HTMLNews extends HTMLElement {
     }
 
     private setTitle() {
-        const title: string = this.getAttribute('title') || '';
+        const title: string = this.getAttribute(HTMLNews.availableAttributes.title) || '';
 
         if (title.length === 0) {
             throw new Error('"title" attribute is required');
@@ -115,7 +130,7 @@ export default class HTMLNews extends HTMLElement {
     }
 
     private setViewsCount() {
-        const viewsCount: string = this.getAttribute('views') || '';
+        const viewsCount: string = this.getAttribute(HTMLNews.availableAttributes.views) || '';
 
         if (viewsCount.length === 0) {
             throw new Error('"title" attribute is required');
@@ -126,7 +141,7 @@ export default class HTMLNews extends HTMLElement {
     }
 
     private setCommentsCount() {
-        const commentsCount: string = this.getAttribute('comments') || '';
+        const commentsCount: string = this.getAttribute(HTMLNews.availableAttributes.comments) || '';
 
         if (commentsCount.length === 0) {
             throw new Error('"title" attribute is required');
@@ -159,7 +174,11 @@ export default class HTMLNews extends HTMLElement {
             throw 'value must be a number'
         }
 
-        this.viewsCountTextNode.textContent = newValue;
+        const countViewsNode = this.findTextNode(this.viewsCountElement);
+
+        if (countViewsNode) {
+            countViewsNode.nodeValue = newValue;
+        }
     }
 
     private updateCommentsCount(newValue: string) {
@@ -167,6 +186,14 @@ export default class HTMLNews extends HTMLElement {
             throw 'value must be a number'
         }
 
-        this.commentsCountTextNode.textContent = newValue;
+        const countCommentsNode = this.findTextNode(this.commentsCountElement);
+
+        if (countCommentsNode) {
+            countCommentsNode.nodeValue = newValue;
+        }
+    }
+
+    private findTextNode(element: HTMLElement) {
+        return Array.from(element.childNodes).find(node => node.nodeType === node.TEXT_NODE);
     }
 }
