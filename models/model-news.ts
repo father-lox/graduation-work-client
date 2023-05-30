@@ -10,9 +10,35 @@ export default class ModelNews {
         readonly authorComment?: UserComment,
     ) { }
 
+
+    static requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Accept': 'application/json'
+        },
+    };
     static requestAddress: string | null = 'http://localhost/api/news';
 
-    static async getNews(): Promise<ModelNews[] | null> {
+    static async getOneNews(newsId: number): Promise<ModelNews | null> {
+        if (this.requestAddress === null) {
+            return null;
+        }
+
+        return fetch(this.requestAddress?.concat(`/${newsId}`), ModelNews.requestOptions)
+        .then(response => response.json())
+        .then(newsObject => this.serializeOne(
+            Number(newsObject.data[ReadableNewsFields.id]),
+            newsObject.data[ReadableNewsFields.title],
+            newsObject.data[ReadableNewsFields.nickname],
+            newsObject.data[ReadableNewsFields.authorComment],
+            newsObject.data[ReadableNewsFields.countViews],
+            newsObject.data[ReadableNewsFields.countComments],
+            newsObject.data[ReadableNewsFields.sources],
+        ))
+    }
+
+    static async getManyNews(): Promise<ModelNews[] | null> {
         const unserializedNews: Array<any> | null = await this.loadInOrder();
 
         if (!unserializedNews) {
@@ -28,13 +54,7 @@ export default class ModelNews {
             return null;
         }
 
-        return fetch(this.requestAddress, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Accept': 'application/json'
-            },
-        }).then(response => {
+        return fetch(this.requestAddress, ModelNews.requestOptions).then(response => {
             return response.json();
         }).then(({ data: arrayNews, links }) => {
             this.requestAddress = links.next;

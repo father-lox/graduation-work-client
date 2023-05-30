@@ -3,6 +3,9 @@
 @use '../../../styles/fonts.scss' as *;
 @use '../../../styles/colors.scss' as *;
 @use '../../../styles/functions/convert-value-to-vw.scss' as *;
+@use '../buttons/_accent.scss';
+@use '../buttons/button.scss';
+@use '../buttons/_states.scss';
 
 .news {
     position: relative;
@@ -26,7 +29,7 @@
             margin: convertValueToVW(25rem) 0 0;
         }
     }
-    
+
     &__author-name {
         color: $accent-color;
         @include setFontDefaultMedium();
@@ -68,15 +71,15 @@
         }
     }
 
-    &__source {
-        $size: 40rem;
-        $sizeMobile: 32rem;
+    &__source,
+    &__share {
+        $size: 35rem;
+        $sizeMobile: 25rem;
 
         border-radius: 50%;
+        transition: transform .15s cubic-bezier(0.33, 1, 0.68, 1);
         background-color: $accent-color;
-        transition-property: width, height;
-        transition: .15s cubic-bezier(0.33, 1, 0.68, 1);
-    
+
         @include media-from($width576) {
             width: $size;
             height: $size;
@@ -91,9 +94,44 @@
             width: $sizeMobile;
             height: $sizeMobile;
         }
-        
+
         &:hover {
             transform: scale(1.2);
+        }
+    }
+
+    &__source {
+        &:hover {
+            cursor: alias;
+        }
+    }
+
+    &__share {
+        $marginTop: 25rem;
+
+        margin-top: $marginTop;
+        border: none;
+        fill: $white-color;
+
+        @include media-from($desktopMaxWidth) {
+            margin-top: convertValueToVW($marginTop);
+        }
+
+        &:focus-visible {
+            fill: $white-color;
+        }
+    
+        &:hover {
+            cursor: pointer;
+        }
+    
+        &:active {
+            fill: $accent-color;
+            background-color: $black-color;
+        }
+    
+        &:disabled {
+            fill: $walrus-color;
         }
     }
 
@@ -103,8 +141,7 @@
         }
 
         @include media-till($width576) {
-            //Fix alignment
-        transform: scale(.7) translateX(.7rem);
+            transform: scale(.7) translateX(.7rem);
         }
     }
 

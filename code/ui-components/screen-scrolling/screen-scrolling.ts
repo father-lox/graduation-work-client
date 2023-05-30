@@ -4,7 +4,9 @@ export default class ScreenScrolling {
         private screens: HTMLElement[],
         private loadScreens?: () => Promise<HTMLElement[] | null>
     ) {
-        if (screens.length === 0 && loadScreens) {
+        if (screens.length >= 0 && loadScreens) {
+            screens.forEach(screen => this.attachScreen(screen));
+
             this.attachLoadedScreens().then(() => {
                 this.screens[this.currentScreen].classList.remove(this.classes.nextScreen);
                 this.containerScreens.dispatchEvent(this.customEvents.screenScrollingInit);
@@ -150,10 +152,14 @@ export default class ScreenScrolling {
         }
 
         data.forEach(element => {
-            element.classList.add(this.classes.nextScreen, this.classes.screens);
-            this.containerScreens.append(element);
+            this.attachScreen(element);
             this.screens.push(element);
         });
+    }
+
+    private attachScreen(screen: HTMLElement) {
+        screen.classList.add(this.classes.nextScreen, this.classes.screens);
+        this.containerScreens.append(screen);
     }
 
     private restartWatchTimer = () => {

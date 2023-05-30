@@ -10,6 +10,7 @@ export default class HTMLNews extends HTMLElement {
         this.sourceElement = this.newsNode.querySelector('#source') as HTMLLinkElement;
         this.viewsCountElement = this.newsNode.querySelector('#views') as HTMLLIElement;            
         this.commentsCountElement = this.newsNode.querySelector('#comments') as HTMLLIElement;
+        this.shareButtonElement = this.newsNode.querySelector('#share') as HTMLButtonElement;
 
         if (!(this.template || 
             this.newsNode ||
@@ -17,6 +18,7 @@ export default class HTMLNews extends HTMLElement {
             this.titleElement ||
             this.viewsCountElement ||
             this.commentsCountElement ||
+            this.shareButtonElement ||
             this.commentButtonElement)) {
             throw new Error("Template is incorrect");
         }
@@ -63,6 +65,10 @@ export default class HTMLNews extends HTMLElement {
         comments: 'comments',
         id: 'id',
     }
+
+    static availableEvents = {
+        shareNews: 'share-news',
+        showComments: 'show-comments',
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -88,6 +94,7 @@ export default class HTMLNews extends HTMLElement {
     private commentsCountElement: HTMLLIElement;
     private commentButtonElement: HTMLButtonElement;
     private sourceElement: HTMLLinkElement;
+    private shareButtonElement: HTMLButtonElement;
 
     private shadowDOMProperty: ShadowRootInit = {
         mode: 'closed'
@@ -101,13 +108,21 @@ export default class HTMLNews extends HTMLElement {
     }
 
     private initEvents() {
-        const newsId = Number(this.getAttribute('id'));
+        const newsId = this.newsId;
 
         if (!newsId) {
             throw Error('Attribute id is not set');
         }
 
-        const showCommentsEvent: CustomEvent = new CustomEvent('show-comments', {
+        const showCommentsEvent: CustomEvent = new CustomEvent(HTMLNews.availableEvents.showComments, {
+            composed: true,
+            bubbles: true,
+            detail: {
+                newsId: newsId,
+            }
+        });
+
+        const shareNews: CustomEvent = new CustomEvent(HTMLNews.availableEvents.shareNews, {
             composed: true,
             bubbles: true,
             detail: {
@@ -116,10 +131,17 @@ export default class HTMLNews extends HTMLElement {
         });
 
         this.onButtonCommentClick(showCommentsEvent);
+        this.onButtonShareClick(shareNews);
     }
 
     private onButtonCommentClick(generatedEvent: CustomEvent) {
         this.commentButtonElement.addEventListener('click', () => {
+            this.dispatchEvent(generatedEvent);
+        });
+    }
+
+    private onButtonShareClick(generatedEvent: CustomEvent) {
+        this.shareButtonElement.addEventListener('click', () => {
             this.dispatchEvent(generatedEvent);
         });
     }

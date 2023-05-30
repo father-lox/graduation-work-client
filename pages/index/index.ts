@@ -9,10 +9,10 @@ import { UserComment } from 'types/api.js';
 import ShareNews from './portions/share-news.js';
 import StatisticsCounter from './portions/statistics-counter.js';
 
-new ShareNews();
 new Header();
 const commentsManger = new CommentsManger();
 const statisticsCounter = new StatisticsCounter();
+const shareNews = new ShareNews();
 
 commentsManger.init();
 
@@ -20,6 +20,7 @@ const rendererNews: RenderNews = new RenderNews();
 const newsContainer: HTMLDivElement = document.querySelector('.news-section') as HTMLDivElement;
 const newsElements: HTMLNews[] = [];
 const commentForm = document.getElementById('comment-form') as HTMLFormElement
+await loadSharedNews();
 
 if (!newsContainer) {
     throw new Error(".news-section is undefined");
@@ -31,7 +32,7 @@ document.addEventListener(ScreenScrolling.availableEvents.screenWatched, onNewsW
 new CommentForm(commentForm, onAddCommentSuccess, onAddCommentReject);
 
 async function loadNews(): Promise<HTMLNews[] | null> {
-    const modelsNews: ModelNews[] | null = await ModelNews.getNews();
+    const modelsNews: ModelNews[] | null = await ModelNews.getManyNews();
 
     if (!modelsNews) {
         return null;
@@ -51,4 +52,18 @@ function onAddCommentSuccess(comment: UserComment) {
 
 function onAddCommentReject() {
     alert('Comment was not sended');
+}
+
+async function loadSharedNews() {
+    if (!shareNews.isShareLink()) {
+        return;
+    }
+
+    let shareNewsModel = await ModelNews.getOneNews(shareNews.getShredNewsId() as number);
+
+    if (!shareNewsModel) {
+        return;
+    }
+
+    newsElements.unshift(rendererNews.renderOne(shareNewsModel) as HTMLNews);
 }
