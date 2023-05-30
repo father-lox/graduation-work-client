@@ -18,29 +18,4 @@
     }
 
     @extend .button_states;
-
-    // &:hover {
-    //     cursor: pointer;
-    // }
-
-    // &:hover:not(:disabled) {
-    //     color: $white-color;
-    //     background-color: $accent-color;
-    // }
-
-    // &:active:not(:disabled) {
-    //     color: $white-color;
-    //     background-color: $black-color;
-    // }
-
-    // &:active:active:not(:disabled),
-    // &:focus:active:not(:disabled) {
-    //     color: $white-color;
-    //     background-color: $accent-color;
-    // }
-
-    // &:disabled {
-    //     cursor: not-allowed;
-    //     color: $walrus-color;
-    // }
 }
