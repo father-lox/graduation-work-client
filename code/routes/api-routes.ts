@@ -24,4 +24,8 @@ export default class APIRoutes {
     get sendComment() {
         return new URL('/api/send-comment', this.server);
     }
+
+    get increaseViews() {
+        return new URL('/api/increase-views', this.server);
+    }
 }

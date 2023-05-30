@@ -22,18 +22,18 @@ export default class HTMLNews extends HTMLElement {
         }
     }
 
-    increaseCountViews() {
+    increaseCountViews = () => {
         let views: number = Number.parseInt(this.getAttribute(HTMLNews.availableAttributes.views) || '') || 0;
 
         views++;
         this.setAttribute(HTMLNews.availableAttributes.views, views.toString());
     }
 
-    increaseCountComments() {
-        let views: number = Number.parseInt(this.getAttribute(HTMLNews.availableAttributes.comments) || '') || 0;
+    increaseCountComments = () => {
+        let comments: number = Number.parseInt(this.getAttribute(HTMLNews.availableAttributes.comments) || '') || 0;
 
-        views++;
-        this.setAttribute(HTMLNews.availableAttributes.comments, views.toString());
+        comments++;
+        this.setAttribute(HTMLNews.availableAttributes.comments, comments.toString());
     }
 
     connectedCallback() {
@@ -47,8 +47,12 @@ export default class HTMLNews extends HTMLElement {
         return [
             HTMLNews.availableAttributes.title, 
             HTMLNews.availableAttributes.comments,
-            HTMLNews.availableAttributes.comments
+            HTMLNews.availableAttributes.views,
         ];
+    }
+
+    get newsId(): number {
+        return Number(this.getAttribute(HTMLNews.availableAttributes.id));
     }
 
     static availableAttributes = {
@@ -56,7 +60,9 @@ export default class HTMLNews extends HTMLElement {
         sourceTitle: 'source-title',
         title: 'title',
         views: 'views',
-        comments: 'comments'
+        comments: 'comments',
+        id: 'id',
+    }
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {

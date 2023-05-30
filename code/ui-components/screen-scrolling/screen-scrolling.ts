@@ -7,6 +7,8 @@ export default class ScreenScrolling {
         if (screens.length === 0 && loadScreens) {
             this.attachLoadedScreens().then(() => {
                 this.screens[this.currentScreen].classList.remove(this.classes.nextScreen);
+                this.containerScreens.dispatchEvent(this.customEvents.screenScrollingInit);
+                this.restartWatchTimer();
             });
         } else if (screens.length === 0 && !loadScreens) {
             throw new Error('The array of screens is empty');
@@ -18,6 +20,15 @@ export default class ScreenScrolling {
         this.containerScreens.addEventListener('transitionend', this.activateSwitching);
     }
 
+    get currentScreenNumber() {
+        return this.currentScreen;
+    }
+
+    static availableEvents = {
+        screenScrollingInit: 'screen-scrolling-init',
+        screenSwitched: 'screen-switched',
+        screenWatched: 'screen-watched',
+    }
     //TODO: При слабом скроле смещать новость, выполнять поготовку к анимации
     //TODO: Если скрол был не достаточно сильный, обнулять switchAccumulator
     //TODO: Реализовать поддержку touchscreens
@@ -26,19 +37,28 @@ export default class ScreenScrolling {
     private readonly previousSwitchThreshold: number = -this.nextSwitchThreshold;
     private switchAccumulator: number = 0;
     private isSwitchable: boolean = true;
+    private timeTriggerWatch = 5000;
+    private watchTimerId: number | undefined;
 
     private currentScreen: number = 0;
-    private classes: {
-        container: string,
-        screens: string,
-        nextScreen: string,
-        previousScreen: string
-    } = {
-            container: 'screen-scrolling',
-            screens: 'screen-scrolling__item',
-            nextScreen: 'screen-scrolling_next',
-            previousScreen: 'screen-scrolling_previous'
-        }
+    private classes = {
+        container: 'screen-scrolling',
+        screens: 'screen-scrolling__item',
+        nextScreen: 'screen-scrolling_next',
+        previousScreen: 'screen-scrolling_previous'
+    }
+
+    private customEvents = {
+        screenSwitched: new Event(ScreenScrolling.availableEvents.screenSwitched, {
+            bubbles: true
+        }),
+        screenScrollingInit: new Event(ScreenScrolling.availableEvents.screenScrollingInit, {
+            bubbles: true
+        }),
+        screenWatched: new Event(ScreenScrolling.availableEvents.screenWatched, {
+            bubbles: true,
+        }),
+    }
 
     private canNextSwitch = (): boolean => {
         return this.switchAccumulator >= this.nextSwitchThreshold && this.isSwitchable;
@@ -103,6 +123,8 @@ export default class ScreenScrolling {
         }
 
         window.scroll(0, 0);
+        this.screens[this.currentScreen].dispatchEvent(this.customEvents.screenSwitched);
+        this.restartWatchTimer();
     }
 
     private switchPrevious = () => {
@@ -111,6 +133,7 @@ export default class ScreenScrolling {
             this.screens[this.currentScreen].classList.add(this.classes.nextScreen);
             this.currentScreen--;
             this.screens[this.currentScreen].classList.remove(this.classes.previousScreen);
+            this.restartWatchTimer();
         } else {
             this.resetSwitchAccumulator();
         }
@@ -131,5 +154,17 @@ export default class ScreenScrolling {
             this.containerScreens.append(element);
             this.screens.push(element);
         });
+    }
+
+    private restartWatchTimer = () => {
+        if (this.watchTimerId) {
+            clearTimeout(this.watchTimerId);
+        }
+        
+        this.watchTimerId = setTimeout(this.notifyAboutScreenWatched, this.timeTriggerWatch);
+    }
+
+    private notifyAboutScreenWatched = () => {
+        this.screens[this.currentScreen].dispatchEvent(this.customEvents.screenWatched);
     }
 }

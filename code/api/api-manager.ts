@@ -33,31 +33,31 @@ export default class APIManager {
         applicationData: ApplicationDate,
         onSuccess: () => void,
         onReject: (message: ErrorMessage) => void
-        ) {
-            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.newApplication, applicationData);
-            let serverResponse = await response.json();
+    ) {
+        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.newApplication, applicationData);
+        let serverResponse = await response.json();
 
-            if (response.ok) {
-                onSuccess();
-            } else if (serverResponse.hasOwnProperty('error')) {
-                onReject(this.formateServerErrorMessage(serverResponse.message));
-            }
+        if (response.ok) {
+            onSuccess();
+        } else if (serverResponse.hasOwnProperty('error')) {
+            onReject(this.formateServerErrorMessage(serverResponse.message));
+        }
     }
 
     public async login(
         loginData: LoginData,
         onSuccess: () => void,
         onReject: (message: ErrorMessage) => void
-        ) {
-            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.login, loginData);
-            let serverResponse = await response.json();
+    ) {
+        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.login, loginData);
+        let serverResponse = await response.json();
 
-            if (response.status === 201 && 'user' in serverResponse && 'token' in serverResponse) {
-                this.apiRequestManager.storeAPIToken(serverResponse.token);
-                onSuccess();
-            } else if ('errors' in serverResponse || 'message' in serverResponse) {
-                onReject(this.formateServerErrorMessage(serverResponse.message));
-            }
+        if (response.status === 201 && 'user' in serverResponse && 'token' in serverResponse) {
+            this.apiRequestManager.storeAPIToken(serverResponse.token);
+            onSuccess();
+        } else if ('errors' in serverResponse || 'message' in serverResponse) {
+            onReject(this.formateServerErrorMessage(serverResponse.message));
+        }
     }
 
     public async isValueUnique(property: CheckableUniqueProperties, value: string): Promise<boolean> {
@@ -77,28 +77,43 @@ export default class APIManager {
         news: PublishedNews,
         onSuccess: () => void,
         onReject: (message: ErrorMessage, errorCode: number) => void) {
-            const response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.postNews, news, true);
+        const response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.postNews, news, true);
 
-            if (response.ok) {
-                onSuccess();
-            } else {
-                const serverMessage = await response.json();
-                onReject(serverMessage.message, response.status);
-            }
+        if (response.ok) {
+            onSuccess();
+        } else {
+            const serverMessage = await response.json();
+            onReject(serverMessage.message, response.status);
+        }
     }
 
     public async sendComment(
         comment: SubmittedComment,
         onSuccess: (comment: UserComment) => void,
         onReject: (message: ErrorMessage, errorCode: number) => void) {
-            let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.sendComment, comment, this.apiRequestManager.isAPITokenSet());
-            const serverMessage = await response.json();
+        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.sendComment, comment, this.apiRequestManager.isAPITokenSet());
+        const serverMessage = await response.json();
 
-            if (response.ok && isUserComment(serverMessage)) {
-                onSuccess(serverMessage);
-            } else {
-                onReject(serverMessage.message, response.status);
-            }
+        if (response.ok && isUserComment(serverMessage)) {
+            onSuccess(serverMessage);
+        } else {
+            onReject(serverMessage.message, response.status);
+        }
+    }
+
+    public async increaseViews(
+        newsId: number,
+        onSuccess: () => void,
+        onReject: (message: ErrorMessage) => void
+    ) {
+        let response: Response = await this.apiRequestManager.sendRequest(this.urlManager.api.increaseViews, {'news_id': newsId});
+        const serverMessage = await response.json();
+
+        if (response.ok && serverMessage.hasBeenIncreased) {
+            onSuccess();
+        } else {
+            onReject(this.formateServerErrorMessage(serverMessage.error || serverMessage.message));
+        }
     }
 
     private urlManager = new URLManager();

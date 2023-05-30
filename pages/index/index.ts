@@ -5,26 +5,30 @@ import RenderNews from 'renders/render-news.js'
 import CommentsManger from './portions/comments/comments-manager.js';
 import CommentForm from './portions/comments/comment-form.js';
 import Header from 'code/ui-components/header/header.js';
+import { UserComment } from 'types/api.js';
+import ShareNews from './portions/share-news.js';
+import StatisticsCounter from './portions/statistics-counter.js';
 
+new ShareNews();
 new Header();
 const commentsManger = new CommentsManger();
+const statisticsCounter = new StatisticsCounter();
 
 commentsManger.init();
 
 const rendererNews: RenderNews = new RenderNews();
 const newsContainer: HTMLDivElement = document.querySelector('.news-section') as HTMLDivElement;
 const newsElements: HTMLNews[] = [];
-let currentNews: number = 0;
+const commentForm = document.getElementById('comment-form') as HTMLFormElement
 
 if (!newsContainer) {
     throw new Error(".news-section is undefined");
 }
 
+const screenScrolling = new ScreenScrolling(newsContainer, newsElements, loadNews);
 
-new ScreenScrolling(newsContainer, newsElements, loadNews);
-
-new CommentForm(document.getElementById('comment-form') as HTMLFormElement, commentsManger.insertComment, onReject);
-
+document.addEventListener(ScreenScrolling.availableEvents.screenWatched, onNewsWatched);
+new CommentForm(commentForm, onAddCommentSuccess, onAddCommentReject);
 
 async function loadNews(): Promise<HTMLNews[] | null> {
     const modelsNews: ModelNews[] | null = await ModelNews.getNews();
@@ -36,6 +40,15 @@ async function loadNews(): Promise<HTMLNews[] | null> {
     return rendererNews.renderMany(modelsNews) as HTMLNews[];
 }
 
-function onReject() {
+function onNewsWatched(event: Event) {
+    statisticsCounter.increaseViews(event.target as HTMLNews);
+} 
+
+function onAddCommentSuccess(comment: UserComment) {
+    commentsManger.insertComment(comment);
+    statisticsCounter.increaseComments(newsElements[screenScrolling.currentScreenNumber]);
+}
+
+function onAddCommentReject() {
     alert('Comment was not sended');
 }
